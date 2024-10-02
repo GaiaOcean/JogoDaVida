@@ -13,7 +13,12 @@ Nome dos integrantes:
 #include "JVida_BGLL_Projeto_Controller.cpp"
 
 int main(){
+
+  int dim;
+  
   inicializarMatriz60x60();
-  mostrarMatriz(20);
+  perguntarDIm(&dim);
+  mostrarMatriz(dim);
+  
   return 0;
 }
