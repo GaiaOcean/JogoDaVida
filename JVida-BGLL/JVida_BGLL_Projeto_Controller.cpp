@@ -11,3 +11,15 @@ Nome dos integrantes:
 */
 
 #include "JVida_BGLL_Projeto_Controller.h"
+
+
+void gerarSeres(int linhas, int colunas,int dim){
+
+	
+   for (int i = 0; i < dim; i++) {
+        for (int j = 0; j < dim; j++) {
+            
+            jdvMatriz[linhas][colunas] = 'O'; 
+        }
+    }
+}
