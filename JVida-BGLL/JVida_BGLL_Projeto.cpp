@@ -15,9 +15,13 @@ Nome dos integrantes:
 int main(){
 
   int dim;
+  int linhas,colunas;
   
   inicializarMatriz60x60();
   perguntarDIm(&dim);
+  mostrarMatriz(dim);
+  perguntarCoordenadas(&linhas,&colunas, &dim);
+  gerarSeres(linhas,colunas,dim);
   mostrarMatriz(dim);
   
   return 0;
