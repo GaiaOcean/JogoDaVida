@@ -26,3 +26,13 @@ void perguntarDIm(int* dim){
 	
 //	return *dim;
 }
+
+void perguntarCoordenadas(int *linhas, int *colunas, int *dim){
+	
+    printf("Digite as coordenadas (x y): ");
+    scanf("%d %d", linhas, colunas);
+    printf("\n");
+	
+	
+}
+
