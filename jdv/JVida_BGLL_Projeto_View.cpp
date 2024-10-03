@@ -26,6 +26,7 @@ void mostrarMatriz(int dim){
 	}	  
 }
 
+// -----------FUNCOES DE VALIDACOES-----------
 int validarDim(int dimMundo){
 	if(dimMundo < 10 || dimMundo > 60){
 		printf("Dimensao invalida.\t"); 
@@ -58,6 +59,8 @@ int validarCoord(int linhas, int colunas){
 	
 }
 
+//-----------INTERACOES COM JOGADOR-----------
+
 void perguntarDim(){
 	int dimMundo;
 	do{
@@ -77,3 +80,34 @@ void perguntarCoordenadas(){
     
 }
 
+//--------------FUNCIONALIDADES DO MENU------------
+
+int menu(){
+	int opcao;
+    
+    //limparTela();
+	printf("\n======= JOGO DA VIDA =======\n");
+    printf("1 - Apresentar Mapa\n");
+    printf("2 - Limpar Mapa\n");
+    printf("3 - Incluir celula / excluir celulas\n");
+    printf("0 - Sair\n");  
+    printf("=============================\n");
+    printf("Escolha uma opcao: \n");
+    scanf("%d", &opcao);
+    return opcao;
+}
+
+void interacoesMenu(int opcao){
+    if(opcao == 0){
+        printf("Saindo do jogo...\n");
+    } else if(opcao < 0 || opcao > 3) {
+        printf("Opcao invalida. Tente novamente.\n");
+    }
+}
+void limparBuffer(){
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+void limparTela(){
+	system("cls||clear");
+}

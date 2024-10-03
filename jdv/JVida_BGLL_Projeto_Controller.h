@@ -16,3 +16,6 @@ Nome dos integrantes:
 #include <stdio.h>
 #include <time.h>
 
+void gerarSeres(int linhas, int colunas,int dim);
+void jogarMenu();
+void limparBuffer();

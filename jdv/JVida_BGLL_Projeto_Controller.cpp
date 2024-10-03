@@ -23,3 +23,36 @@ Nome dos integrantes:
 void gerarSeres(int linhas, int colunas,int dim){       
     jdvMatriz[linhas][colunas].situacao = 'O'; 
 }
+
+//---------FUNCIONALIDADES DO MENU---------
+void jogarMenu(){
+	
+	int opcao;
+ 	
+ 	do{
+ 		
+ 		opcao = menu();
+ 		
+        switch(opcao){
+            case 1:
+                inicializarMatriz60x60();
+                perguntarDim();
+                mostrarMatriz(dim);
+                break;
+            case 2:
+                limparBuffer(); 
+                break;
+            case 3:
+            	mostrarMatriz(dim);
+                perguntarCoordenadas();
+                gerarSeres(linhas, colunas, dim);
+                mostrarMatriz(dim);
+                break;
+            case 0:
+                interacoesMenu(opcao);
+				exit(0);
+            default:
+                interacoesMenu(opcao);
+        }
+    } while (opcao != 0);
+}
