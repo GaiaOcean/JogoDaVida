@@ -17,3 +17,4 @@ Nome dos integrantes:
 
 void mostrarMatriz(int dim);
 void inicializarMatriz60x60();
+void perguntarDim();

@@ -14,7 +14,9 @@ Nome dos integrantes:
 #define JVIDA_BGLL_PROJETO_MODEL_H
 
 char jdvMatriz[60][60];
-void perguntarDIm(int* dim);
+
+int dim;
+int linhas,colunas;
 
 
 #endif

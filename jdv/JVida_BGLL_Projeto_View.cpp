@@ -15,7 +15,7 @@ Nome dos integrantes:
 void mostrarMatriz(int dim){
 	printf("\t");
     for (int j = 0; j < dim; j++)
-      printf("%2d ", j);
+      printf("%02d ", j);
     printf("\n\n");
 	
 	for (int i = 0; i < dim; i++){
@@ -24,4 +24,17 @@ void mostrarMatriz(int dim){
         	printf("%c  ", jdvMatriz[i][j]);
         printf("\n");
 	}	  
+}
+
+void perguntarDim(){
+	printf("Digite a dimensao do mundo(de 10 a 60): " );
+	scanf("%d", &dim);
+	
+	printf("\n");
+}
+
+void perguntarCoordenadas(){
+	printf("Digite as coordenadas (x y): ");
+    scanf("%d %d", &linhas, &colunas);
+    printf("\n");	
 }

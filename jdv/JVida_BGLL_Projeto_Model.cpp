@@ -19,20 +19,4 @@ void inicializarMatriz60x60(){
         jdvMatriz[i][j] = '.'; // Define todos as celulas como vazias inicialmente
 }
 
-void perguntarDIm(int* dim){
-	
-	printf("Digite a dimensao do mundo(de 10 a 60): " );
-	scanf("%d",dim);
-	
-	printf("\n");
-//	return *dim;
-}
 
-void perguntarCoordenadas(int *linhas, int *colunas, int *dim){
-	
-	printf("Digite as coordenadas (x y): ");
-    scanf("%d %d", linhas, colunas);
-    printf("\n");
-	
-	
-}
