@@ -21,16 +21,29 @@ void mostrarMatriz(int dim){
 	for (int i = 0; i < dim; i++){
 		printf("%d\t", i);
       	for (int j = 0; j < dim; j++) 
-        	printf("%c  ", jdvMatriz[i][j]);
+        	printf("%c  ", jdvMatriz[i][j].situacao);
         printf("\n");
 	}	  
 }
 
-void perguntarDim(){
-	printf("Digite a dimensao do mundo(de 10 a 60): " );
-	scanf("%d", &dim);
+int validarDim(int dimMundo){
+	if(dimMundo < 10 || dimMundo > 60){
+		printf("Dimensao invalida.\t"); // cout >>
+		return -1;
+	}
 	
-	printf("\n");
+	dim = dimMundo;
+	return 1;
+}
+
+void perguntarDim(){
+	int dimMundo;
+	do{
+		printf("Digite a dimensao do mundo(de 10 a 60): " );
+		scanf("%d", &dimMundo);
+		
+		printf("\n");
+	}while(validarDim(dimMundo) != 1);
 }
 
 void perguntarCoordenadas(){
@@ -38,3 +51,4 @@ void perguntarCoordenadas(){
     scanf("%d %d", &linhas, &colunas);
     printf("\n");	
 }
+

@@ -16,7 +16,11 @@ Nome dos integrantes:
 void inicializarMatriz60x60(){
 	for (int i = 0; i < 60; i++)
       for (int j = 0; j < 60; j++) 
-        jdvMatriz[i][j] = '.'; // Define todos as celulas como vazias inicialmente
+        jdvMatriz[i][j].situacao = '.'; // Define todos as celulas como vazias inicialmente
 }
 
-
+void inicializarMatrizAux(){
+	for (int i = 0; i < 60; i++)
+      for (int j = 0; j < 60; j++) 
+        jdvAux[i][j].situacao = '.'; // Define todos as celulas como vazias inicialmente
+}

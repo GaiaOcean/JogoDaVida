@@ -13,10 +13,20 @@ Nome dos integrantes:
 #ifndef JVIDA_BGLL_PROJETO_MODEL_H
 #define JVIDA_BGLL_PROJETO_MODEL_H
 
-char jdvMatriz[60][60];
+#define VALORMAX 60
+  
+typedef struct{
+  	char situacao;
+  	int vizinhos;
+}Mundo;
 
+int linhas;
+int colunas;
 int dim;
-int linhas,colunas;
 
+Mundo jdvMatriz[VALORMAX][VALORMAX];
+Mundo jdvAux[VALORMAX][VALORMAX];
+void perguntarDim();
+void inicializarMatrizAux();
 
 #endif

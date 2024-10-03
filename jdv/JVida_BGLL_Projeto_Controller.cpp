@@ -21,5 +21,5 @@ Nome dos integrantes:
 //}
 
 void gerarSeres(int linhas, int colunas,int dim){       
-    jdvMatriz[linhas][colunas] = 'O'; 
+    jdvMatriz[linhas][colunas].situacao = 'O'; 
 }
