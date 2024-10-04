@@ -13,13 +13,14 @@ Nome dos integrantes:
 #include "JVida_BGLL_Projeto_View.h"
 
 void mostrarMatriz(int dim){
+	limparTela();
 	printf("\t");
     for (int j = 0; j < dim; j++)
       printf("%02d ", j);
     printf("\n\n");
 	
 	for (int i = 0; i < dim; i++){
-		printf("%d\t", i);
+		printf("%02d\t", i);
       	for (int j = 0; j < dim; j++) 
         	printf("%c  ", jdvMatriz[i][j].situacao);
         printf("\n");
@@ -37,26 +38,28 @@ int validarDim(int dimMundo){
 	return 1;
 }
 
-int validarCoord(int linhas, int colunas){
-	
-	char escolha;
-	
-	if((linhas >= 0 && linhas < dim)&&(colunas >= 0 && colunas < dim)){ //verifica se as coordenas sao validas
-		if (jdvMatriz[linhas][colunas].situacao == 'O'){
+int validarCoord(int linhas, int colunas, int dim) {
+    char escolha;
 
-			printf("A coordenada já existe. Deseja remover a célula do mapa (Digite S ou N)? ");
+    if ((linhas >= 0 && linhas < dim) && (colunas >= 0 && colunas < dim)) {
+        if (jdvMatriz[linhas][colunas].situacao == 'O') {
+            printf("A coordenada ja existe. Deseja remover a celula do mapa (Digite S ou N)?\n");
             scanf(" %c", &escolha);
-			
-			if (escolha == 'S' || escolha == 's') {
+
+            if (escolha == 'S' || escolha == 's') {
                 jdvMatriz[linhas][colunas].situacao = '.';
-                printf("Célula removida.\n");
-                return 1;
-			}
-		}
-	}
-	
-	return -1;
-	
+                return 1;  // Indica que a celula foi removida
+            } else {
+                return 0;  // O jogador decidiu nao remover a celula
+            }
+        } else {
+            printf("Nenhuma celula existe nessa coordenada.\n");
+            return 0;
+        }
+    } else {
+        printf("Coordenadas invalidas.\n");
+        return 0;
+    }
 }
 
 //-----------INTERACOES COM JOGADOR-----------
@@ -64,36 +67,34 @@ int validarCoord(int linhas, int colunas){
 void perguntarDim(){
 	int dimMundo;
 	do{
+		printf("\n======= JOGO DA VIDA =======\n");
 		printf("Digite a dimensao do mundo(de 10 a 60): " );
 		scanf("%d", &dimMundo);
 		
-		printf("\n");
+		printf("Dimensao %d escolhida", &dimMundo);
+		
 	}while(validarDim(dimMundo) != 1);
 }
 
 void perguntarCoordenadas(){
 	printf("Digite as coordenadas (x y): ");
-    scanf("%d %d", &linhas, &colunas);
-    printf("\n");	
-    
-    validarCoord(linhas, colunas);
-    
+	scanf("%d %d", &linhas, &colunas);
+    printf("\n");
 }
-
 //--------------FUNCIONALIDADES DO MENU------------
 
 int menu(){
 	int opcao;
-    
-    //limparTela();
+
 	printf("\n======= JOGO DA VIDA =======\n");
     printf("1 - Apresentar Mapa\n");
     printf("2 - Limpar Mapa\n");
     printf("3 - Incluir celula / excluir celulas\n");
     printf("0 - Sair\n");  
     printf("=============================\n");
-    printf("Escolha uma opcao: \n");
+    printf("Escolha uma opcao: ");
     scanf("%d", &opcao);
+    limparBuffer();
     return opcao;
 }
 
@@ -104,6 +105,8 @@ void interacoesMenu(int opcao){
         printf("Opcao invalida. Tente novamente.\n");
     }
 }
+
+//--------------FUNCOES LIMPAR-----------
 void limparBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
