@@ -52,7 +52,7 @@ int validarCoord(int linhas, int colunas, int dim) {
     if (jdvMatriz[linhas][colunas].situacao == 'O') {
         printf("A coordenada ja existe. Deseja remover a celula do mapa (Digite S ou N)? ");
         scanf(" %c", &escolha);
-        limparBuffer();
+
         if (escolha == 'S' || escolha == 's') {
             jdvMatriz[linhas][colunas].situacao = '.';
             return 1; // Mostra que a celula foi removida do mundo
@@ -83,13 +83,13 @@ void perguntarCoordenadas(){
 	printf("Digite as coordenadas (x y): ");
 	scanf("%d %d", &linhas, &colunas);
     printf("\n");
-    
+    limparBuffer();
     int res = validarCoord(linhas, colunas, dim);
     
     if (res == -1) {
         perguntarCoordenadas(); // Pergunta novamente se as coordenadas forem invalidas
     }
-    mostrarMapa();
+    mostrarMatriz(dim);
 }
 //--------------FUNCIONALIDADES DO MENU------------
 
