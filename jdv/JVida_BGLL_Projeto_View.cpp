@@ -39,28 +39,30 @@ int validarDim(int dimMundo){
 }
 
 int validarCoord(int linhas, int colunas, int dim) {
+	
     char escolha;
 
-    if ((linhas >= 0 && linhas < dim) && (colunas >= 0 && colunas < dim)) {
-        if (jdvMatriz[linhas][colunas].situacao == 'O') {
-            printf("A coordenada ja existe. Deseja remover a celula do mapa (Digite S ou N)?\n");
-            scanf(" %c", &escolha);
-
-            if (escolha == 'S' || escolha == 's') {
-                jdvMatriz[linhas][colunas].situacao = '.';
-                return 1;  // Indica que a celula foi removida
-            } else {
-                return 0;  // O jogador decidiu nao remover a celula
-            }
-        } else {
-            printf("Nenhuma celula existe nessa coordenada.\n");
-            return 0;
-        }
-    } else {
+    
+    if ((linhas < 0 || linhas >= dim) || (colunas < 0 || colunas >= dim)) {
         printf("Coordenadas invalidas.\n");
-        return 0;
+        return -1;  //retorna -1 quando a coordenada digitada e invalida
     }
+
+    //Ve se a celula ja existe e remove a mesma caso o usuario digite 'S'
+    if (jdvMatriz[linhas][colunas].situacao == 'O') {
+        printf("A coordenada ja existe. Deseja remover a celula do mapa (Digite S ou N)? ");
+        scanf(" %c", &escolha);
+        limparBuffer();
+        if (escolha == 'S' || escolha == 's') {
+            jdvMatriz[linhas][colunas].situacao = '.';
+            return 1; // Mostra que a celula foi removida do mundo
+        } else {
+            return 0; // o jogador nao quis remover a celula digitada
+        }
+    }
+    return 0; 
 }
+
 
 //-----------INTERACOES COM JOGADOR-----------
 
@@ -71,15 +73,23 @@ void perguntarDim(){
 		printf("Digite a dimensao do mundo(de 10 a 60): " );
 		scanf("%d", &dimMundo);
 		
-		printf("Dimensao %d escolhida", &dimMundo);
+//		printf("Dimensao %d escolhida", &dimMundo);
 		
 	}while(validarDim(dimMundo) != 1);
 }
 
 void perguntarCoordenadas(){
+	
 	printf("Digite as coordenadas (x y): ");
 	scanf("%d %d", &linhas, &colunas);
     printf("\n");
+    
+    int res = validarCoord(linhas, colunas, dim);
+    
+    if (res == -1) {
+        perguntarCoordenadas(); // Pergunta novamente se as coordenadas forem invalidas
+    }
+    mostrarMapa();
 }
 //--------------FUNCIONALIDADES DO MENU------------
 

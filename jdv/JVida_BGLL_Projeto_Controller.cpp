@@ -18,6 +18,7 @@ void gerarSeres(int linhas, int colunas,int dim){
 }
 
 int inserirOuRetirarCel(int linhas, int colunas, int dim){
+	
     if ((linhas >= 0 && linhas < dim) && (colunas >= 0 && colunas < dim)){
         if (jdvMatriz[linhas][colunas].situacao == '.') {
             gerarSeres(linhas, colunas, dim);  
