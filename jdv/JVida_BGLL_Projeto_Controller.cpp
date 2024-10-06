@@ -17,27 +17,26 @@ void gerarSeres(int linhas, int colunas,int dim){
     jdvMatriz[linhas][colunas].situacao = 'O';
 }
 
-int inserirOuRetirarCel(int linhas, int colunas, int dim){
-	
-    if ((linhas >= 0 && linhas < dim) && (colunas >= 0 && colunas < dim)){
-        if (jdvMatriz[linhas][colunas].situacao == '.') {
-            gerarSeres(linhas, colunas, dim);  
-            return 1;  // celula inserida
-        }
-        else if (jdvMatriz[linhas][colunas].situacao == 'O') {
-            int resultado = validarCoord(linhas, colunas, dim);
-            if (resultado == 1) {
-                return 2;  // celula removida
-            }
+int inserirOuRetirarCel(int linhas, int colunas, int dim) {
+    if (jdvMatriz[linhas][colunas].situacao == '.') {
+        gerarSeres(linhas, colunas, dim);  
+        return 1;  // celula inserida
+    }
+    else if (jdvMatriz[linhas][colunas].situacao == 'O') {
+    	 if(validarCoord(linhas, colunas, dim) == 1){
+        	jdvMatriz[linhas][colunas].situacao = '.';  // celula removida
+        	return 2;  // celula removida
         }
     }
-    return 0;  // coordenadas invalidas ou nenhuma alteracao
+    return 0;  // nenhuma alteracao feita
 }
+
 
 
 //---------FUNCIONALIDADES DO MENU---------
 void jogarMenu(){
 	
+	int resultado;
 	int opcao;
  	
 	inicializarMatriz60x60();
@@ -57,10 +56,10 @@ void jogarMenu(){
             case 2:
                 limparBuffer(); 
                 break;
-            case 3:
-            	mostrarMatriz(dim);
+           case 3:
+  			    mostrarMatriz(dim);
                 perguntarCoordenadas();
-                inserirOuRetirarCel(linhas, colunas, dim);
+                resultado = inserirOuRetirarCel(linhas, colunas, dim);
                 mostrarMatriz(dim);
                 break;
             case 0:

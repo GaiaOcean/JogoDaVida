@@ -54,9 +54,11 @@ int validarCoord(int linhas, int colunas, int dim) {
         scanf(" %c", &escolha);
 
         if (escolha == 'S' || escolha == 's') {
-            jdvMatriz[linhas][colunas].situacao = '.';
+//            jdvMatriz[linhas][colunas].situacao = '.';
+	          printf("A celula %d%d foi removida do mundo.", linhas,colunas);
             return 1; // Mostra que a celula foi removida do mundo
         } else {
+        	printf("A celula nao foi removida do mundo.");
             return 0; // o jogador nao quis remover a celula digitada
         }
     }
@@ -78,19 +80,25 @@ void perguntarDim(){
 	}while(validarDim(dimMundo) != 1);
 }
 
-void perguntarCoordenadas(){
-	
-	printf("Digite as coordenadas (x y): ");
-	scanf("%d %d", &linhas, &colunas);
-    printf("\n");
-    limparBuffer();
-    int res = validarCoord(linhas, colunas, dim);
+void perguntarCoordenadas() {
+    int res; // armazena o resultado da validacao
     
-    if (res == -1) {
-        perguntarCoordenadas(); // Pergunta novamente se as coordenadas forem invalidas
-    }
-    mostrarMatriz(dim);
+    do {
+        printf("Digite as coordenadas (x y): ");
+        scanf("%d %d", &linhas, &colunas);
+        printf("\n");
+        limparBuffer();
+        
+        res = validarCoord(linhas, colunas, dim);  // valida as coordenadas
+
+        if (res == -1) {
+            printf("Coordenada invalida! Tente novamente.\n");  // Exibe a mensagem de erro antes de pedir novamente
+        }
+    } while (res == -1);  // continua pedindo enquanto as coordenadas forem invalidas
+    
+    mostrarMatriz(dim);  
 }
+
 //--------------FUNCIONALIDADES DO MENU------------
 
 int menu(){

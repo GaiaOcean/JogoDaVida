@@ -1,6 +1,6 @@
 /*
 JVida-BGLL - Projeto Jogo da Vida - Etapa 6
-24/09/2024 - Grupo:BGLL
+24/09/2024 - Grupo:BGLL10
 
 Nome dos integrantes:
 
