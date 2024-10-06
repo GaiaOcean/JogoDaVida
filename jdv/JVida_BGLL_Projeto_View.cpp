@@ -44,7 +44,7 @@ int validarCoord(int linhas, int colunas, int dim) {
 
     
     if ((linhas < 0 || linhas >= dim) || (colunas < 0 || colunas >= dim)) {
-        printf("Coordenadas invalidas.\n");
+//        printf("Coordenadas invalidas.\n");
         return -1;  //retorna -1 quando a coordenada digitada e invalida
     }
 
