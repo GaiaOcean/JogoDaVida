@@ -32,15 +32,14 @@ void limparMapa(int dim) {
     }
 }
 
-
 int inserirOuRetirarCel(int linhas, int colunas, int dim) {
     if (jdvMatriz[linhas][colunas].situacao == '.') {
         gerarSeres(linhas, colunas, dim);  
         return 1;  // celula inserida
     }
     else if (jdvMatriz[linhas][colunas].situacao == 'O') {
-    	 if(validarCoord(linhas, colunas, dim) == 1){
-        	jdvMatriz[linhas][colunas].situacao = '.';  // celula removida
+    	 if(retirarCel(linhas, colunas, dim) == 1){
+        	jdvMatriz[linhas][colunas].situacao = '.';  
         	return 2;  // celula removida
         }
     }
@@ -56,7 +55,6 @@ void jogarMenu(){
 	int opcao;
  	
 	inicializarMatriz60x60();
-	inicializarMatrizAux();
     perguntarDim();
     limparTela();
  	
@@ -70,7 +68,6 @@ void jogarMenu(){
                 mostrarMatriz(dim);
                 break;
             case 2:
-//                limparBuffer(); 
                 limparMapa(dim);
                 mostrarMatriz(dim);
                 break;

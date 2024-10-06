@@ -18,6 +18,8 @@ Nome dos integrantes:
 void mostrarMatriz(int dim);
 void inicializarMatriz60x60();
 void perguntarDim();
+void perguntarCoordenadas();
+int retirarCel(int linhas, int colunas, int dim);
 int menu();
 void interacoesMenu(int opcao);
 void limparBuffer();

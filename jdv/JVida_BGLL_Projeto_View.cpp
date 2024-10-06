@@ -30,7 +30,7 @@ void mostrarMatriz(int dim){
 // -----------FUNCOES DE VALIDACOES-----------
 int validarDim(int dimMundo){
 	if(dimMundo < 10 || dimMundo > 60){
-		printf("Dimensao invalida.\t"); 
+		printf("Dimensao invalida.\n"); 
 		return -1;
 	}
 	
@@ -38,15 +38,9 @@ int validarDim(int dimMundo){
 	return 1;
 }
 
-int validarCoord(int linhas, int colunas, int dim) {
+int retirarCel(int linhas, int colunas, int dim) {
 	
     char escolha;
-
-    
-    if ((linhas < 0 || linhas >= dim) || (colunas < 0 || colunas >= dim)) {
-//        printf("Coordenadas invalidas.\n");
-        return -1;  //retorna -1 quando a coordenada digitada e invalida
-    }
 
     //Ve se a celula ja existe e remove a mesma caso o usuario digite 'S'
     if (jdvMatriz[linhas][colunas].situacao == 'O') {
@@ -54,9 +48,8 @@ int validarCoord(int linhas, int colunas, int dim) {
         scanf(" %c", &escolha);
 
         if (escolha == 'S' || escolha == 's') {
-//            jdvMatriz[linhas][colunas].situacao = '.';
 	          printf("A celula %d%d foi removida do mundo.", linhas,colunas);
-            return 1; // Mostra que a celula foi removida do mundo
+            return 1; // celula removida do mundo
         } else {
         	printf("A celula nao foi removida do mundo.");
             return 0; // o jogador nao quis remover a celula digitada
@@ -64,7 +57,6 @@ int validarCoord(int linhas, int colunas, int dim) {
     }
     return 0; 
 }
-
 
 //-----------INTERACOES COM JOGADOR-----------
 
@@ -75,7 +67,6 @@ void perguntarDim(){
 		printf("Digite a dimensao do mundo(de 10 a 60): " );
 		scanf("%d", &dimMundo);
 		
-//		printf("Dimensao %d escolhida", &dimMundo);
 		
 	}while(validarDim(dimMundo) != 1);
 }
@@ -89,10 +80,12 @@ void perguntarCoordenadas() {
         printf("\n");
         limparBuffer();
         
-        res = validarCoord(linhas, colunas, dim);  // valida as coordenadas
+        if ((linhas < 0 || linhas >= dim) || (colunas < 0 || colunas >= dim)){
+            res = retirarCel( linhas, colunas, dim);
 
-        if (res == -1) {
+        } else{
             printf("Coordenada invalida! Tente novamente.\n");  // Exibe a mensagem de erro antes de pedir novamente
+            res== -1;
         }
     } while (res == -1);  // continua pedindo enquanto as coordenadas forem invalidas
     
