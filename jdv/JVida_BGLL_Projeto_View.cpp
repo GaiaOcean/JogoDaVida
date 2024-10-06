@@ -1,6 +1,6 @@
 /*
-JVida-BGLL - Projeto Jogo da Vida - Etapa 6
-24/09/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 1
+08/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -48,12 +48,9 @@ int retirarCel(int linhas, int colunas, int dim) {
         scanf(" %c", &escolha);
 
         if (escolha == 'S' || escolha == 's') {
-	          printf("A celula %d%d foi removida do mundo.", linhas,colunas);
+	        printf("A celula %d%d foi removida do mundo.", linhas,colunas);
             return 1; // celula removida do mundo
-        } else {
-        	printf("A celula nao foi removida do mundo.");
-            return 0; // o jogador nao quis remover a celula digitada
-        }
+        } 
     }
     return 0; 
 }
@@ -112,7 +109,7 @@ int menu(){
 void interacoesMenu(int opcao){
     if(opcao == 0){
         printf("Saindo do jogo...\n");
-    } else if(opcao < 0 || opcao > 3) {
+    } else if(opcao < 0 || opcao > 4) {
         printf("Opcao invalida. Tente novamente.\n");
     }
 }

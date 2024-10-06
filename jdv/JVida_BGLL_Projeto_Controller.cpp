@@ -1,6 +1,6 @@
 /*
-JVida-BGLL - Projeto Jogo da Vida - Etapa 6
-24/09/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 1
+08/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -71,7 +71,7 @@ void jogarMenu(){
                 limparMapa(dim);
                 mostrarMatriz(dim);
                 break;
-           case 3:
+            case 3:
   			    mostrarMatriz(dim);
                 perguntarCoordenadas();
                 resultado = inserirOuRetirarCel(linhas, colunas, dim);
