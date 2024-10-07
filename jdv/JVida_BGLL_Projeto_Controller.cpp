@@ -33,6 +33,7 @@ void limparMapa(int dim) {
 }
 
 int inserirOuRetirarCel(int linhas, int colunas, int dim) {
+	
     if (jdvMatriz[linhas][colunas].situacao == '.') {
         gerarSeres(linhas, colunas, dim);  
         return 1;  // celula inserida
@@ -74,6 +75,7 @@ void jogarMenu(){
             case 3:
   			    mostrarMatriz(dim);
                 perguntarCoordenadas();
+                validarCoord(linhas,colunas,dim);
                 resultado = inserirOuRetirarCel(linhas, colunas, dim);
                 mostrarMatriz(dim);
                 break;
