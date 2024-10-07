@@ -71,21 +71,23 @@ void perguntarDim(){
 void perguntarCoordenadas() {
     int res;  // armazena o resultado da validaçao
     do {
-        printf("Digite as coordenadas (x y): ");
+        printf("Digite as coordenadas (x y) ou (%d %d para sair): ", dim, dim);
         scanf("%d %d", &linhas, &colunas);
         printf("\n");
         limparBuffer();
         
         // Verifica se as coordenadas estao dentro dos limites
-        if ((linhas < 0 || linhas >= dim) || (colunas < 0 || colunas >= dim)) {
+        if (linhas == dim|| colunas == dim){
+            res = 0;
+        }else if ((linhas < 0 || linhas >= dim) || (colunas < 0 || colunas >= dim)) {
             printf("Coordenada invalida! Tente novamente.\n");  // Exibe a mensagem de erro
             res = -1;  // Coordenadas invalidas
         } else {
             res = 0;  // Coordenadas validas
         }
-    } while (res == -1);  //  ontinua pedindo ata receber coordenadas validas
+    } while (res == -1);  //  continua pedindo ata receber coordenadas validas
 
-    mostrarMatriz(dim);  
+   // mostrarMatriz(dim);  
 }
 
 

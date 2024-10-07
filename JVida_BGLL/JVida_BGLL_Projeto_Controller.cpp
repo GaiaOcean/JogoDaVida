@@ -20,7 +20,7 @@ void gerarSeres(int linhas, int colunas,int dim){
 //Funcao responsavel por limpar o mapa
 void limparMapa(int dim) {
 	
-//    printf("Limpando o mapa...\n"); 
+ //    printf("Limpando o mapa...\n"); 
     for (int i = 0; i < dim; i++) {
         for (int j = 0; j < dim; j++) {
         	
@@ -33,7 +33,10 @@ void limparMapa(int dim) {
 }
 
 int inserirOuRetirarCel(int linhas, int colunas, int dim) {
-    if (jdvMatriz[linhas][colunas].situacao == '.') {
+    if(linhas == dim || colunas == dim){
+        return 0; // nrnhuma alteração feita
+    }
+    else if (jdvMatriz[linhas][colunas].situacao == '.') {
         gerarSeres(linhas, colunas, dim);  
         return 1;  // celula inserida
     }
@@ -71,9 +74,12 @@ void jogarMenu(){
                 mostrarMatriz(dim);
                 break;
             case 3:
-  			    mostrarMatriz(dim);
-                perguntarCoordenadas();
-                inserirOuRetirarCel(linhas, colunas, dim);
+                while(linhas != dim || colunas != dim){    
+                    mostrarMatriz(dim);
+                    perguntarCoordenadas();
+                    inserirOuRetirarCel(linhas, colunas, dim);
+                }
+                linhas = 0, colunas = 0;
                 mostrarMatriz(dim);
                 break;
             case 0:
