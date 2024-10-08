@@ -19,5 +19,4 @@ Nome dos integrantes:
 void gerarSeres(int linhas, int colunas,int dim);
 int inserirOuRetirarCel(int linhas, int colunas, int dim);
 void jogarMenu();
-void limparBuffer();
 void limparMapa(int dim);
