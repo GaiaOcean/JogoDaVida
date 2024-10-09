@@ -23,7 +23,7 @@ void limparMapa(int dim) {
     for (int i = 0; i < dim; i++) {
         for (int j = 0; j < dim; j++) {
         	
-            if (jdvMatriz[i][j].situacao == 'O') {
+            if (jdvMatriz[i][j].situacao == 'O' || jdvMatriz[i][j].situacao == '+') {
                 jdvMatriz[i][j].situacao = '.';
             }
             
@@ -40,12 +40,12 @@ void tornarVazio(int l, int c){
 		lV = jdvMatriz[l][c].infoVizinhos[i].linha;
 		lC = jdvMatriz[l][c].infoVizinhos[i].coluna;
 		
-		jdvMatriz[lV][lC].situacao == '.';
+		jdvMatriz[lV][lC].situacao = '.';
 	}
 }
 
 //verifica as possibilidades de acao para a coordenada informada, de forma que,
-//se a coordenada estiver vazia, ela é ocupada e se estiver ocupada, pode ser esvaziada
+//se a coordenada estiver vazia, ela e' ocupada e se estiver ocupada, pode ser esvaziada
 int inserirOuRetirarCel(int linhas, int colunas, int dim) {
     if (jdvMatriz[linhas][colunas].situacao == '.' || jdvMatriz[linhas][colunas].situacao == '+') {
         gerarSeres(linhas, colunas, dim);  
@@ -68,7 +68,7 @@ void guardarInfoVizinhos(int l, int c){
 	int nC = c - 1;
 	int qtdVizinhos = 0;
 	
-	if(nL > 0){
+	if(nL >= 0){
 		for(int i = 1; i <= 3; i++){
 			if(nC >= 0 || nC >= dim){
 				jdvMatriz[l][c].qtdVizinhos = qtdVizinhos + 1;
@@ -133,12 +133,14 @@ void guardarInfoVizinhos(int l, int c){
 }
 
 int validarCoordenadas(){
-	perguntarCoordenadas();
 	
 	do{
+		perguntarCoordenadas();
+		if (linhas == dim && colunas == dim){
+			return -1;
+		}
 		if ((linhas < 0 || linhas >= dim) || (colunas < 0 || colunas >= dim)) {
             printf("Coordenada invalida! Tente novamente.\n");  // Exibe a mensagem de erro
-            perguntarCoordenadas();
         } else {
         	guardarInfoVizinhos(linhas,colunas);
             return 0;  // Coordenadas validas
