@@ -12,8 +12,19 @@ Nome dos integrantes:
 
 #include "JVida_BGLL_Projeto_View.h"
 
+void mostrarInfoVizinhos(int l, int c){
+	int qtdV = jdvMatriz[l][c].qtdVizinhos;
+	for(int i = 0; i < qtdV; i++){
+		printf("linha %d\n", jdvMatriz[l][c].infoVizinhos[i].linha);
+		printf("coluna %d\n", jdvMatriz[l][c].infoVizinhos[i].coluna);
+		printf("situacao %c\n", jdvMatriz[l][c].infoVizinhos[i].situacao);
+		printf("\n");	
+	}
+}
+
 void mostrarMatriz(int dim){
 	limparTela();
+	mostrarInfoVizinhos(linhas,colunas);
 	printf("\t");
     for (int j = 0; j < dim; j++)
       printf("%02d ", j);
@@ -21,10 +32,10 @@ void mostrarMatriz(int dim){
 	
 	for (int i = 0; i < dim; i++){
 		printf("%02d\t", i);
-      	for (int j = 0; j < dim; j++) 
+      	for (int j = 0; j < dim; j++)
         	printf("%c  ", jdvMatriz[i][j].situacao);
         printf("\n");
-	}	  
+	} 
 }
 
 // -----------FUNCOES DE VALIDACOES-----------
@@ -73,24 +84,11 @@ void perguntarDim(){
 }
 
 void perguntarCoordenadas() {
-    int res;  // armazena o resultado da validacao
-    do {
-        printf("Digite as coordenadas (x y) ou (%d %d para sair): ", dim, dim);
-        scanf("%d %d", &colunas, &linhas);
-        printf("\n");
-        limparBuffer();
-        
-        // Verifica se as coordenadas estao dentro dos limites
-        if ((linhas < 0 || linhas >= dim) || (colunas < 0 || colunas >= dim)) {
-            printf("Coordenada invalida! Tente novamente.\n");  // Exibe a mensagem de erro
-            res = -1;  // Coordenadas invalidas
-        } else {
-            res = 0;  // Coordenadas validas
-        }
-    } while (res == -1);  //  continua pedindo ate receber coordenadas validas
+    printf("Digite as coordenadas (x y) ou (%d %d para sair): ", dim, dim);
+    scanf("%d %d", &colunas, &linhas);
+    printf("\n");
+    limparBuffer();
 }
-
-
 //--------------FUNCIONALIDADES DO MENU------------
 
 int menu(){

@@ -14,10 +14,17 @@ Nome dos integrantes:
 #define JVIDA_BGLL_PROJETO_MODEL_H
 
 #define VALORMAX 60
+
+typedef struct{
+  	char situacao;
+  	int linha;
+  	int coluna;
+}Vizinhos;
   
 typedef struct{
   	char situacao;
-  	int vizinhos;
+  	int qtdVizinhos;
+  	Vizinhos infoVizinhos[8];
 }Mundo;
 
 int linhas;
