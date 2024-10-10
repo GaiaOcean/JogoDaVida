@@ -25,3 +25,4 @@ int menu();
 void interacoesMenu(int opcao);
 void limparBuffer();
 void limparTela();
+void mostrarMatrizAux(int dim);

@@ -30,10 +30,12 @@ typedef struct{
 int linhas;
 int colunas;
 int dim;
-// bool false;
+bool viz; // flag para mostrar ou nao os vizinhos
 
 Mundo jdvMatriz[VALORMAX][VALORMAX];
 Mundo jdvAux[VALORMAX][VALORMAX];
+
+void inicializarMatriz60x60();
 void perguntarDim();
 void inicializarMatrizAux();
 

@@ -38,6 +38,22 @@ void mostrarMatriz(int dim){
 	} 
 }
 
+void mostrarMatrizAux(int dim){
+	//limparTela();
+	mostrarInfoVizinhos(linhas,colunas);
+	printf("\t");
+    for (int j = 0; j < dim; j++)
+      printf("%02d ", j);
+    printf("\n\n");
+	
+	for (int i = 0; i < dim; i++){
+		printf("%02d\t", i);
+      	for (int j = 0; j < dim; j++)
+        	printf("%c  ", jdvAux[i][j].situacao);
+        printf("\n");
+	} 
+}
+
 // -----------FUNCOES DE VALIDACOES-----------
 int validarDim(int dimMundo){
 	if(dimMundo < 10 || dimMundo > 60){
@@ -61,27 +77,11 @@ int retirarCel(int linhas, int colunas, int dim) {
         escolha = toupper(escolha); //transforma a entrada em caixa alta para facilitar a validacao
 
         if (escolha == 'S') {
-	        printf("A celula %d%d foi removida do mundo.", linhas,colunas);
+	        printf("A celula %d %d foi removida do mundo.", linhas,colunas);
             return 1; // celula removida do mundo
         } 
     }
     return 0; 
-}
-int validarCoordenadas(){
-	
-	do{
-		perguntarCoordenadas();
-		if (linhas == dim && colunas == dim){
-			return -1;
-		}
-		if ((linhas < 0 || linhas >= dim) || (colunas < 0 || colunas >= dim)) {
-            printf("Coordenada invalida! Tente novamente.\n");  // Exibe a mensagem de erro
-        } else {
-        	mostrarInfoVizinhos(linhas,colunas);
-            return 0;  // Coordenadas validas
-        }
-	}while(1);
-        
 }
 
 //-----------INTERACOES COM JOGADOR-----------
@@ -105,23 +105,6 @@ void perguntarCoordenadas() {
     printf("\n");
     limparBuffer();
 }
-
-int perguntarCelulasMortas() {
-	
-    char escolha;
-    printf("Deseja mostrar as celulas mortas ao redor? (S/N): ");
-    scanf(" %c", &escolha);
-    
-    escolha = toupper(escolha);
-    
-	if(escolha == 'S'){
-		return 1;
-	}else{
-		return -1;
-	}
-    return 0;
-    
-}
 //--------------FUNCIONALIDADES DO MENU------------
 
 int menu(){
@@ -131,7 +114,6 @@ int menu(){
     printf("1 - Apresentar Mapa\n");
     printf("2 - Limpar Mapa\n");
     printf("3 - Incluir celula / excluir celulas\n");
-	printf("4 - Mostrar/Esconder celulas vizinhas mortas\n");
     printf("0 - Sair\n");  
     printf("=============================\n");
     printf("Escolha uma opcao: ");
