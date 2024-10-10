@@ -156,16 +156,41 @@ void alterarViz(bool *viz){
 	*viz = !(*viz);
 }
 
-void mostrarVizinhos(bool viz){
-	if(viz == true){
-		for(int i = 0; i < dim; i++){
-			for(int j = 0; j < dim; j++){
-				jdvMatriz[i][j].situacao = jdvAux[i][j].situacao;
-			}
-		}
-	}
-}
+//void mostrarVizinhos(bool viz) {
+//    if (viz == true) {
+//        for (int i = 0; i < dim; i++) {
+//            for (int j = 0; j < dim; j++) {
+//                // Apenas altera se a célula não estiver viva
+//                if (jdvMatriz[i][j].situacao != 'O') {
+//                    jdvMatriz[i][j].situacao = jdvAux[i][j].situacao;  // Marca os vizinhos
+//                }
+//            }
+//        }
+//    }
+//}
+void mostrarVizinhos(bool viz) {
+	
+    if (viz == true) {
+        printf("\t"); 
+        for (int j = 0; j < dim; j++) {
+            printf("%02d  ", j);
+        }
+        printf("\n\n"); /
 
+        for (int i = 0; i < dim; i++) {
+            printf("%02d\t", i); 
+
+            for (int j = 0; j < dim; j++) {
+                if (jdvMatriz[i][j].situacao == 'O') {
+                    printf("O  "); // mostra as celulas vivas
+                } else {
+                    printf("%c  ", jdvAux[i][j].situacao); // mostra as celulas mortas guardadas na auxiliar
+                }
+            }
+            printf("\n");
+        }
+    }
+}
 
 
 //---------FUNCIONALIDADES DO MENU---------
@@ -203,9 +228,10 @@ void jogarMenu(){
                 mostrarMatriz(dim);
                 break;
 			case 4:
+				limparTela();
 				alterarViz(&viz);
 				mostrarVizinhos(viz);
-				mostrarMatrizAux(dim);
+//     			mostrarMatrizAux(dim); //so salva os mortos entao nao pode ser mostrada apenas usada em outras funcoes(por enquanto)
 				break;
             case 0:
                 interacoesMenu(opcao);

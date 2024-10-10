@@ -12,19 +12,19 @@ Nome dos integrantes:
 
 #include "JVida_BGLL_Projeto_View.h"
 
-void mostrarInfoVizinhos(int l, int c){
-	int qtdV = jdvMatriz[l][c].qtdVizinhos;
-	for(int i = 0; i < qtdV; i++){
-		printf("linha %d\n", jdvMatriz[l][c].infoVizinhos[i].linha);
-		printf("coluna %d\n", jdvMatriz[l][c].infoVizinhos[i].coluna);
-		printf("situacao %c\n", jdvMatriz[l][c].infoVizinhos[i].situacao);
-		printf("\n");	
-	}
-}
+//void mostrarInfoVizinhos(int l, int c){
+//	int qtdV = jdvMatriz[l][c].qtdVizinhos;
+//	for(int i = 0; i < qtdV; i++){
+//		printf("linha %d\n", jdvMatriz[l][c].infoVizinhos[i].linha);
+//		printf("coluna %d\n", jdvMatriz[l][c].infoVizinhos[i].coluna);
+//		printf("situacao %c\n", jdvMatriz[l][c].infoVizinhos[i].situacao);
+//		printf("\n");	
+//	}
+//}
 
 void mostrarMatriz(int dim){
 	limparTela();
-	mostrarInfoVizinhos(linhas,colunas);
+//	mostrarInfoVizinhos(linhas,colunas);
 	printf("\t");
     for (int j = 0; j < dim; j++)
       printf("%02d ", j);
@@ -40,7 +40,7 @@ void mostrarMatriz(int dim){
 
 void mostrarMatrizAux(int dim){
 	//limparTela();
-	mostrarInfoVizinhos(linhas,colunas);
+//	mostrarInfoVizinhos(linhas,colunas);
 	printf("\t");
     for (int j = 0; j < dim; j++)
       printf("%02d ", j);
@@ -114,6 +114,7 @@ int menu(){
     printf("1 - Apresentar Mapa\n");
     printf("2 - Limpar Mapa\n");
     printf("3 - Incluir celula / excluir celulas\n");
+    printf("4 - Mostrar/Esconder celulas mortas\n");
     printf("0 - Sair\n");  
     printf("=============================\n");
     printf("Escolha uma opcao: ");
