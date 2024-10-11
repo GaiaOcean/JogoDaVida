@@ -168,29 +168,68 @@ void alterarViz(bool *viz){
 //        }
 //    }
 //}
+
+//printf("\t");
+//    for (int j = 0; j < dim; j++)
+//      printf("%02d ", j);
+//    printf("\n\n");
+//	
+//	for (int i = 0; i < dim; i++){
+//		printf("%02d\t", i);
+//      	for (int j = 0; j < dim; j++)
+//        	printf("%c  ", jdvAux[i][j].situacao);
+//        printf("\n");
+//	} 
+//}
+//
+//void mostrarVizinhos(bool viz) {
+//    if (viz == true) {
+//        printf("\t"); 
+//        for (int j = 0; j < dim; j++) {
+//            printf("%02d  ", j);  // Exibe o índice das colunas com 2 dígitos e espaçamento
+//        }
+//        printf("\n\n"); 
+//
+//        for (int i = 0; i < dim; i++) {
+//            printf("%02d\t", i);  // Exibe o índice da linha com 2 dígitos e espaçamento
+//            for (int j = 0; j < dim; j++) {
+//                if (jdvMatriz[i][j].situacao == 'O') {
+//                    printf("O  ");  // Exibe as células vivas (O)
+//                } else {
+//                    printf("%c  ", jdvAux[i][j].situacao);  // Exibe as células mortas da matriz auxiliar
+//                }
+//            }
+//            printf("\n");
+//        }
+//    }
+//}
+
 void mostrarVizinhos(bool viz) {
-	
     if (viz == true) {
-        printf("\t"); 
+       
+        printf("\t  "); 
         for (int j = 0; j < dim; j++) {
-            printf("%02d  ", j);
+            printf("%02d ", j);  
         }
-        printf("\n\n"); /
+        printf("\n\n");
 
+       
         for (int i = 0; i < dim; i++) {
-            printf("%02d\t", i); 
-
+            printf("%02d\t  ", i); 
             for (int j = 0; j < dim; j++) {
                 if (jdvMatriz[i][j].situacao == 'O') {
-                    printf("O  "); // mostra as celulas vivas
+                    printf("O  ");  // celula viva
                 } else {
-                    printf("%c  ", jdvAux[i][j].situacao); // mostra as celulas mortas guardadas na auxiliar
+                    printf("%c  ", jdvAux[i][j].situacao);   // Celula morta 
                 }
             }
-            printf("\n");
+            printf("\n");  
         }
     }
 }
+
+
+
 
 
 //---------FUNCIONALIDADES DO MENU---------
