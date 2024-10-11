@@ -156,55 +156,10 @@ void alterarViz(bool *viz){
 	*viz = !(*viz);
 }
 
-//void mostrarVizinhos(bool viz) {
-//    if (viz == true) {
-//        for (int i = 0; i < dim; i++) {
-//            for (int j = 0; j < dim; j++) {
-//                // Apenas altera se a célula não estiver viva
-//                if (jdvMatriz[i][j].situacao != 'O') {
-//                    jdvMatriz[i][j].situacao = jdvAux[i][j].situacao;  // Marca os vizinhos
-//                }
-//            }
-//        }
-//    }
-//}
 
-//printf("\t");
-//    for (int j = 0; j < dim; j++)
-//      printf("%02d ", j);
-//    printf("\n\n");
-//	
-//	for (int i = 0; i < dim; i++){
-//		printf("%02d\t", i);
-//      	for (int j = 0; j < dim; j++)
-//        	printf("%c  ", jdvAux[i][j].situacao);
-//        printf("\n");
-//	} 
-//}
-//
-//void mostrarVizinhos(bool viz) {
-//    if (viz == true) {
-//        printf("\t"); 
-//        for (int j = 0; j < dim; j++) {
-//            printf("%02d  ", j);  // Exibe o índice das colunas com 2 dígitos e espaçamento
-//        }
-//        printf("\n\n"); 
-//
-//        for (int i = 0; i < dim; i++) {
-//            printf("%02d\t", i);  // Exibe o índice da linha com 2 dígitos e espaçamento
-//            for (int j = 0; j < dim; j++) {
-//                if (jdvMatriz[i][j].situacao == 'O') {
-//                    printf("O  ");  // Exibe as células vivas (O)
-//                } else {
-//                    printf("%c  ", jdvAux[i][j].situacao);  // Exibe as células mortas da matriz auxiliar
-//                }
-//            }
-//            printf("\n");
-//        }
-//    }
-//}
 
 void mostrarVizinhos(bool viz) {
+	
     if (viz == true) {
        
         printf("\t  "); 
@@ -225,7 +180,10 @@ void mostrarVizinhos(bool viz) {
             }
             printf("\n");  
         }
-    }
+    }else{
+    	mostrarMatriz(dim);// se viz for false, nao mostra as celulas mortas
+	}
+
 }
 
 
