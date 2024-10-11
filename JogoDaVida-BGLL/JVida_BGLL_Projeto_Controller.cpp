@@ -166,7 +166,7 @@ void mostrarVizinhos(bool viz) {
 	
     if (viz == true) {
        
-        printf("\t  "); 
+        printf("\t"); 
         for (int j = 0; j < dim; j++) {
             printf("%02d ", j);  
         }
@@ -174,7 +174,7 @@ void mostrarVizinhos(bool viz) {
 
        
         for (int i = 0; i < dim; i++) {
-            printf("%02d\t  ", i); 
+            printf("%02d\t", i); 
             for (int j = 0; j < dim; j++) {
                 if (jdvMatriz[i][j].situacao == 'O') {
                     printf("O  ");  // celula viva
@@ -189,9 +189,6 @@ void mostrarVizinhos(bool viz) {
 	}
 
 }
-
-
-
 
 
 //---------FUNCIONALIDADES DO MENU---------
