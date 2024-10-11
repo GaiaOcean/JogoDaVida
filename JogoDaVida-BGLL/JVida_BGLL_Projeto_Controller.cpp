@@ -31,6 +31,21 @@ void limparMapa(int dim) {
         }
     }
 }
+//void tornarVazio(int l, int c) {
+//    int qtdV = jdvMatriz[l][c].qtdVizinhos; // Quantidade de vizinhos
+//    int lV;
+//    int lC;
+//
+//    for (int i = 0; i < qtdV; i++) {
+//        lV = jdvMatriz[l][c].infoVizinhos[i].linha; // Linha do vizinho
+//        lC = jdvMatriz[l][c].infoVizinhos[i].coluna; // Coluna do vizinho
+//
+//        // Verifica se a celula vizinha nao e viva 
+//        if (jdvMatriz[lV][lC].situacao != 'O') { 
+//            jdvMatriz[lV][lC].situacao = '.'; // se ela nao for viva, torna em vazia
+//        }
+//    }
+//}
 void tornarVazio(int l, int c) {
     int qtdV = jdvMatriz[l][c].qtdVizinhos; // Quantidade de vizinhos
     int lV;
@@ -43,6 +58,7 @@ void tornarVazio(int l, int c) {
         // Verifica se a celula vizinha nao e viva 
         if (jdvMatriz[lV][lC].situacao != 'O') { 
             jdvMatriz[lV][lC].situacao = '.'; // se ela nao for viva, torna em vazia
+            jdvAux[lV][lC].situacao = '.';// torna vazia as celulas mortas da matriz auxiliar tambem
         }
     }
 }
