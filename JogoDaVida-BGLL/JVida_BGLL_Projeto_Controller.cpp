@@ -30,19 +30,22 @@ void limparMapa(int dim) {
         }
     }
 }
+void tornarVazio(int l, int c) {
+    int qtdV = jdvMatriz[l][c].qtdVizinhos; // Quantidade de vizinhos
+    int lV;
+    int lC;
 
-void tornarVazio(int l, int c){
-	int qtdV = jdvMatriz[l][c].qtdVizinhos;
-	int lV;
-	int lC;
-	
-	for(int i = 0; i < qtdV; i++){
-		lV = jdvMatriz[l][c].infoVizinhos[i].linha;
-		lC = jdvMatriz[l][c].infoVizinhos[i].coluna;
-		
-		jdvMatriz[lV][lC].situacao = '.';
-	}
+    for (int i = 0; i < qtdV; i++) {
+        lV = jdvMatriz[l][c].infoVizinhos[i].linha; // Linha do vizinho
+        lC = jdvMatriz[l][c].infoVizinhos[i].coluna; // Coluna do vizinho
+
+        // Verifica se a celula vizinha nao e viva 
+        if (jdvMatriz[lV][lC].situacao != 'O') { 
+            jdvMatriz[lV][lC].situacao = '.'; // se ela nao for viva, torna em vazia
+        }
+    }
 }
+
 
 //verifica as possibilidades de acao para a coordenada informada, de forma que,
 //se a coordenada estiver vazia, ela e' ocupada e se estiver ocupada, pode ser esvaziada
@@ -56,8 +59,8 @@ int inserirOuRetirarCel(int linhas, int colunas, int dim) {
     }
     else if (jdvMatriz[linhas][colunas].situacao == 'O') {
     	 if(retirarCel(linhas, colunas, dim) == 1){
-        	jdvMatriz[linhas][colunas].situacao = '.';
-			tornarVazio(linhas, colunas);
+        	jdvMatriz[linhas][colunas].situacao = '.';	
+            tornarVazio(linhas, colunas);
         	return 2;  // celula removida
         }
     }
