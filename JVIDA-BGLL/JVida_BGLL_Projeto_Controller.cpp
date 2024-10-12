@@ -32,28 +32,44 @@ void limparMapa(int dim) {
 }
 
 void tornarVazio(int l, int c){
-	int qtdV = jdvMatriz[l][c].qtdVizinhos;
-	int lV;
-	int lC;
-	
-	for(int i = 0; i < qtdV; i++){
-		lV = jdvMatriz[l][c].infoVizinhos[i].linha;
-		lC = jdvMatriz[l][c].infoVizinhos[i].coluna;
-		
-		jdvMatriz[lV][lC].situacao = '.';
-	}
+	int qtdV = jdvMatriz[l][c].qtdVizinhos; // Quantidade de vizinhos
+    int lV;
+    int lC;
+
+    for (int i = 0; i < qtdV; i++) {
+        lV = jdvMatriz[l][c].infoVizinhos[i].linha; // Linha do vizinho
+        lC = jdvMatriz[l][c].infoVizinhos[i].coluna; // Coluna do vizinho
+        
+
+        // Verifica se a celula vizinha nao e viva 
+        if (jdvMatriz[lV][lC].situacao != 'O' && jdvMatriz[lV][lC].qtdVizVivos == 1) { //Somente torna vazia as celulas que sao vizinhas-mortas APENAS da celula que esta sendo retirada
+            jdvMatriz[lV][lC].situacao = '.'; // se ela nao for viva, torna em vazia
+        }
+        
+        jdvMatriz[lV][lC].qtdVizVivos = jdvMatriz[lV][lC].qtdVizVivos - 1;
+    }  
+}
+
+//Em casos de retirada de uma celula viva que e' vizinha de outra celula viva, o local da celula viva que foi excluida
+//deve se tornar 'vizinha-morta' ao inves de 'morta'
+void tornarVizinho(int l, int c){
+	if(verificarOcupacao(l,c) == 1)
+    	jdvMatriz[l][c].situacao = '+';
+    else
+        jdvMatriz[l][c].situacao = '.';
 }
 
 //verifica as possibilidades de acao para a coordenada informada, de forma que,
 //se a coordenada estiver vazia, ela e' ocupada e se estiver ocupada, pode ser esvaziada
 int inserirOuRetirarCel(int linhas, int colunas, int dim) {
     if (jdvMatriz[linhas][colunas].situacao == '.' || jdvMatriz[linhas][colunas].situacao == '+') {
-        gerarSeres(linhas, colunas, dim);  
+        gerarSeres(linhas, colunas, dim);
+        infoVizinhos(linhas,colunas);
         return 1;  // celula inserida
     }
     else if (jdvMatriz[linhas][colunas].situacao == 'O') {
     	 if(retirarCel(linhas, colunas, dim) == 1){
-        	jdvMatriz[linhas][colunas].situacao = '.';
+    	 	tornarVizinho(linhas, colunas);
 			tornarVazio(linhas, colunas);
         	return 2;  // celula removida
         }
@@ -62,94 +78,105 @@ int inserirOuRetirarCel(int linhas, int colunas, int dim) {
 }
 
 
+//Verifica se entre os vizinhos de uma celula esta uma celula viva
+int verificarOcupacao(int l, int c){
+	int qtdV = jdvMatriz[l][c].qtdVizinhos;
+	int nL, nC;
+	
+	for(int i = 0; i < qtdV; i++){
+		nL = jdvMatriz[l][c].infoVizinhos[i].linha;
+		nC = jdvMatriz[l][c].infoVizinhos[i].coluna;
+		
+		if(jdvMatriz[nL][nC].situacao == 'O')
+			return 1;
+	}
+	
+	return 0;
+}
 
-void guardarInfoVizinhos(int l, int c){
-	int nL = l - 1;
-	int nC = c - 1;
+//Altera e armazena as informacoes das celulas vizinhas a uma celula no momento em que ela e' incluida no mundo
+void guardarInfoVizinhos(int l, int c, int nC, int nL, int qtdVizinhos){
+	jdvMatriz[l][c].qtdVizinhos = qtdVizinhos + 1;
+	jdvMatriz[l][c].infoVizinhos[qtdVizinhos].coluna = nC;
+	jdvMatriz[l][c].infoVizinhos[qtdVizinhos].linha = nL;
+	jdvMatriz[nL][nC].qtdVizVivos = jdvMatriz[nL][nC].qtdVizVivos + 1;
+	if(jdvMatriz[nL][nC].situacao != 'O'){
+		jdvMatriz[nL][nC].situacao = '+';
+	}
+}
+
+//Realiza as validacoes necessarias para determinar uma celula como vizinha morta
+void infoVizinhos(int l, int c){
+	int nL = l - 1; //Inicia com a linha acima da coordenada informada
+	int nC = c - 1; //Inicia com a coluna a esquerda da coordenada informada
 	int qtdVizinhos = 0;
 	
+	//Verifica se a linha acima da coordenada informada e' valida 
 	if(nL >= 0){
+		//Caso seja, verifica se a coluna, nas 3 posicoes possiveis, e' valida, se for, altera sua situacao para 'vizinha-morta'
 		for(int i = 1; i <= 3; i++){
-			if(nC >= 0 || nC >= dim){
-				jdvMatriz[l][c].qtdVizinhos = qtdVizinhos + 1;
-				jdvMatriz[l][c].infoVizinhos[qtdVizinhos].coluna = nC;
-				jdvMatriz[l][c].infoVizinhos[qtdVizinhos].linha = nL;
-				if(jdvMatriz[nL][nC].situacao != 'O'){
-					jdvMatriz[nL][nC].situacao = '+';
-					jdvMatriz[l][c].infoVizinhos[qtdVizinhos].situacao = jdvMatriz[nL][nC].situacao;
-				}
+			if(nC >= 0 && nC < dim){
+				guardarInfoVizinhos(l,c,nC,nL,qtdVizinhos);
 				qtdVizinhos = qtdVizinhos + 1;
 			}
-			nC = nC + 1;
+			nC = nC + 1; //a cada rodada do loop, segue uma coluna para a direita ate que as 3 possibilidades de colunas vizinhas sejam verificadas
 		}
 	}
 	
-	
-	nL = l + 1;
+	nL = l + 1; //linha abaixo da coordenada informada
 	nC = c - 1;
 	
+	//Em seguida, realiza as mesmas verificacoes nas celulas vizinhas da linha abaixo da coordenada, se esta existir
 	if(nL < dim){
 		for(int i = 1; i <= 3; i++){
-			if(nC >= 0){
-				jdvMatriz[l][c].qtdVizinhos = qtdVizinhos + 1;
-				jdvMatriz[l][c].infoVizinhos[qtdVizinhos].coluna = nC;
-				jdvMatriz[l][c].infoVizinhos[qtdVizinhos].linha = nL;
-				if(jdvMatriz[nL][nC].situacao != 'O'){
-					jdvMatriz[nL][nC].situacao = '+';
-					jdvMatriz[l][c].infoVizinhos[qtdVizinhos].situacao = jdvMatriz[nL][nC].situacao;
-				}
+			if(nC >= 0 && nC < dim){
+				guardarInfoVizinhos(l,c,nC,nL,qtdVizinhos);
 				qtdVizinhos = qtdVizinhos + 1;
 			}
 			nC = nC + 1;
 		}
 	}
 	
-	nL = l;
-	nC = c + 1;
+	//Apos verificar ambas as linhas,
+	//verifica se as celulas imediatamente a esquerda e a direita da coordenada existem e, se sim, altera sua situacao para 'vizinha-morta'
+	
+	nL = l; //linha da coordenada
+	nC = c + 1; //coluna a direita da coordenada
 	
 	if(nC < dim){
-		jdvMatriz[l][c].qtdVizinhos = qtdVizinhos + 1;
-		jdvMatriz[l][c].infoVizinhos[qtdVizinhos].coluna = nC;
-		jdvMatriz[l][c].infoVizinhos[qtdVizinhos].linha = nL;
-		if(jdvMatriz[nL][nC].situacao != 'O'){
-			jdvMatriz[nL][nC].situacao = '+';
-			jdvMatriz[l][c].infoVizinhos[qtdVizinhos].situacao = jdvMatriz[nL][nC].situacao;
-		}
+		guardarInfoVizinhos(l,c,nC,nL,qtdVizinhos);
 		qtdVizinhos = qtdVizinhos + 1;
 	}
 	
-	nC = c - 1;
+	nC = c - 1;//coluna a esquerda
 	
 	if(nC >= 0){
-		jdvMatriz[l][c].qtdVizinhos = qtdVizinhos + 1;
-		jdvMatriz[l][c].infoVizinhos[qtdVizinhos].coluna = nC;
-		jdvMatriz[l][c].infoVizinhos[qtdVizinhos].linha = nL;
-		if(jdvMatriz[nL][nC].situacao != 'O'){
-			jdvMatriz[nL][nC].situacao = '+';
-			jdvMatriz[l][c].infoVizinhos[qtdVizinhos].situacao = jdvMatriz[nL][nC].situacao;
-		}
+		guardarInfoVizinhos(l,c,nC,nL,qtdVizinhos);
 		qtdVizinhos = qtdVizinhos + 1;
 	}
+}
+
+void alterarViz(){
+	viz = !(viz);
 }
 
 int validarCoordenadas(){
 	
 	do{
 		perguntarCoordenadas();
-		if (linhas == dim && colunas == dim){
-			return -1;
-		}
+		if(linhas == dim && colunas == dim)
+			return 0;
+		
 		if ((linhas < 0 || linhas >= dim) || (colunas < 0 || colunas >= dim)) {
-            printf("Coordenada invalida! Tente novamente.\n");  // Exibe a mensagem de erro
+			mensagemCoordenada(-1);
         } else {
-        	guardarInfoVizinhos(linhas,colunas);
-            return 0;  // Coordenadas validas
+        	inserirOuRetirarCel(linhas, colunas, dim);
+        	mensagemCoordenada(0);
+        	return 1;
         }
 	}while(1);
         
 }
-
-
 
 //---------FUNCIONALIDADES DO MENU---------
 void jogarMenu(){
@@ -157,9 +184,12 @@ void jogarMenu(){
 	int opcao;
  	
 	inicializarMatriz60x60();
+	inicializarMatrizAux();
     perguntarDim();
     limparTela();
  	mostrarMatriz(dim);
+	viz = true;
+
  	do{
  		
  		opcao = menu();
@@ -176,12 +206,16 @@ void jogarMenu(){
             case 3:
                 while(linhas != dim || colunas != dim){    
                     mostrarMatriz(dim);
-                    validarCoordenadas();
-                    inserirOuRetirarCel(linhas, colunas, dim);
+                	validarCoordenadas();
                 }
                 linhas = 0, colunas = 0;
                 mostrarMatriz(dim);
                 break;
+			case 4:
+				limparTela();
+				alterarViz();
+				mostrarMatriz(dim);
+				break;
             case 0:
                 interacoesMenu(opcao);
 				exit(0);

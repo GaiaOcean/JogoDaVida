@@ -12,19 +12,21 @@ Nome dos integrantes:
 
 #include "JVida_BGLL_Projeto_View.h"
 
-void mostrarInfoVizinhos(int l, int c){
-	int qtdV = jdvMatriz[l][c].qtdVizinhos;
-	for(int i = 0; i < qtdV; i++){
-		printf("linha %d\n", jdvMatriz[l][c].infoVizinhos[i].linha);
-		printf("coluna %d\n", jdvMatriz[l][c].infoVizinhos[i].coluna);
-		printf("situacao %c\n", jdvMatriz[l][c].infoVizinhos[i].situacao);
-		printf("\n");	
-	}
-}
+//void mostrarInfoVizinhos(int l, int c){
+//	int qtdV = jdvMatriz[l][c].qtdVizinhos;
+//	for(int i = 0; i < qtdV; i++){
+//		printf("linha %d\n", jdvMatriz[l][c].infoVizinhos[i].linha);
+//		printf("coluna %d\n", jdvMatriz[l][c].infoVizinhos[i].coluna);
+//		printf("viz vivos %d\n", jdvMatriz[jdvMatriz[l][c].infoVizinhos[i].linha][jdvMatriz[l][c].infoVizinhos[i].coluna].qtdVizVivos);
+//		printf("\n");	
+//	}
+//}
 
 void mostrarMatriz(int dim){
 	limparTela();
-	mostrarInfoVizinhos(linhas,colunas);
+	printf("\n============================= JOGO DA VIDA =============================\n\n");
+	printf("  '.' - celula morta/vazia | 'O' - celula viva | '+' - vizinha-morta\n\n");
+	
 	printf("\t");
     for (int j = 0; j < dim; j++)
       printf("%02d ", j);
@@ -32,8 +34,13 @@ void mostrarMatriz(int dim){
 	
 	for (int i = 0; i < dim; i++){
 		printf("%02d\t", i);
-      	for (int j = 0; j < dim; j++)
-        	printf("%c  ", jdvMatriz[i][j].situacao);
+      	for (int j = 0; j < dim; j++){
+      		if(viz == false && jdvMatriz[i][j].situacao == '+')
+      			printf(".  ");
+			else
+      			printf("%c  ", jdvMatriz[i][j].situacao);
+		}
+        	
         printf("\n");
 	} 
 }
@@ -47,6 +54,15 @@ int validarDim(int dimMundo){
 	
 	dim = dimMundo;
 	return 1;
+}
+
+int mensagemCoordenada(int status){
+	
+	if(status == -1)
+		printf("Coordenada invalida. Tenta novamente\n");
+	else
+		printf("Celula adicionada.\n");
+        
 }
 
 int retirarCel(int linhas, int colunas, int dim) {
@@ -73,7 +89,7 @@ int retirarCel(int linhas, int colunas, int dim) {
 void perguntarDim(){
 	int dimMundo;
 	do{
-		printf("\n======= JOGO DA VIDA =======\n");
+		printf("\n============================= JOGO DA VIDA =============================\n\n");
 		printf("Digite a dimensao do mundo(de 10 a 60) [0 para sair do jogo]: " );
 		scanf("%d", &dimMundo);
 		
@@ -84,8 +100,8 @@ void perguntarDim(){
 }
 
 void perguntarCoordenadas() {
-    printf("Digite as coordenadas (x y) ou (%d %d para sair): ", dim, dim);
-    scanf("%d %d", &colunas, &linhas);
+    printf("\nDigite as coordenadas (x y) ou (%d %d para sair): ", dim, dim);
+    scanf("%d %d", &linhas, &colunas);
     printf("\n");
     limparBuffer();
 }
@@ -98,6 +114,7 @@ int menu(){
     printf("1 - Apresentar Mapa\n");
     printf("2 - Limpar Mapa\n");
     printf("3 - Incluir celula / excluir celulas\n");
+    printf("4 - Mostrar/Esconder vizinhas-mortas\n");
     printf("0 - Sair\n");  
     printf("=============================\n");
     printf("Escolha uma opcao: ");

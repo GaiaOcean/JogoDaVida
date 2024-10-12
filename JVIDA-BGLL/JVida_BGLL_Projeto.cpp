@@ -15,8 +15,6 @@ A etapa 1 consiste em apresentar um mapa/mundo(no maximo 60x60) e permitir que o
 #include "JVida_BGLL_Projeto_Controller.cpp"
 
 int main(){
-  
   jogarMenu();
-  
   return 0;
 }

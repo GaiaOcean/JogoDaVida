@@ -25,3 +25,4 @@ int menu();
 void interacoesMenu(int opcao);
 void limparBuffer();
 void limparTela();
+int mensagemCoordenada(int status);

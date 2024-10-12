@@ -21,3 +21,8 @@ void gerarSeres(int linhas, int colunas,int dim);
 int inserirOuRetirarCel(int linhas, int colunas, int dim);
 void jogarMenu();
 void limparMapa(int dim);
+void guardarInfoVizinhos(int l, int c, int nC, int nL, int qtdVizinhos);
+void infoVizinhos(int l, int c);
+int verificarOcupacao(int l, int c);
+void tornarVizinho(int l, int c);
+int validarCoordenadas();
