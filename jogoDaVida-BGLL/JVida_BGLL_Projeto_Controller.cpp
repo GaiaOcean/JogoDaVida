@@ -218,7 +218,7 @@ int sobrevivencia(int l, int c) {
 int morteFaltaComida(int l,int c){
 	
 	if(qtdVizinhosVivos(l,c) >= 4){
-		jdvAux[l][c].situacao = '.';
+		jdvAux[l][c].situacao = '+';
 		return 1;// a celula morre por falta de comida
 	}
 	return 0; //nenhuma alteracao
@@ -226,9 +226,12 @@ int morteFaltaComida(int l,int c){
 // Um ser vivo com 0 ou 1 vizinhos morre de solidao.
 int morteSolidao(int l, int c){
 	
-	if(qtdVizinhosVivos(l,c) == 0  ||qtdVizinhosVivos(l,c) == 1){
+	if(qtdVizinhosVivos(l,c) == 0){ 
 		jdvAux[l][c].situacao = '.';
 		return 1;// a celula morre por falta de amigos
+	}else if(qtdVizinhosVivos(l,c) == 1){
+		jdvAux[l][c].situacao = '+';
+		return 1;
 	}
 	return 0;//nenhuma alteracao, a celula continua viva
 }
