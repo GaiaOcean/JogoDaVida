@@ -208,7 +208,12 @@ int sobrevivencia(int l, int c) {
     if (qtdVivos == 2 || qtdVivos == 3) {
         return 1;  // a celula sobrevive, entao nao precisa mudar nada
     } else {
-        jdvAux[l][c].situacao = '.';  // A celula morre
+    	if( qtdVivos == 1){
+    		jdvAux[l][c].situacao = '+';
+		}else if(qtdVivos == 0){
+			jdvAux[l][c].situacao = '.';
+		}
+//        jdvAux[l][c].situacao = '.';  // A celula morre
         return 0;  // a celula não sobreviveu
     }
 }
