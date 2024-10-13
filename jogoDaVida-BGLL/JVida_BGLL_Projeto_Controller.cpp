@@ -264,7 +264,7 @@ void proximaGeracao(int dim) {
                 } else {
                     jdvAux[i][j].situacao = 'O'; // se sobrevive, copia o estado para a matriz auxiliar
                 }
-            } else if (jdvMatriz[i][j].situacao == '.') { // Verifica se uma nova celula deve nascer
+            } else if (jdvMatriz[i][j].situacao == '+') { // Verifica se uma nova celula deve nascer
                 if (reproducao(i, j) == 1) {
                     jdvAux[i][j].situacao = 'O';
                 }
