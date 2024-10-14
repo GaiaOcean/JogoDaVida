@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 1
-08/10/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 2
+14/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -8,19 +8,12 @@ Nome dos integrantes:
 - Grazielle Batista de Almeida
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
+
+O View.cpp contem todas as interacoes com o usuario
+
 */
 
 #include "JVida_BGLL_Projeto_View.h"
-
-//void mostrarInfoVizinhos(int l, int c){
-//	int qtdV = jdvMatriz[l][c].qtdVizinhos;
-//	for(int i = 0; i < qtdV; i++){
-//		printf("linha %d\n", jdvMatriz[l][c].infoVizinhos[i].linha);
-//		printf("coluna %d\n", jdvMatriz[l][c].infoVizinhos[i].coluna);
-//		printf("viz vivos %d\n", jdvMatriz[jdvMatriz[l][c].infoVizinhos[i].linha][jdvMatriz[l][c].infoVizinhos[i].coluna].qtdVizVivos);
-//		printf("\n");	
-//	}
-//}
 
 void mostrarMatriz(int dim){
 	limparTela();
@@ -62,7 +55,7 @@ int mensagemCoordenada(int status){
 		printf("Coordenada invalida. Tenta novamente\n");
 	else
 		printf("Celula adicionada.\n");
-        
+    return 1;
 }
 
 int retirarCel(int linhas, int colunas, int dim) {

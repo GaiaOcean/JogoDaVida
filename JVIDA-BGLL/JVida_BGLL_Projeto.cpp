@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 1
-08/10/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 2
+14/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -9,7 +9,7 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-A etapa 1 consiste em apresentar um mapa/mundo(no maximo 60x60) e permitir que o jogador incula ou retire uma celula e limpe o mapa.
+A etapa 2 consiste em permitir que o jogador veja as celulas vizinhas-mortas quando quiser.
 */
 
 #include "JVida_BGLL_Projeto_Controller.cpp"

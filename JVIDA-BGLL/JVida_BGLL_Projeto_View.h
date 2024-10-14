@@ -1,7 +1,6 @@
 /*
-/*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 1
-08/10/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 2
+14/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -9,6 +8,9 @@ Nome dos integrantes:
 - Grazielle Batista de Almeida
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
+
+O Controller.h contem os prototipos das funcoes presentes no View.cpp
+
 */
 
 #include "JVida_BGLL_Projeto_Model.h"

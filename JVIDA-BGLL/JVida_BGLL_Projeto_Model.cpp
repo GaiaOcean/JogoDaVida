@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 1
-08/10/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 2
+14/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -8,6 +8,9 @@ Nome dos integrantes:
 - Grazielle Batista de Almeida
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
+
+O Model.cpp inicializa as matrizes, e contem as definicoes das estruturas e variaveis globais
+
 */
 
 #include "JVida_BGLL_Projeto_Model.h"
