@@ -28,7 +28,7 @@ void mostrarMatriz(int dim){
 	for (int i = 0; i < dim; i++){
 		printf("%02d\t", i);
       	for (int j = 0; j < dim; j++){
-      		if(viz == false && jdvMatriz[i][j].situacao == '+')
+      		if(!viz && jdvMatriz[i][j].situacao == '+')
       			printf(".  ");
 			else
       			printf("%c  ", jdvMatriz[i][j].situacao);

@@ -105,10 +105,9 @@ void guardarInfoVizinhos(int l, int c, int nC, int nL, int qtdVizinhos){
 	jdvMatriz[nL][nC].qtdVizVivos = jdvMatriz[nL][nC].qtdVizVivos + 1;
 	if(jdvMatriz[nL][nC].situacao != 'O'){
 		jdvMatriz[nL][nC].situacao = '+';
-	}
+    }
 }
 
-//Realiza as validacoes necessarias para determinar uma celula como vizinha morta
 void infoVizinhos(int l, int c){
 	int nL = l - 1; //Inicia com a linha acima da coordenada informada
 	int nC = c - 1; //Inicia com a coluna a esquerda da coordenada informada
@@ -160,7 +159,7 @@ void infoVizinhos(int l, int c){
 }
 
 void alterarViz(){
-	viz = !(viz);
+	viz = !viz;
 }
 
 int validarCoordenadas(){
@@ -191,7 +190,7 @@ void jogarMenu(){
     perguntarDim();
     limparTela();
  	mostrarMatriz(dim);
-	viz = true;
+	viz = false;
 
  	do{
  		
