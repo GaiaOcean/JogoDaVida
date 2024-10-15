@@ -1,6 +1,6 @@
 /*
 JVIDA-BGLL - Projeto Jogo da Vida - Etapa 2
-14/10/2024 - Grupo:BGLL
+15/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -103,7 +103,7 @@ void guardarInfoVizinhos(int l, int c, int nC, int nL, int qtdVizinhos){
 	jdvMatriz[l][c].infoVizinhos[qtdVizinhos].coluna = nC;
 	jdvMatriz[l][c].infoVizinhos[qtdVizinhos].linha = nL;
 	jdvMatriz[nL][nC].qtdVizVivos = jdvMatriz[nL][nC].qtdVizVivos + 1;
-	if(jdvMatriz[nL][nC].situacao != 'O'){
+	if(jdvMatriz[nL][nC].situacao == '.'){
 		jdvMatriz[nL][nC].situacao = '+';
     }
 }

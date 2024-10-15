@@ -1,6 +1,6 @@
 /*
 JVIDA-BGLL - Projeto Jogo da Vida - Etapa 2
-14/10/2024 - Grupo:BGLL
+15/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -13,7 +13,7 @@ O Controller.h contem os prototipos das funcoes presentes no Controller.cpp
 
 */
 
-#include "JVida_BGLL_Projeto_View.cpp"
+#include "JVida_BGLL_Projeto_View.cpp" 
 #include "JVida_BGLL_Projeto_Model.cpp"
 #include <stdlib.h>
 #include <stdio.h>

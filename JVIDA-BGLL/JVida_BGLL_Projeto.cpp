@@ -1,6 +1,6 @@
 /*
 JVIDA-BGLL - Projeto Jogo da Vida - Etapa 2
-14/10/2024 - Grupo:BGLL
+15/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
