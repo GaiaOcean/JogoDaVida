@@ -77,6 +77,8 @@ int mensagemCoordenada(int status){
 		printf("Coordenada invalida. Tenta novamente\n");
 	else
 		printf("Celula adicionada.\n");
+	
+	return 0;
         
 }
 

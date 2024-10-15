@@ -105,6 +105,16 @@ void guardarInfoVizinhos(int l, int c, int nC, int nL, int qtdVizinhos){
 	}
 }
 
+void guardarInfoVizinhosAux(int l, int c, int nC, int nL, int qtdVizinhos){
+	jdvAux[l][c].qtdVizinhos = qtdVizinhos + 1;
+	jdvAux[l][c].infoVizinhos[qtdVizinhos].coluna = nC;
+	jdvAux[l][c].infoVizinhos[qtdVizinhos].linha = nL;
+	jdvAux[nL][nC].qtdVizVivos = jdvMatriz[nL][nC].qtdVizVivos + 1;
+	if(jdvAux[nL][nC].situacao != 'O'){
+		jdvAux[nL][nC].situacao = '+';
+	}
+}
+
 //Realiza as validacoes necessarias para determinar uma celula como vizinha morta
 void infoVizinhos(int l, int c){
 	int nL = l - 1; //Inicia com a linha acima da coordenada informada
@@ -117,6 +127,7 @@ void infoVizinhos(int l, int c){
 		for(int i = 1; i <= 3; i++){
 			if(nC >= 0 && nC < dim){
 				guardarInfoVizinhos(l,c,nC,nL,qtdVizinhos);
+				guardarInfoVizinhosAux(l,c,nC,nL,qtdVizinhos);
 				qtdVizinhos = qtdVizinhos + 1;
 			}
 			nC = nC + 1; //a cada rodada do loop, segue uma coluna para a direita ate que as 3 possibilidades de colunas vizinhas sejam verificadas
@@ -131,6 +142,7 @@ void infoVizinhos(int l, int c){
 		for(int i = 1; i <= 3; i++){
 			if(nC >= 0 && nC < dim){
 				guardarInfoVizinhos(l,c,nC,nL,qtdVizinhos);
+				guardarInfoVizinhosAux(l,c,nC,nL,qtdVizinhos);
 				qtdVizinhos = qtdVizinhos + 1;
 			}
 			nC = nC + 1;
@@ -145,6 +157,7 @@ void infoVizinhos(int l, int c){
 	
 	if(nC < dim){
 		guardarInfoVizinhos(l,c,nC,nL,qtdVizinhos);
+		guardarInfoVizinhosAux(l,c,nC,nL,qtdVizinhos);
 		qtdVizinhos = qtdVizinhos + 1;
 	}
 	
@@ -152,6 +165,7 @@ void infoVizinhos(int l, int c){
 	
 	if(nC >= 0){
 		guardarInfoVizinhos(l,c,nC,nL,qtdVizinhos);
+		guardarInfoVizinhosAux(l,c,nC,nL,qtdVizinhos);
 		qtdVizinhos = qtdVizinhos + 1;
 	}
 }
@@ -260,7 +274,6 @@ void limparMatrizAux(int dim) {
 }
 
 void proximaGeracao(int dim) {
-	
     limparMatrizAux(dim);  
     
     for (int i = 0; i < dim; i++) {
@@ -272,16 +285,15 @@ void proximaGeracao(int dim) {
                 } else {
                     jdvAux[i][j].situacao = 'O'; // se sobrevive, copia o estado para a matriz auxiliar
                 }
-            } else if (jdvMatriz[i][j].situacao == '+' ||jdvMatriz[i][j].situacao == '.') { // Verifica se uma nova celula deve nascer
+            } else if (jdvMatriz[i][j].situacao == '+' || jdvMatriz[i][j].situacao == '.') { // Verifica se uma nova celula deve nascer
                 if (reproducao(i, j) == 1) {
                     jdvAux[i][j].situacao = 'O';
-                }else if(verificarOcupacao(linhas,colunas) == 1){
-                	jdvAux[i][j].situacao = 'O';
-				}
+                    infoVizinhos(i, j); // registra vizinhos de novas celulas vivas
+                }
             }
         }
     }
-    copiarMatrizAux(dim);// Copia a matriz auxiliar de volta para a matriz principal
+    copiarMatrizAux(dim); // Copia a matriz auxiliar de volta para a matriz principal
 }
 
 
