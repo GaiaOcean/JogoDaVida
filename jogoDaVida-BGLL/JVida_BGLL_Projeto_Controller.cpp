@@ -285,9 +285,21 @@ void gerarAtraso(){
     }
 }
 
+int contarVivas(int dim) {
+    int qtdCelViva = 0;
+    
+    for (int i = 0; i < dim; i++) {
+        for (int j = 0; j < dim; j++) {
+            if (jdvMatriz[i][j].situacao == 'O') {
+                qtdCelViva++;  
+            }
+        }
+    }
+    return qtdCelViva;
+}
+
+
 void proximaGeracao(int dim,int qtdGeracao) {
-	
-//	do{
 		
     limparMatrizAux(dim);  
     
@@ -312,8 +324,9 @@ void proximaGeracao(int dim,int qtdGeracao) {
 	    copiarMatrizAux(dim); // copia a matriz auxiliar de volta para a matriz principal
         mostrarMatriz(dim); 
         gerarAtraso();
-
-//     }while(qtdGeracao > 0);
+		geracaoAtual ++;
+		int qtdCelViva = contarVivas(dim);  
+   		mostrarSitGeracao(qtdCelViva, qtdGeracao);
 }
 	
 

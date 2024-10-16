@@ -36,6 +36,8 @@ bool viz;
 int atraso;
 int velocidade;
 int qtdGeracao;
+int geracaoAtual = 0; 
+
 
 Mundo jdvMatriz[VALORMAX][VALORMAX];
 Mundo jdvAux[VALORMAX][VALORMAX];

@@ -101,6 +101,10 @@ int retirarCel(int linhas, int colunas, int dim) {
     return 0; 
 }
 
+void mostrarSitGeracao(int qtdCelViva,int geracaoAtual){
+	printf("Geracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva );
+}
+
 //-----------INTERACOES COM JOGADOR-----------
 
 void perguntarDim(){
