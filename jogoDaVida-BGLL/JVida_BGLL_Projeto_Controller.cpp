@@ -11,7 +11,7 @@ Nome dos integrantes:
 */
 
 #include "JVida_BGLL_Projeto_Controller.h"
-
+#include <time.h>
 
 void gerarSeres(int linhas, int colunas,int dim){       
     jdvMatriz[linhas][colunas].situacao = 'O';
@@ -273,29 +273,49 @@ void limparMatrizAux(int dim) {
     }
 }
 
-void proximaGeracao(int dim) {
-    limparMatrizAux(dim);  
+void gerarAtraso(){
+	time_t lt1, lt2;
     
-    for (int i = 0; i < dim; i++) {
-        for (int j = 0; j < dim; j++) {
-            if (jdvMatriz[i][j].situacao == 'O') {
-                if (sobrevivencia(i, j) == 0) {
-                    morteFaltaComida(i, j);
-                    morteSolidao(i, j);
-                } else {
-                    jdvAux[i][j].situacao = 'O'; // se sobrevive, copia o estado para a matriz auxiliar
-                }
-            } else if (jdvMatriz[i][j].situacao == '+' || jdvMatriz[i][j].situacao == '.') { // Verifica se uma nova celula deve nascer
-                if (reproducao(i, j) == 1) {
-                    jdvAux[i][j].situacao = 'O';
-                    infoVizinhos(i, j); // registra vizinhos de novas celulas vivas
-                }
-            }
-        }
+    lt1 = time(NULL);
+    lt2 = lt1;
+    
+    // enquanto a diferença entre o lt2 e o lt1 for menor que o atraso, continua no loop
+    while (difftime(lt2, lt1) < velocidade) {
+        lt2 = time(NULL); // atualiza o lt2 com o tempo atual
     }
-    copiarMatrizAux(dim); // Copia a matriz auxiliar de volta para a matriz principal
 }
 
+void proximaGeracao(int dim,int qtdGeracao) {
+	
+//	do{
+		
+    limparMatrizAux(dim);  
+    
+	    for (int i = 0; i < dim; i++) {
+	        for (int j = 0; j < dim; j++) {
+	            if (jdvMatriz[i][j].situacao == 'O') {
+	                if (sobrevivencia(i, j) == 0) {
+	                    morteFaltaComida(i, j);
+	                    morteSolidao(i, j);
+	                } else {
+	                    jdvAux[i][j].situacao = 'O'; // se sobrevive, copia o estado para a matriz auxiliar
+	                }
+	            } else if (jdvMatriz[i][j].situacao == '+' || jdvMatriz[i][j].situacao == '.') { // Verifica se uma nova celula deve nascer
+	                if (reproducao(i, j) == 1) {
+	                    jdvAux[i][j].situacao = 'O';
+	                    infoVizinhos(i, j); // registra vizinhos de novas celulas vivas
+	                }
+	            }
+	        }
+	    }
+	    
+	    copiarMatrizAux(dim); // copia a matriz auxiliar de volta para a matriz principal
+        mostrarMatriz(dim); 
+        gerarAtraso();
+
+//     }while(qtdGeracao > 0);
+}
+	
 
 int validarCoordenadas(){
 	
@@ -355,11 +375,16 @@ void jogarMenu(){
 				break;
 			case 5:
 				limparTela();
-//				perguntarQtdGeracao();
-//				perguntarVelocidade();
-				proximaGeracao(dim);
+				perguntarQtdGeracao();
+				perguntarVelocidade();
+				do{
+					proximaGeracao(dim,qtdGeracao);
+					mostrarMatriz(dim);
+					limparTela();
+					qtdGeracao = qtdGeracao - 1;
+				}while(qtdGeracao > 0);
 //				mostrarMatrizAux(dim);
-				mostrarMatriz(dim);
+//				mostrarMatriz(dim);
 				break;
             case 0:
                 interacoesMenu(opcao);
@@ -369,3 +394,6 @@ void jogarMenu(){
         }
     } while (opcao != 0);
 }
+
+
+

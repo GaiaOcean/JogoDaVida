@@ -124,14 +124,14 @@ void perguntarCoordenadas() {
 }
 
 void perguntarQtdGeracao(){
-	printf("Digite a quantidade de geracoes");
+	printf("Digite a quantidade de geracoes: ");
 	scanf("%d", &qtdGeracao);
 	printf("\n");
     limparBuffer();
 }
 
 void perguntarVelocidade(){
-	printf("Digite a velocidade de sucessao das geracoes");
+	printf("Digite a velocidade de sucessao das geracoes: ");
 	scanf("%d", &velocidade);
 	printf("\n");
     limparBuffer();
