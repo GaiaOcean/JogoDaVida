@@ -374,9 +374,9 @@ void jogarMenu(){
 				mostrarMatriz(dim);
 				break;
 			case 5:
-				limparTela();
 				perguntarQtdGeracao();
 				perguntarVelocidade();
+				limparTela();
 				do{
 					proximaGeracao(dim,qtdGeracao);
 					mostrarMatriz(dim);
