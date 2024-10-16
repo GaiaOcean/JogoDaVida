@@ -323,11 +323,10 @@ void proximaGeracao(int dim,int qtdGeracao) {
 	    
 	    copiarMatrizAux(dim); // copia a matriz auxiliar de volta para a matriz principal
         mostrarMatriz(dim); 
-        gerarAtraso();
-		geracaoAtual ++;
+        geracaoAtual ++;
 		int qtdCelViva = contarVivas(dim);  
    		mostrarSitGeracao(qtdCelViva, geracaoAtual);
-   		gerarAtraso();
+        gerarAtraso();
 }
 	
 
