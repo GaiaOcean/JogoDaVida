@@ -384,7 +384,7 @@ void jogarMenu(){
 					qtdGeracao = qtdGeracao - 1;
 				}while(qtdGeracao > 0);
 //				mostrarMatrizAux(dim);
-//				mostrarMatriz(dim);
+				mostrarMatriz(dim);
 				break;
             case 0:
                 interacoesMenu(opcao);
