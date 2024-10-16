@@ -326,7 +326,8 @@ void proximaGeracao(int dim,int qtdGeracao) {
         gerarAtraso();
 		geracaoAtual ++;
 		int qtdCelViva = contarVivas(dim);  
-   		mostrarSitGeracao(qtdCelViva, qtdGeracao);
+   		mostrarSitGeracao(qtdCelViva, geracaoAtual);
+   		gerarAtraso();
 }
 	
 
