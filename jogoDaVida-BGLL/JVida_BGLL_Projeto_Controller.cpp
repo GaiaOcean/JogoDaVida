@@ -171,7 +171,7 @@ void infoVizinhos(int l, int c){
 }
 
 void alterarViz(){
-	viz = !(viz);
+	viz = !viz;
 }
 
 //funcao para contar quantos vizinhos vivos existem perto de uma celula
@@ -326,7 +326,12 @@ void proximaGeracao(int dim,int qtdGeracao) {
         geracaoAtual ++;
 		int qtdCelViva = contarVivas(dim);  
    		mostrarSitGeracao(qtdCelViva, geracaoAtual);
-        gerarAtraso();
+		if(velocidade == 0){
+			confirmacao();
+		}
+        else{
+			gerarAtraso();
+		}
 }
 	
 
@@ -358,7 +363,7 @@ void jogarMenu(){
     perguntarDim();
     limparTela();
  	mostrarMatriz(dim);
-	viz = true;
+	viz = false;
 
  	do{
  		
@@ -395,7 +400,7 @@ void jogarMenu(){
 					mostrarMatriz(dim);
 					limparTela();
 					qtdGeracao = qtdGeracao - 1;
-				}while(qtdGeracao > 0);
+				}while(qtdGeracao > 0 && conf != 'N');
 //				mostrarMatrizAux(dim);
 				mostrarMatriz(dim);
 				break;

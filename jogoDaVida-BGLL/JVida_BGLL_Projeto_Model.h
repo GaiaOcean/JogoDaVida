@@ -37,6 +37,7 @@ int atraso;
 int velocidade;
 int qtdGeracao;
 int geracaoAtual = 0; 
+char conf;
 
 
 Mundo jdvMatriz[VALORMAX][VALORMAX];
