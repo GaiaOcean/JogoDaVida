@@ -30,6 +30,25 @@ void limparMapa(int dim) {
         }
     }
 }
+void tornarVazioAux(int l,int c){
+	int qtdV = jdvAux[l][c].qtdVizinhos; // Quantidade de vizinhos
+    int lV;
+    int lC;
+    
+    for (int i = 0; i < qtdV; i++) {
+        lV = jdvAux[l][c].infoVizinhos[i].linha; // Linha do vizinho
+        lC = jdvAux[l][c].infoVizinhos[i].coluna; // Coluna do vizinho
+        
+        
+
+        // Verifica se a celula vizinha nao e viva 
+        if (jdvAux[lV][lC].situacao != 'O' && jdvAux[lV][lC].qtdVizVivos == 1) { //Somente torna vazia as celulas que sao vizinhas-mortas APENAS da celula que esta sendo retirada
+            jdvAux[lV][lC].situacao = '.'; // se ela nao for viva, torna em vazia
+        }
+        
+        jdvAux[lV][lC].qtdVizVivos = jdvAux[lV][lC].qtdVizVivos - 1;
+    }  
+}
 
 void tornarVazio(int l, int c){
 	int qtdV = jdvMatriz[l][c].qtdVizinhos; // Quantidade de vizinhos
@@ -58,6 +77,8 @@ void tornarVizinho(int l, int c){
     else
         jdvMatriz[l][c].situacao = '.';
 }
+
+//verifica 
 
 //verifica as possibilidades de acao para a coordenada informada, de forma que,
 //se a coordenada estiver vazia, ela e' ocupada e se estiver ocupada, pode ser esvaziada
@@ -171,7 +192,7 @@ void infoVizinhos(int l, int c){
 }
 
 void alterarViz(){
-	viz = !viz;
+	viz = !(viz);
 }
 
 //funcao para contar quantos vizinhos vivos existem perto de uma celula
@@ -298,41 +319,44 @@ int contarVivas(int dim) {
     return qtdCelViva;
 }
 
-
-void proximaGeracao(int dim,int qtdGeracao) {
+void proximaGeracao(int dim, int qtdGeracao) {
 		
     limparMatrizAux(dim);  
     
-	    for (int i = 0; i < dim; i++) {
-	        for (int j = 0; j < dim; j++) {
-	            if (jdvMatriz[i][j].situacao == 'O') {
-	                if (sobrevivencia(i, j) == 0) {
-	                    morteFaltaComida(i, j);
-	                    morteSolidao(i, j);
-	                } else {
-	                    jdvAux[i][j].situacao = 'O'; // se sobrevive, copia o estado para a matriz auxiliar
-	                }
-	            } else if (jdvMatriz[i][j].situacao == '+' || jdvMatriz[i][j].situacao == '.') { // Verifica se uma nova celula deve nascer
-	                if (reproducao(i, j) == 1) {
-	                    jdvAux[i][j].situacao = 'O';
-	                    infoVizinhos(i, j); // registra vizinhos de novas celulas vivas
-	                }
-	            }
-	        }
-	    }
+    for (int i = 0; i < dim; i++) {
+        for (int j = 0; j < dim; j++) {
+            if (jdvMatriz[i][j].situacao == 'O') {
+                if (sobrevivencia(i, j) == 0) {
+                    morteFaltaComida(i, j);
+                    morteSolidao(i, j);
+                } else {
+                    jdvAux[i][j].situacao = 'O'; // se sobrevive, copia o estado para a matriz auxiliar
+                }
+            } else if (jdvMatriz[i][j].situacao == '+' || jdvMatriz[i][j].situacao == '.') { // Verifica se uma nova celula deve nascer
+                if (reproducao(i, j) == 1) {
+                    jdvAux[i][j].situacao = 'O';
+                    infoVizinhos(i, j); // registra vizinhos de novas celulas vivas
+                }
+            }
+            // Verifica se a celula n e viva e precisa ser esvaziada
+            if (jdvMatriz[i][j].situacao != 'O' && jdvMatriz[i][j].situacao != '.') {
+                tornarVazioAux(i, j);
+            }
+        }
+    }
 	    
-	    copiarMatrizAux(dim); // copia a matriz auxiliar de volta para a matriz principal
-        mostrarMatriz(dim); 
-        geracaoAtual ++;
-		int qtdCelViva = contarVivas(dim);  
-   		mostrarSitGeracao(qtdCelViva, geracaoAtual);
-		if(velocidade == 0){
-			confirmacao();
-		}
-        else{
-			gerarAtraso();
-		}
+    copiarMatrizAux(dim); // copia a matriz auxiliar de volta para a matriz principal
+    mostrarMatriz(dim); 
+    geracaoAtual++;
+	int qtdCelViva = contarVivas(dim);  
+    mostrarSitGeracao(qtdCelViva, geracaoAtual);
+	if (velocidade == 0) {
+		confirmacao();
+	} else {
+		gerarAtraso();
+	}
 }
+
 	
 
 int validarCoordenadas(){
