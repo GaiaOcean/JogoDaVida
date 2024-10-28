@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 1
-08/10/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
+28/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -8,6 +8,12 @@ Nome dos integrantes:
 - Grazielle Batista de Almeida
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
+
+	A etapa 3 consiste de criar uma simulacao da evolucao das celulas ao longo de varias geracoes
+	Esta simulacao sera realizada com o auxilio de uma matriz auxiliar
+	O usuario pod definir a quantidade de geracao a serem simuladas
+	tembem deve ser possivel ajustar a velocidade com que as geracoes seram exibidas
+
 */
 
 #include "JVida_BGLL_Projeto_View.cpp"
