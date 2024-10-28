@@ -1,6 +1,6 @@
 /*
 JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
-08/10/2024 - Grupo:BGLL
+28/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -36,6 +36,35 @@ void limparMapa(int dim) {
     }
 }
 
+//verifica as possibilidades de acao para a coordenada informada, de forma que,
+//se a coordenada estiver vazia, ela e' ocupada e se estiver ocupada, pode ser esvaziada
+int inserirOuRetirarCel(int linhas, int colunas, int dim) {
+    if (jdvMatriz[linhas][colunas].situacao == '.' || jdvMatriz[linhas][colunas].situacao == '+') {
+        gerarSeres(linhas, colunas, dim);
+        infoVizinhos(linhas,colunas);
+        return 1;  // celula inserida
+    }
+    else if (jdvMatriz[linhas][colunas].situacao == 'O') {
+    	 if(retirarCel(linhas, colunas, dim) == 1){
+    	 	tornarVizinho(linhas, colunas);
+			tornarVazio(linhas, colunas);
+        	return 2;  // celula removida
+        }
+    }
+    return 0;  // nenhuma alteracao feita
+}
+
+//---------------------FUNCIONALIDADES PARA VIZINHOS---------------------------
+
+//Em casos de retirada de uma celula viva que e' vizinha de outra celula viva, o local da celula viva que foi excluida
+//deve se tornar 'vizinha-morta' ao inves de 'morta'
+void tornarVizinho(int l, int c){
+	if(verificarOcupacao(l,c) == 1)
+    	jdvMatriz[l][c].situacao = '+';
+    else
+        jdvMatriz[l][c].situacao = '.';
+}
+
 //Funcao responsave por tornar uma celula vazia
 void tornarVazio(int l, int c){
 	int qtdV = jdvMatriz[l][c].qtdVizinhos; // Quantidade de vizinhos
@@ -55,34 +84,6 @@ void tornarVazio(int l, int c){
         jdvMatriz[lV][lC].qtdVizVivos = jdvMatriz[lV][lC].qtdVizVivos - 1;
     }  
 }
-
-//Em casos de retirada de uma celula viva que e' vizinha de outra celula viva, o local da celula viva que foi excluida
-//deve se tornar 'vizinha-morta' ao inves de 'morta'
-void tornarVizinho(int l, int c){
-	if(verificarOcupacao(l,c) == 1)
-    	jdvMatriz[l][c].situacao = '+';
-    else
-        jdvMatriz[l][c].situacao = '.';
-}
-
-//verifica as possibilidades de acao para a coordenada informada, de forma que,
-//se a coordenada estiver vazia, ela e' ocupada e se estiver ocupada, pode ser esvaziada
-int inserirOuRetirarCel(int linhas, int colunas, int dim) {
-    if (jdvMatriz[linhas][colunas].situacao == '.' || jdvMatriz[linhas][colunas].situacao == '+') {
-        gerarSeres(linhas, colunas, dim);
-        infoVizinhos(linhas,colunas);
-        return 1;  // celula inserida
-    }
-    else if (jdvMatriz[linhas][colunas].situacao == 'O') {
-    	 if(retirarCel(linhas, colunas, dim) == 1){
-    	 	tornarVizinho(linhas, colunas);
-			tornarVazio(linhas, colunas);
-        	return 2;  // celula removida
-        }
-    }
-    return 0;  // nenhuma alteracao feita
-}
-
 
 //Verifica se entre os vizinhos de uma celula esta uma celula viva
 int verificarOcupacao(int l, int c){
@@ -162,9 +163,36 @@ void infoVizinhos(int l, int c){
 	}
 }
 
+//funcao para contar quantos vizinhos vivos existem perto de uma celula
+int qtdVizinhosVivos(int l, int c) {
+	
+    int qtdCelViva = 0;
+   
+    // percorre os 8 vizinhos ao redor da celula
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+        	
+            if (i == 0 && j == 0) {
+                continue; // ignora a propria celula
+            }
+            int novaLinha = l + i;
+   		    int novaColuna = c + j;
+            // verifica se a celula vizinha esta dentro dos limites da matriz
+            if (novaLinha >= 0 && novaLinha < dim && novaColuna >= 0 && novaColuna < dim) {
+                if (jdvMatriz[novaLinha][novaColuna].situacao == 'O') {
+                     qtdCelViva++;
+                }
+            }
+        }
+    }
+    return  qtdCelViva;//devolve a qtd de celulas vivas vizinhas
+}
+
 void alterarViz(){
 	viz = !viz;
 }
+
+//---------------------FUNCIONALIDADES PARA MATRIZ AUXILIAR----------------------
 
 //As funcaoes abaixo sao utiizadas para a matriz auxiliar
 void gerarSeresAux(int linhas, int colunas){       
@@ -230,31 +258,31 @@ int inserirCelAux(int linhas, int colunas){
     return 1;  // celula inserida
 }
 
-//funcao para contar quantos vizinhos vivos existem perto de uma celula
-int qtdVizinhosVivos(int l, int c) {
-	
-    int qtdCelViva = 0;
-   
-    // percorre os 8 vizinhos ao redor da celula
-    for (int i = -1; i <= 1; i++) {
-        for (int j = -1; j <= 1; j++) {
-        	
-            if (i == 0 && j == 0) {
-                continue; // ignora a propria celula
-            }
-            int novaLinha = l + i;
-   		    int novaColuna = c + j;
-            // verifica se a celula vizinha esta dentro dos limites da matriz
-            if (novaLinha >= 0 && novaLinha < dim && novaColuna >= 0 && novaColuna < dim) {
-                if (jdvMatriz[novaLinha][novaColuna].situacao == 'O') {
-                     qtdCelViva++;
-                }
-            }
+ // Copia a matriz auxiliar para a principal
+void copiarMatrizAux(int dim) {
+    
+    int lV,lC;
+    for (int i = 0; i < dim; i++) {
+        for (int j = 0; j < dim; j++) {
+            jdvMatriz[i][j].situacao = jdvAux[i][j].situacao;  // copia a proxima geracao
+            jdvMatriz[i][j].qtdVizVivos = jdvAux[i][j].qtdVizVivos;
+            jdvMatriz[i][j].qtdVizinhos = jdvAux[i][j].qtdVizinhos;
         }
     }
-    return  qtdCelViva;//devolve a qtd de celulas vivas vizinhas
 }
 
+// Limpa a matriz auxiliar
+void limparMatrizAux(int dim) {
+    for (int i = 0; i < dim; i++) {
+        for (int j = 0; j < dim; j++) {
+            jdvAux[i][j].situacao = '.';
+            jdvAux[i][j].qtdVizinhos = 0;
+			jdvAux[i][j].qtdVizVivos = 0;
+        }
+    }
+}
+
+//-----------------FUNCIONALIDADES PARA NOVAS GERACOES----------------
 
 //um ser vivo nasce numa celula vazia se essa celula vazia tiver exatamente 3 seres vivos vizinhos.
 int reproducao(int l, int c) {
@@ -300,28 +328,27 @@ int morteSolidao(int l, int c){
 	return 0;
 }
 
- // Copia a matriz auxiliar para a principal
-void copiarMatrizAux(int dim) {
-    
-    int lV,lC;
-    for (int i = 0; i < dim; i++) {
-        for (int j = 0; j < dim; j++) {
-            jdvMatriz[i][j].situacao = jdvAux[i][j].situacao;  // copia a proxima geracao
-            jdvMatriz[i][j].qtdVizVivos = jdvAux[i][j].qtdVizVivos;
-            jdvMatriz[i][j].qtdVizinhos = jdvAux[i][j].qtdVizinhos;
-        }
-    }
-}
-
-// Limpa a matriz auxiliar
-void limparMatrizAux(int dim) {
-    for (int i = 0; i < dim; i++) {
-        for (int j = 0; j < dim; j++) {
-            jdvAux[i][j].situacao = '.';
-            jdvAux[i][j].qtdVizinhos = 0;
-			jdvAux[i][j].qtdVizVivos = 0;
-        }
-    }
+//Funcao responsavel por criar a proxima geracao de celulas
+void proximaGeracao(int dim,int qtdGeracao) {	
+    	for (int i = 0; i < dim; i++) {
+	    	for (int j = 0; j < dim; j++) {
+	    		definirSituacaoCelula(i,j);
+	    	}
+		}
+	    
+	    copiarMatrizAux(dim); // copia a matriz auxiliar de volta para a matriz principal
+	    limparMatrizAux(dim);
+        mostrarMatriz(dim);
+        geracaoAtual++;
+		int qtdCelViva = contarVivas(dim);  
+   		mostrarSitGeracao(qtdCelViva, geracaoAtual);
+		if(velocidade == 0){
+			confirmacao();
+		}
+        else{
+			gerarAtraso();
+		}
+		
 }
 
 //Gera um atraso para que seja perceptivel quando se passa de uma geracao para a outra
@@ -336,6 +363,8 @@ void gerarAtraso(){
         lt2 = time(NULL); // atualiza o lt2 com o tempo atual
     }
 }
+
+//---------------FUNCIONALIDADES DE VERIFICACOES E DEFINICAO DE SITUACAO------------------
 
 //Conta a quantidade de celulas "O" na matriz
 int contarVivas(int dim) {
@@ -381,29 +410,6 @@ int definirSituacaoCelula(int l, int c){
 	
 	return -1;
 	                
-}
-
-//Funcao responsavel por criar a proxima geracao de celulas
-void proximaGeracao(int dim,int qtdGeracao) {	
-    	for (int i = 0; i < dim; i++) {
-	    	for (int j = 0; j < dim; j++) {
-	    		definirSituacaoCelula(i,j);
-	    	}
-		}
-	    
-	    copiarMatrizAux(dim); // copia a matriz auxiliar de volta para a matriz principal
-	    limparMatrizAux(dim);
-        mostrarMatriz(dim);
-        geracaoAtual++;
-		int qtdCelViva = contarVivas(dim);  
-   		mostrarSitGeracao(qtdCelViva, geracaoAtual);
-		if(velocidade == 0){
-			confirmacao();
-		}
-        else{
-			gerarAtraso();
-		}
-		
 }
 	
 //Funcao responsavel por verificar se as coordenadas digitadas sao validas
@@ -473,7 +479,6 @@ void jogarMenu(){
 					limparTela();
 					qtdGeracao = qtdGeracao - 1;
 				}while(qtdGeracao > 0 && conf != 'N');
-//				mostrarMatrizAux(dim);
 				mostrarMatriz(dim);
 				break;
             case 0:
@@ -484,6 +489,3 @@ void jogarMenu(){
         }
     } while (opcao != 0);
 }
-
-
-
