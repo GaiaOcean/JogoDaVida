@@ -46,6 +46,7 @@ Vizinhos celVivas[60];
 Mundo jdvMatriz[VALORMAX][VALORMAX];
 Mundo jdvAux[VALORMAX][VALORMAX];
 void perguntarDim();
+void inicializarMatriz60x60();
 void inicializarMatrizAux();
 
 #endif

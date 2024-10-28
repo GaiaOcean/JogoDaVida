@@ -1,5 +1,5 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 1
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
 08/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
@@ -8,6 +8,11 @@ Nome dos integrantes:
 - Grazielle Batista de Almeida
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
+
+	A etapa 3 consiste de criar uma simulacao da evolucao das celulas ao longo de varias geracoes
+	Esta simulacao sera realizada com o auxilio de uma matriz auxiliar
+	O usuario pod definir a quantidade de geracao a serem simuladas
+	tembem deve ser possivel ajustar a velocidade com que as geracoes seram exibidas
 */
 
 #include "JVida_BGLL_Projeto_Controller.h"
@@ -31,6 +36,7 @@ void limparMapa(int dim) {
     }
 }
 
+//Funcao responsave por tornar uma celula vazia
 void tornarVazio(int l, int c){
 	int qtdV = jdvMatriz[l][c].qtdVizinhos; // Quantidade de vizinhos
     int lV;
@@ -159,7 +165,8 @@ void infoVizinhos(int l, int c){
 void alterarViz(){
 	viz = !viz;
 }
-//Auxiliar
+
+//As funcaoes abaixo sao utiizadas para a matriz auxiliar
 void gerarSeresAux(int linhas, int colunas){       
     jdvAux[linhas][colunas].situacao = 'O';
 }
@@ -217,7 +224,7 @@ void infoVizinhosAux(int l, int c){
 	}
 }
 
-int inserirCelAux(int linhas, int colunas) {
+int inserirCelAux(int linhas, int colunas){
     gerarSeresAux(linhas, colunas);
     infoVizinhosAux(linhas,colunas);
     return 1;  // celula inserida
@@ -293,8 +300,8 @@ int morteSolidao(int l, int c){
 	return 0;
 }
 
+ // Copia a matriz auxiliar para a principal
 void copiarMatrizAux(int dim) {
-    // Copia a matriz auxiliar para a principal
     
     int lV,lC;
     for (int i = 0; i < dim; i++) {
@@ -317,6 +324,7 @@ void limparMatrizAux(int dim) {
     }
 }
 
+//Gera um atraso para que seja perceptivel quando se passa de uma geracao para a outra
 void gerarAtraso(){
 	time_t lt1, lt2;
     
@@ -329,6 +337,7 @@ void gerarAtraso(){
     }
 }
 
+//Conta a quantidade de celulas "O" na matriz
 int contarVivas(int dim) {
     int qtdCelViva = 0;
     
@@ -374,7 +383,7 @@ int definirSituacaoCelula(int l, int c){
 	                
 }
 
-
+//Funcao responsavel por criar a proxima geracao de celulas
 void proximaGeracao(int dim,int qtdGeracao) {	
     	for (int i = 0; i < dim; i++) {
 	    	for (int j = 0; j < dim; j++) {
@@ -397,7 +406,7 @@ void proximaGeracao(int dim,int qtdGeracao) {
 		
 }
 	
-
+//Funcao responsavel por verificar se as coordenadas digitadas sao validas
 int validarCoordenadas(){
 	
 	do{

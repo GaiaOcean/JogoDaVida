@@ -17,13 +17,17 @@ Nome dos integrantes:
 #include <ctype.h>
 
 void mostrarMatriz(int dim);
-void inicializarMatriz60x60();
+void mostrarMatrizAux(int dim);
+int validarDim(int dimMundo);
 void perguntarDim();
 void perguntarCoordenadas();
 int retirarCel(int linhas, int colunas, int dim);
+void mostrarSitGeracao(int qtdCelViva,int geracaoAtual);
 int menu();
 void interacoesMenu(int opcao);
 void limparBuffer();
 void limparTela();
 int mensagemCoordenada(int status);
-void mostrarInfoCelulas();
+void perguntarQtdGeracao();
+void perguntarVelocidade();
+void confirmacao();
