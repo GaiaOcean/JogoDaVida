@@ -17,16 +17,6 @@ Nome dos integrantes:
 
 #include "JVida_BGLL_Projeto_View.h"
 
-//void mostrarInfoVizinhos(int l, int c){
-//	int qtdV = jdvMatriz[l][c].qtdVizinhos;
-//	for(int i = 0; i < qtdV; i++){
-//		printf("linha %d\n", jdvMatriz[l][c].infoVizinhos[i].linha);
-//		printf("coluna %d\n", jdvMatriz[l][c].infoVizinhos[i].coluna);
-//		printf("viz vivos %d\n", jdvMatriz[jdvMatriz[l][c].infoVizinhos[i].linha][jdvMatriz[l][c].infoVizinhos[i].coluna].qtdVizVivos);
-//		printf("\n");	
-//	}
-//}
-
 void mostrarMatriz(int dim){
 	limparTela();
 	printf("\n============================= JOGO DA VIDA =============================\n\n");
@@ -47,7 +37,7 @@ void mostrarMatriz(int dim){
 		}
         	
         printf("\n");
-	} 
+	}
 }
 
 void mostrarMatrizAux(int dim){

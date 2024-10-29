@@ -26,7 +26,6 @@ typedef struct{
   	char situacao;
   	int qtdVizinhos;
   	Vizinhos infoVizinhos[8];
-  	int qtdVizVivos;
 }Mundo; 
 
 int linhas;
@@ -48,5 +47,7 @@ Mundo jdvAux[VALORMAX][VALORMAX];
 void perguntarDim();
 void inicializarMatriz60x60();
 void inicializarMatrizAux();
+int contarVizinhos(int l, int c);
+void inicializarQuantidadeVizinhos(int l, int c, int nC, int nL, int qtdVizinhos);
 
 #endif
