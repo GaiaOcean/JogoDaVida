@@ -33,6 +33,9 @@ typedef struct cel{
 	struct cel *prox;
 }TipoCel;
 
+TipoCel *pvivo, *pmorto, *pvivoprox;
+int totvivo, totmorto, totvivoprox;
+
 int linhas;
 int colunas;
 int dim;
