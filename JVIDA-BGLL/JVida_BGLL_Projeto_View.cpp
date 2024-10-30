@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 2
-15/10/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
+29/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -9,8 +9,10 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-O View.cpp contem todas as interacoes com o usuario
-
+	A etapa 3 consiste de criar uma simulacao da evolucao das celulas ao longo de varias geracoes
+	Esta simulacao sera realizada com o auxilio de uma matriz auxiliar
+	O usuario pod definir a quantidade de geracao a serem simuladas
+	tembem deve ser possivel ajustar a velocidade com que as geracoes seram exibidas
 */
 
 #include "JVida_BGLL_Projeto_View.h"
@@ -35,6 +37,21 @@ void mostrarMatriz(int dim){
 		}
         	
         printf("\n");
+	}
+}
+
+void mostrarMatrizAux(int dim){
+
+	printf("\t");
+    for (int j = 0; j < dim; j++)
+      printf("%02d ", j);
+    printf("\n\n");
+	
+	for (int i = 0; i < dim; i++){
+		printf("%02d\t", i);
+      	for (int j = 0; j < dim; j++)
+        	printf("%c  ", jdvAux[i][j].situacao);
+        printf("\n");
 	} 
 }
 
@@ -55,7 +72,9 @@ int mensagemCoordenada(int status){
 		printf("Coordenada invalida. Tenta novamente\n");
 	else
 		printf("Celula adicionada.\n");
-    return 1;
+	
+	return 0;
+        
 }
 
 int retirarCel(int linhas, int colunas, int dim) {
@@ -75,6 +94,10 @@ int retirarCel(int linhas, int colunas, int dim) {
         } 
     }
     return 0; 
+}
+
+void mostrarSitGeracao(int qtdCelViva,int geracaoAtual){
+	printf("Geracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva );
 }
 
 //-----------INTERACOES COM JOGADOR-----------
@@ -98,6 +121,30 @@ void perguntarCoordenadas() {
     printf("\n");
     limparBuffer();
 }
+
+void perguntarQtdGeracao(){
+	printf("Digite a quantidade de geracoes (0 para sair): ");
+	scanf("%d", &qtdGeracao);
+	printf("\n");
+    limparBuffer();
+}
+
+void perguntarVelocidade(){
+	printf("Digite a velocidade de sucessao das geracoes (-1 para sair): ");
+	scanf("%d", &velocidade);
+	printf("\n");
+    limparBuffer();
+}
+
+void confirmacao(){
+	printf("Deseja Gerar outra geracao(S/N): ");
+	scanf("%c", &conf);
+	if(conf == 'N' || conf == 'n')
+		conf = 'N';
+	printf("\n");
+	limparBuffer();
+	
+}
 //--------------FUNCIONALIDADES DO MENU------------
 
 int menu(){
@@ -108,6 +155,7 @@ int menu(){
     printf("2 - Limpar Mapa\n");
     printf("3 - Incluir celula / excluir celulas\n");
     printf("4 - Mostrar/Esconder vizinhas-mortas\n");
+    printf("5 - Mostrar Proximas Geracoes\n");
     printf("0 - Sair\n");  
     printf("=============================\n");
     printf("Escolha uma opcao: ");

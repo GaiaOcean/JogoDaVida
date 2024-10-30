@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 2
-15/10/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
+29/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -8,10 +8,8 @@ Nome dos integrantes:
 - Grazielle Batista de Almeida
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
-
-O Model.h contem as definicoes das estruturas e variaveis globais
-
 */
+
 #ifndef JVIDA_BGLL_PROJETO_MODEL_H
 #define JVIDA_BGLL_PROJETO_MODEL_H
 
@@ -28,17 +26,28 @@ typedef struct{
   	char situacao;
   	int qtdVizinhos;
   	Vizinhos infoVizinhos[8];
-  	int qtdVizVivos;
 }Mundo; 
 
 int linhas;
 int colunas;
 int dim;
 bool viz;
+int atraso;
+int velocidade;
+int qtdGeracao;
+int geracaoAtual = 0; 
+char conf;
+
+int qtdVivas = 0;
+Vizinhos celVivas[60];
+
 
 Mundo jdvMatriz[VALORMAX][VALORMAX];
 Mundo jdvAux[VALORMAX][VALORMAX];
 void perguntarDim();
+void inicializarMatriz60x60();
 void inicializarMatrizAux();
+int contarVizinhos(int l, int c);
+void inicializarQuantidadeVizinhos(int l, int c, int nC, int nL, int qtdVizinhos);
 
 #endif
