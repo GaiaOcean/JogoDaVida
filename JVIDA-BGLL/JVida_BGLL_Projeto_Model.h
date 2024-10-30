@@ -42,7 +42,6 @@ int velocidade;
 int qtdGeracao;
 int geracaoAtual = 0; 
 char conf;
-
 int qtdVivas = 0;
 Vizinhos celVivas[60];
 
