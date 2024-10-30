@@ -17,6 +17,7 @@ Nome dos integrantes:
 
 #include "JVida_BGLL_Projeto_Controller.h"
 #include <time.h>
+#include <stdlib.h>
 
 void gerarSeres(int linhas, int colunas,int dim){       
     jdvMatriz[linhas][colunas].situacao = 'O';
