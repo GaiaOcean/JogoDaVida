@@ -26,7 +26,12 @@ typedef struct{
   	char situacao;
   	int qtdVizinhos;
   	Vizinhos infoVizinhos[8];
-}Mundo; 
+}Mundo;
+
+typedef struct cel{
+	int lin, col;
+	struct cel *prox;
+}TipoCel;
 
 int linhas;
 int colunas;
