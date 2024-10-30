@@ -342,10 +342,10 @@ void carregaVivo(int i, int j){
 	
 	if(totvivo == 0){
 		pvivo = aux;
-		pvivo->next = NULL;
+		pvivo->prox = NULL;
 	}
 	else{
-		aux->next = pvivo;
+		aux->prox = pvivo;
 		pvivo = aux;
 	}
 	totvivo++;
