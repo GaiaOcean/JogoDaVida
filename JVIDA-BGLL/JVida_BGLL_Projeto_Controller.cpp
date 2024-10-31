@@ -330,6 +330,41 @@ int validarCoordenadas(){
 	}while(1);
         
 }
+// ------------------------------------------------------------------------------
+void iniciarListas(){
+	liberaLista(pvivo, totvivo);
+	liberaLista(pmorto, totmorto);
+	liberaLista(pvivoprox, totvivoprox);
+	
+	pvivo = pmorto = pvivoprox = NULL;
+	totvivo = totmorto = totvivoprox = 0;
+}
+void liberaLista(TipoCel *aux, int tot){
+    if(aux == NULL || tot == 0)
+    	return;
+    TipoCel *aux2;
+    do{
+    	aux2 = aux;
+    	aux = aux->prox;
+    	free(aux2);
+	}while(aux != NULL);
+}
+
+bool VerificaMortoNaLista(int i, int j){
+	TipoCel *aux;
+	aux = pmorto;
+	if(totmorto == 0){
+		return FALSE;
+	}
+	do{
+		if(aux->lin == i && aux->col == j){
+			return TRUE;
+		}
+		aux = aux->prox;
+		
+	}while(aux != NULL);
+	return false;
+}
 
 void carregaVivo(int i, int j){
 	TipoCel *aux = (TipoCel *)malloc(sizeof(TipoCel));
@@ -369,21 +404,6 @@ void excluiVivo(int i, int j){
 		}
 		totvivo--;
 	}
-}
-
-//funcao para limpar a lista de pmorto(será usada na carregarMortosVizinhos)
-void excluiMortos(){
-	
-	TipoCel *aux = pmorto;
-	
-	while(aux != NULL){
-		TipoCel *aux2 = aux -> prox;
-		free(aux);
-		aux = aux2;
-	}
-	pmorto = NULL;
-	totmorto = 0;
-	
 }
 
 //---------FUNCIONALIDADES DO MENU---------
