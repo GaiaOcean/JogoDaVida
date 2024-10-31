@@ -332,7 +332,7 @@ int validarCoordenadas(){
 }
 
 void carregaVivo(int i, int j){
-	TipoCel *aux = malloc(sizeof(TipoCel));
+	TipoCel *aux = (TipoCel *)malloc(sizeof(TipoCel));
 	if(aux == NULL){
 		printf("Sem espaco na memoria para inclusao de celula viva");
 		return;
@@ -349,6 +349,26 @@ void carregaVivo(int i, int j){
 		pvivo = aux;
 	}
 	totvivo++;
+}
+
+void excluiVivo(int i, int j){
+	TipoCel *aux, *aux2;
+	aux = pvivo;
+	aux2 = aux;
+	if(totvivo > 0){
+		while(aux->lin != i || aux->col != j){
+			aux2 = aux;
+			aux = aux->prox;
+		}
+		if(aux->lin == i && aux->col == j){
+			if(aux2 == aux)
+				pvivo = aux->prox;
+			else
+				aux2->prox = aux->prox;
+			free(aux);
+		}
+		totvivo--;
+	}
 }
 
 //---------FUNCIONALIDADES DO MENU---------
