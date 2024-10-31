@@ -20,7 +20,7 @@ Nome dos integrantes:
 #define MORTO '.'
 #define VIZINHO '+'
 
-typedef int bool;
+//typedef int bool;
 
 bool fviz = FALSE;
 
