@@ -100,6 +100,21 @@ void mostrarSitGeracao(int qtdCelViva,int geracaoAtual){
 	printf("Geracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva );
 }
 
+//funcao para mostrar as celulas vivas a partir de ponteiros
+void mostrarVivos(){
+	
+	TipoCel *aux;
+	aux = pvivo;
+	if(totvivo > 0){
+		while(aux -> prox != NULL){
+			printf("%d,%d ", aux->lin,aux->col);
+			aux = aux -> prox;
+		}
+	printf("%d,%d ", aux -> lin, aux->col);
+	}
+	printf("\n");
+}
+
 //-----------INTERACOES COM JOGADOR-----------
 
 void perguntarDim(){
