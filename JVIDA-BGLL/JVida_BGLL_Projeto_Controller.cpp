@@ -371,6 +371,21 @@ void excluiVivo(int i, int j){
 	}
 }
 
+//funcao para limpar a lista de pmorto(será usada na carregarMortosVizinhos)
+void excluiMortos(){
+	
+	TipoCel *aux = pmorto;
+	
+	while(aux != NULL){
+		TipoCel *aux2 = aux -> prox;
+		free(aux);
+		aux = aux2;
+	}
+	pmorto = NULL;
+	totmorto = 0;
+	
+}
+
 //---------FUNCIONALIDADES DO MENU---------
 void jogarMenu(){
 
