@@ -14,6 +14,15 @@ Nome dos integrantes:
 #define JVIDA_BGLL_PROJETO_MODEL_H
 
 #define VALORMAX 60
+#define FALSE 0
+#define TRUE 1
+#define VIVO 'O'
+#define MORTO '.'
+#define VIZINHO '+'
+
+typedef int bool;
+
+bool fviz = FALSE;
 
 //Estrutura responsavel por guardar a linha e a coluna de todas as celulas que forem vizinhas de uma celula viva
 typedef struct{
