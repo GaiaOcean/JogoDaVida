@@ -350,15 +350,29 @@ void liberaLista(TipoCel *aux, int tot){
 	}while(aux != NULL);
 }
 
+//funcao para limpar a lista de pmorto(será usada na carregarMortosVizinhos)
+void excluiMortos(){
+
+	TipoCel *aux = pmorto;
+
+	while(aux != NULL){
+		TipoCel *aux2 = aux -> prox;
+		free(aux);
+		aux = aux2;
+	}
+	pmorto = NULL;
+	totmorto = 0;
+
+}
 bool VerificaMortoNaLista(int i, int j){
 	TipoCel *aux;
 	aux = pmorto;
 	if(totmorto == 0){
-		return FALSE;
+		return false;
 	}
 	do{
 		if(aux->lin == i && aux->col == j){
-			return TRUE;
+			return true;
 		}
 		aux = aux->prox;
 		
