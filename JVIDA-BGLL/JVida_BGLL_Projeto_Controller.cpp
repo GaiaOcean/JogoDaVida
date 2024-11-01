@@ -420,6 +420,51 @@ void cria1CelMorta(int i, int j){
 	}
 }
 
+//inclui cel mortas na lista(inlcui mais de uma diferentemente da outra)
+void incluiCelMortas(){
+	int i,j,k,l;
+	
+	struct{
+		int line,column;
+	}a,b,c,d,e,f,g,h; //celulas vizinhas
+	
+	totmorto = 0;
+	
+	TipoCel *aux;
+	aux = pvivo;
+	
+	if(totvivo == 0){
+		return;
+	}
+	
+	do{
+		i = aux -> lin;
+		j = aux -> col;
+		
+		a.line = i -1; a.column = j - 1;
+		b.line = i -1; b.column = j;
+		c.line = i -1; c.column = j + 1;
+		d.line = i -1; d.column = j - 1;
+		e.line = i -1; e.column = j + 1;
+		f.line = i -1; f.column = j - 1;
+		g.line = i -1; g.column = j;
+		h.line = i -1; h.column = j +1;
+		
+		cria1CelMorta(a.line,a.column);
+		cria1CelMorta(b.line,b.column);
+		cria1CelMorta(c.line,c.column);
+		cria1CelMorta(d.line,d.column);
+		cria1CelMorta(e.line,e.column);
+		cria1CelMorta(g.line,g.column);
+		cria1CelMorta(h.line,h.column);
+		
+		if(aux -> prox == NULL){
+			break;
+		}
+		aux = aux -> prox;			
+	}while(true);
+	
+}
 
 void carregaVivo(int i, int j){
 	TipoCel *aux = (TipoCel *)malloc(sizeof(TipoCel));
