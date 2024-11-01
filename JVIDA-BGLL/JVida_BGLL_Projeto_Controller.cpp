@@ -380,6 +380,47 @@ bool VerificaMortoNaLista(int i, int j){
 	return false;
 }
 
+//caso nao tenha incluido, inclui uma cel na lista de mortos vizinhos
+void cria1CelMorta(int i, int j){
+	if((i < 0) ||(j  < 0)){
+		return; 
+	}
+	if((i >= dim) ||(j >= dim)){
+		return; //nao termina de rodar a funccao
+	}
+	if(jdvMatriz[i][j].situacao == 'O'){
+		return;
+	}
+	if(VerificaMortoNaLista(i,j) == true){
+		return; //a cel ja e uma viz morta
+	}
+	
+	TipoCel *aux = (TipoCel*)malloc(sizeof(TipoCel));
+	if(aux == NULL){
+		printf("Sem memória para incluir a celula vizinha-morta\n");
+		return;
+	}
+	aux -> lin = i;
+	aux -> col = j;
+	
+	if(totmorto == 0){
+		pmorto = aux;
+		pmorto -> prox = NULL;
+		
+	}else{
+		aux -> prox = pmorto;
+		pmorto = aux;
+	}
+	totmorto++;
+	
+	if(viz == true){
+		jdvMatriz[i][j].situacao = '+';
+	}else{
+		jdvMatriz[i][j].situacao = '.';
+	}
+}
+
+
 void carregaVivo(int i, int j){
 	TipoCel *aux = (TipoCel *)malloc(sizeof(TipoCel));
 	if(aux == NULL){
