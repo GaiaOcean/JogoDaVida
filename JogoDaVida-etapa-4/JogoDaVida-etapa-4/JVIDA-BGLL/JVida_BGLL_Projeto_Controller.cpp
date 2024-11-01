@@ -486,6 +486,53 @@ void carregaMortosVizinhos(){
 	}
 	
 }
+
+int contaCelViva(){
+	TipoCel *aux = pvivo; 
+
+    while (aux != NULL) {
+        int ii = aux->lin; 
+        int jj = aux->col;
+        TipoCel *aux2 = pvivo; // percorre a lista de cel vivas
+        int vizinhoCount = 0; // contador de vizinhos vivos
+
+        while (aux2 != NULL) {
+            if (aux2 != aux) { // pula a propria cel
+                int vii = aux2->lin;
+                int vjj = aux2->col;
+                if (abs(ii - vii) <= 1 && abs(jj - vjj) <= 1) { 
+                    vizinhoCount++;
+                }
+            }
+            aux2 = aux2->prox;
+        }
+        aux = aux->prox; 
+    }
+}
+
+void contaCelMorta(){
+	TipoCel *aux = pmorto; 
+
+    while (aux != NULL) {
+        int ii = aux->lin; 
+        int jj = aux->col;
+        TipoCel *aux2 = pvivo; // Percorre a lista de cel vivas
+        int vizinhoCount = 0; // contador de vizinhos vivos
+
+        while (aux2 != NULL) {
+            int vii = aux2->lin;
+            int vjj = aux2->col;
+            if (abs(ii - vii) <= 1 && abs(jj - vjj) <= 1) { // se e vizinho
+                vizinhoCount++;
+            }
+            aux2 = aux2->prox;
+        }
+        
+        aux = aux->prox; 
+    }
+
+}
+
 //---------FUNCIONALIDADES DO MENU---------
 void jogarMenu(){
 
