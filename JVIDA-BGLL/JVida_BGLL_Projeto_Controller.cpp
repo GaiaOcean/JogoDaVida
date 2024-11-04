@@ -364,6 +364,27 @@ void excluiMortos(){
 	totmorto = 0;
 
 }
+
+void carregaVivoProx(int ii, int jj){
+	TipoCel *aux = (TipoCel *)malloc(sizeof(TipoCel));
+	if(aux == NULL){
+		printf("Sem espaco na memoria para inclusao de celula viva");
+		return;
+	}
+	aux->lin = ii;
+	aux->col = jj;
+	
+	if(totvivoprox == 0){
+		pvivoprox = aux;
+		pvivoprox->prox = NULL;
+	}
+	else{
+		aux->prox = pvivoprox;
+		pvivoprox = aux;
+	}
+	totvivoprox++;
+}
+
 bool VerificaMortoNaLista(int i, int j){
 	TipoCel *aux;
 	aux = pmorto;
@@ -420,7 +441,55 @@ void cria1CelMorta(int i, int j){
 	}
 }
 
-//inclui cel mortas na lista(inlcui mais de uma diferentemente da outra)
+void atualizaViz(){
+	int i, j, ii, jj, vii, vjj, ct;
+	
+	liberaLista(pvivoprox, totvivoprox);
+	pvivoprox = NULL //pontiros vazios
+	
+	if(pvivo == NULL)
+	   return;
+	TipoCel *aux, *aux2;
+	aux = pvivo;
+	
+	do{
+		ct = 0; //contador de vizinhos da celula (ii, jj)
+		
+		ii = aux->lin;
+		jj = aux->col;
+		aux2 = pvivo;
+	    
+		do{
+		    vii = aux2->lin;
+		    vjj = aux2->col;
+		
+		    if(vii != ii || vjj != jj){
+		       if(abs(ii - vii)<= 1 && abs(jj - vjj)<= 1){
+		           ct++;
+		        }  
+     	    }
+         	aux2 = aux2->prox;  
+	    }while(aux2 != NULL);
+	    if(ct == 2 || ct = 3){
+		    carregaVivoProx(ii, jj);
+     	}
+    	else{
+	        carregaMortoProx(ii, jj);
+        }
+         aux = aux->prox;
+        if(pmorto == NULL)
+            return;
+        aux = pmorto;
+    
+    	if(ct == 3){
+	    	carregaProxVivo;
+	    }
+    	aux2 = aux2->prox;
+      
+    }while(aux2 != NULL);
+}
+
+//inclui cel mortas na lista(inlcui mas de uma diferentemente da outra)
 void incluiCelMortas(){
 	int i,j,k,l;
 	
@@ -462,7 +531,7 @@ void incluiCelMortas(){
 			break;
 		}
 		aux = aux -> prox;			
-	}while(true);
+	}while(TRUE);
 	
 }
 
