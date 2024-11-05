@@ -63,6 +63,21 @@ void tornarVizinhoVivoOuMorto(int l, int c){
         jdvMatriz[l][c].situacao = '.';
 }
 
+void definirEArmazenarVizinhosLista(int l, int c){
+	int quantidadeDeVizinhos = jdvMatriz[l][c].qtdVizinhos;
+	printf("%d", jdvMatriz[l][c].qtdVizinhos);
+	for(int i = 0; i < jdvMatriz[l][c].qtdVizinhos; i++){
+		int linhaVizinho = jdvMatriz[l][c].infoVizinhos[i].linha;
+		int colunaVizinho = jdvMatriz[l][c].infoVizinhos[i].coluna;
+		
+		if(jdvMatriz[linhaVizinho][colunaVizinho].situacao == '.'){
+			//printf("b");
+			carrega1Morto(linhaVizinho, colunaVizinho);
+		}
+			
+	}
+}
+
 //Verifica se entre os vizinhos de uma celula esta uma celula viva
 int verificarSeCelulaVizinhaViva(int l, int c){
 	int qtdV = jdvMatriz[l][c].qtdVizinhos;
@@ -140,26 +155,31 @@ void alterarViz(){
 	viz = !viz;
 }
 
-//---------------------FUNCIONALIDADES PARA MATRIZ AUXILIAR----------------------
+//---------------------FUNCIONALIDADES PARA LISTAS----------------------
 
 //As funcaoes abaixo sao utiizadas para a matriz auxiliar
 void gerarSeresLista(int linhas, int colunas){       
 	carregaVivo(linhas, colunas);
 }
 
-void definirEArmazenarVizinhosLista(int l, int c){
-	int quantidadeDeVizinhos = jdvMatriz[l][c].qtdVizinhos;
-	printf("%d", jdvMatriz[l][c].qtdVizinhos);
-	for(int i = 0; i < jdvMatriz[l][c].qtdVizinhos; i++){
-		int linhaVizinho = jdvMatriz[l][c].infoVizinhos[i].linha;
-		int colunaVizinho = jdvMatriz[l][c].infoVizinhos[i].coluna;
-		
-		if(jdvMatriz[linhaVizinho][colunaVizinho].situacao == '.'){
-			//printf("b");
-			carrega1Morto(linhaVizinho, colunaVizinho);
-		}
-			
-	}
+void iniciarListas(){
+	liberaLista(pvivo, totvivo);
+	liberaLista(pmorto, totmorto);
+	liberaLista(pvivoprox, totvivoprox);
+	
+	pvivo = pmorto = pvivoprox = NULL;
+	totvivo = totmorto = totvivoprox = 0;
+}
+
+void liberaLista(TipoCel *aux, int tot){
+    if(aux == NULL || tot == 0)
+    	return;
+    TipoCel *aux2;
+    do{
+    	aux2 = aux;
+    	aux = aux->prox;
+    	free(aux2);
+	}while(aux != NULL);
 }
 
 int inserirCelLista(int linhas, int colunas){
@@ -354,31 +374,23 @@ int validarCoordenadas(){
         
 }
 
-// ------------------------------------------------------------------------------
-void iniciarListas(){
-	liberaLista(pvivo, totvivo);
-	liberaLista(pmorto, totmorto);
-	liberaLista(pvivoprox, totvivoprox);
+//percorre a lista verificando se as coordenadas já existem retornando verdadeiro ou falso
+int verificaMorto(int i, int j){
 	
-	pvivo = pmorto = pvivoprox = NULL;
-	totvivo = totmorto = totvivoprox = 0;
-}
-
-void liberaLista(TipoCel *aux, int tot){
-    if(aux == NULL || tot == 0)
-    	return;
-    TipoCel *aux2;
-    do{
-    	aux2 = aux;
-    	aux = aux->prox;
-    	free(aux2);
-	}while(aux != NULL);
+	TipoCel *aux = pmorto;
+	while(aux != NULL){
+		if(aux -> lin == i  && aux -> col == j ){ //verifica se a celula já existe
+			return 1;
+		}
+		aux = aux -> prox;
+	}
+	return -1; // a cel nao foi encontrada
+	
 }
 
 void carregaVivo(int i, int j){
 	TipoCel *aux = (TipoCel *)malloc(sizeof(TipoCel));
 	if(aux == NULL){
-		printf("Sem espaco na memoria para inclusao de celula viva");
 		return;
 	}
 	aux->lin = i;
@@ -394,6 +406,7 @@ void carregaVivo(int i, int j){
 	}
 	totvivo++;
 }
+
 
 void excluiVivo(int i, int j){
 	TipoCel *aux, *aux2;
@@ -430,20 +443,6 @@ void excluiMortos() {
     totmorto = 0;//reseta a qtd de cel morta
 }
 
-//percorre a lista verificando se as coordenadas já existem retornando verdadeiro ou falso
-int verificaMorto(int i, int j){
-	
-	TipoCel *aux = pmorto;
-	while(aux != NULL){
-		if(aux -> lin == i  && aux -> col == j ){ //verifica se a celula já existe
-			return 1;
-		}
-		aux = aux -> prox;
-	}
-	return -1; // a cel nao foi encontrada
-	
-}
-
 void carregaMorto(int i, int j){
 	if((i < 0) || (j < 0))
 		return;
@@ -456,7 +455,6 @@ void carregaMorto(int i, int j){
 	
 	TipoCel *aux = (TipoCel*)malloc(sizeof(TipoCel));
 	if(aux == NULL){
-		printf("sem espaço na memoria para inclusao dde celula morta-vizinha");
 		return;
 	}
 	aux->lin = i;
@@ -493,7 +491,6 @@ void jogarMenu(){
  	
  	perguntarDim();
 	inicializarMatriz60x60(dim);
-	inicializarMatrizAux();
     limparTela();
  	mostrarMatriz(dim);
 	viz = false;

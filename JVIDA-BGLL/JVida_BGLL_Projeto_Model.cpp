@@ -1,6 +1,6 @@
 /*
 JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
-29/10/2024 - Grupo:BGLL
+05/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -93,11 +93,4 @@ void inicializarMatriz60x60(int dim){
         }
     }
     
-}
-
-
-void inicializarMatrizAux(){
-	for (int i = 0; i < 60; i++)
-      for (int j = 0; j < 60; j++) 
-        jdvAux[i][j].situacao = '.'; // Define todos as celulas como vazias inicialmente
 }

@@ -1,6 +1,6 @@
 /*
 JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
-29/10/2024 - Grupo:BGLL
+05/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -38,20 +38,6 @@ void mostrarMatriz(int dim){
 	}
 }
 
-void mostrarMatrizAux(int dim){
-
-	printf("\t");
-    for (int j = 0; j < dim; j++)
-      printf("%02d ", j);
-    printf("\n\n");
-	
-	for (int i = 0; i < dim; i++){
-		printf("%02d\t", i);
-      	for (int j = 0; j < dim; j++)
-        	printf("%c  ", jdvAux[i][j].situacao);
-        printf("\n");
-	} 
-}
 
 // -----------FUNCOES DE VALIDACOES-----------
 int validarDim(int dimMundo){
@@ -92,23 +78,6 @@ int retirarCel(int linhas, int colunas, int dim) {
         } 
     }
     return 0; 
-}
-
-void mostrarSitGeracao(int qtdCelViva,int geracaoAtual){
-	printf("\n\nGeracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva );
-}
-
-void mostrarListaCelVivas(){
-	TipoCel *aux;
-	aux = pvivo;
-	if(totvivo > 0){
-		while (aux->prox != NULL){
-			printf("%d %d", aux->lin, aux->col);
-			aux = aux->prox;
-		}
-		printf("%d %d", aux->lin, aux->col);
-	}
-	printf("/n");
 }
 
 //-----------INTERACOES COM JOGADOR-----------
@@ -192,6 +161,7 @@ void limparTela(){
 	system("cls||clear");
 }
 
+//----------------FUNCOES DE MENSAGEM-------------------
 void mostrarVivos(){
 	TipoCel *aux;
 	aux = pvivo;
@@ -232,4 +202,6 @@ void mostrarVizinhosMortos(){
 	printf("\n");
 }
 
-
+void mostrarSitGeracao(int qtdCelViva,int geracaoAtual){
+	printf("\n\nGeracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva );
+}

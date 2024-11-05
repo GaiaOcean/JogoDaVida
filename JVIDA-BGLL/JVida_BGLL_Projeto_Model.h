@@ -1,6 +1,6 @@
 /*
 JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
-29/10/2024 - Grupo:BGLL
+05/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -24,7 +24,6 @@ Nome dos integrantes:
 #define MORTO '.'
 #define VIZINHO '+'
 
-//typedef int bool;
 
 bool fviz = FALSE;
 
@@ -59,15 +58,11 @@ int qtdGeracao;
 int geracaoAtual = 0; 
 char conf;
 int qtdVivas = 0;
-Vizinhos celVivas[60];
 
 
 Mundo jdvMatriz[VALORMAX][VALORMAX];
-Mundo jdvAux[VALORMAX][VALORMAX];
-void perguntarDim();
 void inicializarMatriz60x60();
-void inicializarMatrizAux();
-int contarVizinhos(int l, int c);
-void inicializarQuantidadeVizinhos(int l, int c, int nC, int nL, int qtdVizinhos);
+int contarEGuardarVizinhos(int l, int c);
+void guardarInformacoesVizinhos(int l, int c, int nC, int nL, int qtdVizinhos);
 
 #endif

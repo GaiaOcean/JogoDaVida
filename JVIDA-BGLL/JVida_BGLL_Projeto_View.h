@@ -20,7 +20,6 @@ Nome dos integrantes:
 #include <ctype.h>
 
 void mostrarMatriz(int dim);
-void mostrarMatrizAux(int dim);
 int validarDim(int dimMundo);
 void perguntarDim();
 void perguntarCoordenadas();
@@ -35,3 +34,4 @@ void perguntarQtdGeracao();
 void perguntarVelocidade();
 void confirmacao();
 void mostrarVizinhosMortos();
+void mostrarVivos();

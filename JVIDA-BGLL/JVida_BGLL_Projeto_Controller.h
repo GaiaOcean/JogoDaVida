@@ -1,6 +1,6 @@
 /*
 JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
-29/10/2024 - Grupo:BGLL
+05/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -38,8 +38,6 @@ int reproducao(int l, int c);
 int sobrevivencia(int l, int c);
 int morteFaltaComida(int l,int c);
 int morteSolidao(int l, int c);
-void copiarMatrizAux(int dim);
-void limparMatrizAux(int dim);
 void gerarAtraso();
 int contarVivas(int dim);
 int definirSituacaoCelula(int l, int c);
@@ -48,7 +46,6 @@ int validarCoordenadas();
 void jogarMenu();
 void carregaMorto(int i, int j);
 void mostrarVivos();
-void salvar(TipoCel* pvivo, const char* fsvivo);
 void liberaLista(TipoCel *aux, int tot);
 void carregaVivo(int i, int j);
 void alterarSituacaoVizinhoMorto();
