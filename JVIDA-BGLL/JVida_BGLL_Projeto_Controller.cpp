@@ -24,7 +24,7 @@ void gerarSeres(int linhas, int colunas,int dim){
 
 //Funcao responsavel por limpar o mapa
 void limparMapa(int dim) {
-    for (int i = 0; i < dim; i++) {
+	for (int i = 0; i < dim; i++) {
         for (int j = 0; j < dim; j++) {
         	if (jdvMatriz[i][j].situacao == 'O' || jdvMatriz[i][j].situacao == '+') {
                 jdvMatriz[i][j].situacao = '.';
