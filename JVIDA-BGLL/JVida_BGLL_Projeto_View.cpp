@@ -38,7 +38,6 @@ void mostrarMatriz(int dim){
 	}
 }
 
-
 // -----------FUNCOES DE VALIDACOES-----------
 int validarDim(int dimMundo){
 	if(dimMundo < 10 || dimMundo > 60){
