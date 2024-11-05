@@ -1,5 +1,5 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
 29/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
@@ -8,6 +8,10 @@ Nome dos integrantes:
 - Grazielle Batista de Almeida
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
+
+	A etapa 4 consiste de substituir a matriz auxiliar utilizada previamente 
+	por uma lista ligada, uma vez que a lista ligada faz um uso mais eficiente da memoria.	
+
 */
 
 #ifndef JVIDA_BGLL_PROJETO_MODEL_H

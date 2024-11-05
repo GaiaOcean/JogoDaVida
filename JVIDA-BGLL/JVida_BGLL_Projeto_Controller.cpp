@@ -1,5 +1,5 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
 29/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
@@ -9,10 +9,9 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-	A etapa 3 consiste de criar uma simulacao da evolucao das celulas ao longo de varias geracoes
-	Esta simulacao sera realizada com o auxilio de uma matriz auxiliar
-	O usuario pod definir a quantidade de geracao a serem simuladas
-	tembem deve ser possivel ajustar a velocidade com que as geracoes seram exibidas
+	A etapa 4 consiste de substituir a matriz auxiliar utilizada previamente 
+	por uma lista ligada, uma vez que a lista ligada faz um uso mais eficiente da memoria.
+
 */
 
 #include "JVida_BGLL_Projeto_Controller.h"
@@ -144,11 +143,11 @@ void alterarViz(){
 //---------------------FUNCIONALIDADES PARA MATRIZ AUXILIAR----------------------
 
 //As funcaoes abaixo sao utiizadas para a matriz auxiliar
-void gerarSeresAux(int linhas, int colunas){       
+void gerarSeresLista(int linhas, int colunas){       
 	carregaVivo(linhas, colunas);
 }
 
-void definirEArmazenarVizinhosAux(int l, int c){
+void definirEArmazenarVizinhosLista(int l, int c){
 	int quantidadeDeVizinhos = jdvMatriz[l][c].qtdVizinhos;
 	printf("%d", jdvMatriz[l][c].qtdVizinhos);
 	for(int i = 0; i < jdvMatriz[l][c].qtdVizinhos; i++){
@@ -165,8 +164,8 @@ void definirEArmazenarVizinhosAux(int l, int c){
 	}
 }
 
-int inserirCelAux(int linhas, int colunas){
-    gerarSeresAux(linhas, colunas);
+int inserirCelLista(int linhas, int colunas){
+    gerarSeresLista(linhas, colunas);
     return 1;  // celula inserida
 }
 
@@ -234,10 +233,10 @@ void armazenarInfoVizinhos(){
 	if(totvivo > 0){
 		while (aux->prox != NULL)
 		{
-			definirEArmazenarVizinhosAux(aux->lin, aux->col);
+			definirEArmazenarVizinhosLista(aux->lin, aux->col);
 			aux = aux->prox;
 		}
-		definirEArmazenarVizinhosAux(aux->lin, aux->col);
+		definirEArmazenarVizinhosLista(aux->lin, aux->col);
 	}
 }
 
@@ -319,17 +318,17 @@ int definirSituacaoCelula(int l, int c){
 	}
 		
 	if(morteFaltaComida(l,c) == 1){
-		return 0; //nada alterado na matriz auxiliar
+		return 0; //nada alterado na lista
 	}
 	
 	if(jdvMatriz[l][c].situacao == 'O'){
 	   if(sobrevivencia(l,c) == 1){
-	        inserirCelAux(l,c);
+	        inserirCelLista(l,c);
 	        return 1; //celula adicionada
 		}
 	} else {
 		if(reproducao(l,c) == 1){
-			inserirCelAux(l,c);
+			inserirCelLista(l,c);
 			return 1;
 		}
 	}
@@ -356,6 +355,7 @@ int validarCoordenadas(){
 	}while(1);
         
 }
+
 // ------------------------------------------------------------------------------
 void iniciarListas(){
 	liberaLista(pvivo, totvivo);
@@ -446,21 +446,6 @@ int verificaMorto(int i, int j){
 	
 }
 
-/*void criaCelMorta(int i, int j){
-	
-	TipoCel *morta = (TipoCel*)malloc(sizeof(TipoCel));
-	morta -> lin =  i;
-	morta -> col = j;
-	morta -> prox = pmorto;
-	
-	pmorto = morta;
-	totmorto = totmorto + 1;
-	
-	//jdvMatriz[i][j].situacao = '+';
-	
-	
-}
-*/
 void carregaMorto(int i, int j){
 	if((i < 0) || (j < 0))
 		return;
@@ -523,7 +508,6 @@ void jogarMenu(){
             case 1:
             	limparTela();
                 mostrarMatriz(dim);
-				
                 break;
             case 2:
                 limparMapa(dim);

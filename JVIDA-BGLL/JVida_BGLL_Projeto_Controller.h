@@ -1,5 +1,5 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
 29/10/2024 - Grupo:BGLL
 
 Nome dos integrantes:
@@ -9,10 +9,8 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-	A etapa 3 consiste de criar uma simulacao da evolucao das celulas ao longo de varias geracoes
-	Esta simulacao sera realizada com o auxilio de uma matriz auxiliar
-	O usuario pod definir a quantidade de geracao a serem simuladas
-	tembem deve ser possivel ajustar a velocidade com que as geracoes seram exibidas
+	A etapa 4 consiste de substituir a matriz auxiliar utilizada previamente 
+	por uma lista ligada, uma vez que a lista ligada faz um uso mais eficiente da memoria.	
 
 */
 
@@ -31,10 +29,10 @@ int inserirOuRetirarCel(int linhas, int colunas, int dim);
 int verificarSeCelulaVizinhaViva(int l, int c);
 void definirSituacaoVizinhos(int l, int c);
 void alterarViz();
-void gerarSeresAux(int linhas, int colunas);
-void guardarInfoVizinhosAux(int l, int c, int nC, int nL, int qtdVizinhos);
-void definirEArmazenarVizinhosAux(int l, int c);
-int inserirCelAux(int linhas, int colunas);
+void gerarSeresLista(int linhas, int colunas);
+void guardarInfoVizinhosLista(int l, int c, int nC, int nL, int qtdVizinhos);
+void definirEArmazenarVizinhosLista(int l, int c);
+int inserirCelLista(int linhas, int colunas);
 int qtdVizinhosVivos(int l, int c);
 int reproducao(int l, int c);
 int sobrevivencia(int l, int c);
