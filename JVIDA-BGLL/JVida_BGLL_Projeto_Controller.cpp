@@ -1,6 +1,6 @@
 /*
 JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
-29/10/2024 - Grupo:BGLL
+05/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -153,12 +153,10 @@ void definirEArmazenarVizinhosLista(int l, int c){
 	for(int i = 0; i < jdvMatriz[l][c].qtdVizinhos; i++){
 		int linhaVizinho = jdvMatriz[l][c].infoVizinhos[i].linha;
 		int colunaVizinho = jdvMatriz[l][c].infoVizinhos[i].coluna;
-		//printf("a");
 		
 		if(jdvMatriz[linhaVizinho][colunaVizinho].situacao == '.'){
 			//printf("b");
 			carrega1Morto(linhaVizinho, colunaVizinho);
-		//	printf("c");
 		}
 			
 	}
