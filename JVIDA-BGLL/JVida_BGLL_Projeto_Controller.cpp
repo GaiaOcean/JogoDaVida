@@ -145,45 +145,29 @@ void alterarViz(){
 
 //As funcaoes abaixo sao utiizadas para a matriz auxiliar
 void gerarSeresAux(int linhas, int colunas){       
-    jdvAux[linhas][colunas].situacao = 'O';
+	carregaVivo(linhas, colunas);
 }
 
 void definirEArmazenarVizinhosAux(int l, int c){
 	int quantidadeDeVizinhos = jdvMatriz[l][c].qtdVizinhos;
-	
+	printf("%d", jdvMatriz[l][c].qtdVizinhos);
 	for(int i = 0; i < jdvMatriz[l][c].qtdVizinhos; i++){
 		int linhaVizinho = jdvMatriz[l][c].infoVizinhos[i].linha;
 		int colunaVizinho = jdvMatriz[l][c].infoVizinhos[i].coluna;
+		//printf("a");
 		
-		if(jdvAux[linhaVizinho][colunaVizinho].situacao == '.')
-			jdvAux[linhaVizinho][colunaVizinho].situacao = '+';
+		if(jdvMatriz[linhaVizinho][colunaVizinho].situacao == '.'){
+			//printf("b");
+			carrega1Morto(linhaVizinho, colunaVizinho);
+		//	printf("c");
+		}
+			
 	}
 }
 
 int inserirCelAux(int linhas, int colunas){
     gerarSeresAux(linhas, colunas);
-    definirEArmazenarVizinhosAux(linhas,colunas);
     return 1;  // celula inserida
-}
-
- // Copia a matriz auxiliar para a principal
-void copiarMatrizAux(int dim) {
-    
-    int lV,lC;
-    for (int i = 0; i < dim; i++) {
-        for (int j = 0; j < dim; j++) {
-            jdvMatriz[i][j].situacao = jdvAux[i][j].situacao;  // copia a proxima geracao 
-        }
-    }
-}
-
-// Limpa a matriz auxiliar
-void limparMatrizAux(int dim) {
-    for (int i = 0; i < dim; i++) {
-        for (int j = 0; j < dim; j++) {
-            jdvAux[i][j].situacao = '.';
-        }
-    }
 }
 
 //-----------------FUNCIONALIDADES PARA NOVAS GERACOES----------------
@@ -194,7 +178,6 @@ int reproducao(int l, int c) {
     int qtdVivos = qtdVizinhosVivos(l, c);
 
     if (qtdVivos == 3) {
-    	inserirCelAux(l,c);
         return 1;  // a celula nasce
     }
 
@@ -232,22 +215,65 @@ int morteSolidao(int l, int c){
 	return 0;
 }
 
+void alterarSituacaoVivo(){
+	TipoCel *aux;
+	aux = pvivo;
+	if(totvivo > 0){
+		while (aux->prox != NULL)
+		{
+			jdvMatriz[aux->lin][aux->col].situacao = VIVO;
+			aux = aux->prox;
+		}
+		jdvMatriz[aux->lin][aux->col].situacao = VIVO;
+	}
+}
+
+void armazenarInfoVizinhos(){
+	TipoCel *aux;
+	aux = pvivo;
+	if(totvivo > 0){
+		while (aux->prox != NULL)
+		{
+			definirEArmazenarVizinhosAux(aux->lin, aux->col);
+			aux = aux->prox;
+		}
+		definirEArmazenarVizinhosAux(aux->lin, aux->col);
+	}
+}
+
+void alterarSituacaoVizinhoMorto(){
+	TipoCel *aux;
+	aux = pmorto;
+	if(totmorto > 0){
+		while (aux->prox != NULL)
+		{
+			jdvMatriz[aux->lin][aux->col].situacao = VIZINHO;
+			aux = aux->prox;
+		}
+		jdvMatriz[aux->lin][aux->col].situacao = VIZINHO;
+	}
+}
+
+
 //Funcao responsavel por criar a proxima geracao de celulas
 void proximaGeracao(int dim,int qtdGeracao) {
-	limparMatrizAux(dim);
-	
     	for (int i = 0; i < dim; i++) {
 	    	for (int j = 0; j < dim; j++) {
 	    		definirSituacaoCelula(i,j);
 	    	}
 		}
 	    
-	    copiarMatrizAux(dim); // copia a matriz auxiliar de volta para a matriz principal
-	    limparMatrizAux(dim);
+	    limparMapa(dim);
+	    alterarSituacaoVivo();
+	    armazenarInfoVizinhos();
+	    alterarSituacaoVizinhoMorto();
         mostrarMatriz(dim);
+        mostrarVivos();
+        mostrarVizinhosMortos();
+        iniciarListas();
         geracaoAtual++;
 		int qtdCelViva = contarVivas(dim);  
-   		mostrarSitGeracao(qtdCelViva, geracaoAtual);
+   		 mostrarSitGeracao(qtdCelViva, geracaoAtual);
 		if(velocidade == 0){
 			confirmacao();
 		}
@@ -339,6 +365,7 @@ void iniciarListas(){
 	pvivo = pmorto = pvivoprox = NULL;
 	totvivo = totmorto = totvivoprox = 0;
 }
+
 void liberaLista(TipoCel *aux, int tot){
     if(aux == NULL || tot == 0)
     	return;
@@ -348,191 +375,6 @@ void liberaLista(TipoCel *aux, int tot){
     	aux = aux->prox;
     	free(aux2);
 	}while(aux != NULL);
-}
-
-//funcao para limpar a lista de pmorto(será usada na carregarMortosVizinhos)
-void excluiMortos(){
-
-	TipoCel *aux = pmorto;
-
-	while(aux != NULL){
-		TipoCel *aux2 = aux -> prox;
-		free(aux);
-		aux = aux2;
-	}
-	pmorto = NULL;
-	totmorto = 0;
-
-}
-
-void carregaVivoProx(int ii, int jj){
-	TipoCel *aux = (TipoCel *)malloc(sizeof(TipoCel));
-	if(aux == NULL){
-		printf("Sem espaco na memoria para inclusao de celula viva");
-		return;
-	}
-	aux->lin = ii;
-	aux->col = jj;
-	
-	if(totvivoprox == 0){
-		pvivoprox = aux;
-		pvivoprox->prox = NULL;
-	}
-	else{
-		aux->prox = pvivoprox;
-		pvivoprox = aux;
-	}
-	totvivoprox++;
-}
-
-bool VerificaMortoNaLista(int i, int j){
-	TipoCel *aux;
-	aux = pmorto;
-	if(totmorto == 0){
-		return false;
-	}
-	do{
-		if(aux->lin == i && aux->col == j){
-			return true;
-		}
-		aux = aux->prox;
-		
-	}while(aux != NULL);
-	return false;
-}
-
-//caso nao tenha incluido, inclui uma cel na lista de mortos vizinhos
-void cria1CelMorta(int i, int j){
-	if((i < 0) ||(j  < 0)){
-		return; 
-	}
-	if((i >= dim) ||(j >= dim)){
-		return; //nao termina de rodar a funccao
-	}
-	if(jdvMatriz[i][j].situacao == 'O'){
-		return;
-	}
-	if(VerificaMortoNaLista(i,j) == true){
-		return; //a cel ja e uma viz morta
-	}
-	
-	TipoCel *aux = (TipoCel*)malloc(sizeof(TipoCel));
-	if(aux == NULL){
-		printf("Sem memória para incluir a celula vizinha-morta\n");
-		return;
-	}
-	aux -> lin = i;
-	aux -> col = j;
-	
-	if(totmorto == 0){
-		pmorto = aux;
-		pmorto -> prox = NULL;
-		
-	}else{
-		aux -> prox = pmorto;
-		pmorto = aux;
-	}
-	totmorto++;
-	
-	if(viz == true){
-		jdvMatriz[i][j].situacao = '+';
-	}else{
-		jdvMatriz[i][j].situacao = '.';
-	}
-}
-
-void atualizaViz(){
-	int i, j, ii, jj, vii, vjj, ct;
-	
-	liberaLista(pvivoprox, totvivoprox);
-	pvivoprox = NULL //pontiros vazios
-	
-	if(pvivo == NULL)
-	   return;
-	TipoCel *aux, *aux2;
-	aux = pvivo;
-	
-	do{
-		ct = 0; //contador de vizinhos da celula (ii, jj)
-		
-		ii = aux->lin;
-		jj = aux->col;
-		aux2 = pvivo;
-	    
-		do{
-		    vii = aux2->lin;
-		    vjj = aux2->col;
-		
-		    if(vii != ii || vjj != jj){
-		       if(abs(ii - vii)<= 1 && abs(jj - vjj)<= 1){
-		           ct++;
-		        }  
-     	    }
-         	aux2 = aux2->prox;  
-	    }while(aux2 != NULL);
-	    if(ct == 2 || ct = 3){
-		    carregaVivoProx(ii, jj);
-     	}
-    	else{
-	        carregaMortoProx(ii, jj);
-        }
-         aux = aux->prox;
-        if(pmorto == NULL)
-            return;
-        aux = pmorto;
-    
-    	if(ct == 3){
-	    	carregaProxVivo;
-	    }
-    	aux2 = aux2->prox;
-      
-    }while(aux2 != NULL);
-}
-
-//inclui cel mortas na lista(inlcui mas de uma diferentemente da outra)
-void incluiCelMortas(){
-	int i,j,k,l;
-	
-	struct{
-		int line,column;
-	}a,b,c,d,e,f,g,h; //celulas vizinhas
-	
-	totmorto = 0;
-	
-	TipoCel *aux;
-	aux = pvivo;
-	
-	if(totvivo == 0){
-		return;
-	}
-	
-	do{
-		i = aux -> lin;
-		j = aux -> col;
-		
-		a.line = i -1; a.column = j - 1;
-		b.line = i -1; b.column = j;
-		c.line = i -1; c.column = j + 1;
-		d.line = i -1; d.column = j - 1;
-		e.line = i -1; e.column = j + 1;
-		f.line = i -1; f.column = j - 1;
-		g.line = i -1; g.column = j;
-		h.line = i -1; h.column = j +1;
-		
-		cria1CelMorta(a.line,a.column);
-		cria1CelMorta(b.line,b.column);
-		cria1CelMorta(c.line,c.column);
-		cria1CelMorta(d.line,d.column);
-		cria1CelMorta(e.line,e.column);
-		cria1CelMorta(g.line,g.column);
-		cria1CelMorta(h.line,h.column);
-		
-		if(aux -> prox == NULL){
-			break;
-		}
-		aux = aux -> prox;			
-	}while(TRUE);
-	
 }
 
 void carregaVivo(int i, int j){
@@ -575,6 +417,92 @@ void excluiVivo(int i, int j){
 	}
 }
 
+//funcao para limpar a lista de cel morta
+void excluiMortos() {
+	
+    TipoCel *aux = pmorto;
+
+    while (aux != NULL) {
+        TipoCel *aux2 = aux->prox;
+        free(aux);
+        aux = aux2;
+    }
+
+    pmorto = NULL;
+    totmorto = 0;//reseta a qtd de cel morta
+}
+
+//percorre a lista verificando se as coordenadas já existem retornando verdadeiro ou falso
+int verificaMorto(int i, int j){
+	
+	TipoCel *aux = pmorto;
+	while(aux != NULL){
+		if(aux -> lin == i  && aux -> col == j ){ //verifica se a celula já existe
+			return 1;
+		}
+		aux = aux -> prox;
+	}
+	return -1; // a cel nao foi encontrada
+	
+}
+
+/*void criaCelMorta(int i, int j){
+	
+	TipoCel *morta = (TipoCel*)malloc(sizeof(TipoCel));
+	morta -> lin =  i;
+	morta -> col = j;
+	morta -> prox = pmorto;
+	
+	pmorto = morta;
+	totmorto = totmorto + 1;
+	
+	//jdvMatriz[i][j].situacao = '+';
+	
+	
+}
+*/
+void carregaMorto(int i, int j){
+	if((i < 0) || (j < 0))
+		return;
+	if((i >= dim) || (j >= dim))
+		return;
+	if(jdvMatriz[i][j].situacao == VIVO)
+		return;
+	if(verificaMorto(i,j) == 1)
+		return;
+	
+	TipoCel *aux = (TipoCel*)malloc(sizeof(TipoCel));
+	if(aux == NULL){
+		printf("sem espaço na memoria para inclusao dde celula morta-vizinha");
+		return;
+	}
+	aux->lin = i;
+	aux->col = j;
+
+	if(totmorto == 0){
+		pmorto = aux;
+		pmorto->prox = NULL;
+	}
+	else{
+		aux->prox = pmorto;
+		pmorto = aux;
+	}
+	totmorto++;
+}
+
+int carrega1Morto(int i, int j){
+	
+	if(jdvMatriz[i][j].situacao == 'O')
+		return 1;//celula viva
+	
+	if(verificaMorto(i,j) == 1)
+		return 2;//celula morta
+		
+	carregaMorto(i,j);
+	
+	return 0;
+}
+
 //---------FUNCIONALIDADES DO MENU---------
 void jogarMenu(){
 
@@ -595,6 +523,7 @@ void jogarMenu(){
             case 1:
             	limparTela();
                 mostrarMatriz(dim);
+				
                 break;
             case 2:
                 limparMapa(dim);

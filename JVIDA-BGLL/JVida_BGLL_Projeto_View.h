@@ -30,3 +30,4 @@ int mensagemCoordenada(int status);
 void perguntarQtdGeracao();
 void perguntarVelocidade();
 void confirmacao();
+void mostrarVizinhosMortos();

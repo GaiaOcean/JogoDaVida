@@ -21,7 +21,6 @@ void mostrarMatriz(int dim){
 	limparTela();
 	printf("\n============================= JOGO DA VIDA =============================\n\n");
 	printf("  '.' - celula morta/vazia | 'O' - celula viva | '+' - vizinha-morta\n\n");
-	
 	printf("\t");
     for (int j = 0; j < dim; j++)
       printf("%02d ", j);
@@ -97,7 +96,7 @@ int retirarCel(int linhas, int colunas, int dim) {
 }
 
 void mostrarSitGeracao(int qtdCelViva,int geracaoAtual){
-	printf("Geracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva );
+	printf("\n\nGeracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva );
 }
 
 void mostrarListaCelVivas(){
@@ -193,3 +192,45 @@ void limparBuffer(){
 void limparTela(){
 	system("cls||clear");
 }
+
+void mostrarVivos(){
+	TipoCel *aux;
+	aux = pvivo;
+	if(totvivo > 0){
+		int k = 0;
+		printf("Celulas Vivas: \n");
+		while (aux->prox != NULL)
+		{
+			if(k%10 == 0){
+				printf("\n");
+			}
+			printf("(%d,%d) | ", aux->lin, aux->col);
+			aux = aux->prox;
+			k++;
+		}
+		printf("(%d,%d) ", aux->lin, aux->col);
+	}
+	printf("\n");
+}
+
+void mostrarVizinhosMortos(){
+	TipoCel *aux;
+	aux = pmorto;
+	if(totmorto > 0){
+		int k = 0;
+		printf("\n\nCelulas Vizinhas Mortas: \n");
+		while (aux->prox != NULL)
+		{
+			if(k%10 == 0){
+				printf("\n");
+			}
+			printf("(%d,%d) | ", aux->lin, aux->col);
+			aux = aux->prox;
+			k++;
+		}
+		printf("(%d,%d) ", aux->lin, aux->col);
+	}
+	printf("\n");
+}
+
+

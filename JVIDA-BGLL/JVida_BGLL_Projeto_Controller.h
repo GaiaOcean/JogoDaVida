@@ -48,4 +48,12 @@ int definirSituacaoCelula(int l, int c);
 void proximaGeracao(int dim,int qtdGeracao);
 int validarCoordenadas();
 void jogarMenu();
-
+void carregaMorto(int i, int j);
+void mostrarVivos();
+void salvar(TipoCel* pvivo, const char* fsvivo);
+void liberaLista(TipoCel *aux, int tot);
+void carregaVivo(int i, int j);
+void alterarSituacaoVizinhoMorto();
+void iniciarListas();
+void armazenarInfoVizinhos();
+int carrega1Morto(int i, int j);
