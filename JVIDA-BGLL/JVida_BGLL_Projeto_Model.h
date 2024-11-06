@@ -48,6 +48,29 @@ typedef struct cel{
 TipoCel *pvivo, *pmorto, *pvivoprox;
 int totvivo, totmorto, totvivoprox;
 
+//Gravação/Recuperacao de cels vivas
+
+typdef struct c{
+	int lin, col;
+}CelViva;
+
+typedef struct list{
+	int tamanhoList;//pode ser ate 400 cel vivas
+	Cel l[400];
+}TipoLista;
+
+TipoLista Lvivo; //struct sem ponteiros
+
+lConfig[50];//grava ate 50 listas de cel vivas iniciais
+int qtconf;//quantidade de configurações iniciais
+int ultrecup = -1;//indice da ultima configuracao recuperada (de 0 a 49)
+
+typedef struct arquivo{
+	TipoLista TL; //1 lista total
+}LConfig[50];
+
+
+
 int linhas;
 int colunas;
 int dim;
