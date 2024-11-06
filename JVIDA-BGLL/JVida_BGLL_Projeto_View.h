@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
-29/10/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
+05/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -8,6 +8,10 @@ Nome dos integrantes:
 - Grazielle Batista de Almeida
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
+
+	A etapa 4 consiste de substituir a matriz auxiliar utilizada previamente 
+	por uma lista ligada, uma vez que a lista ligada faz um uso mais eficiente da memoria.	
+
 */
 
 #include "JVida_BGLL_Projeto_Model.h"
@@ -16,7 +20,6 @@ Nome dos integrantes:
 #include <ctype.h>
 
 void mostrarMatriz(int dim);
-void mostrarMatrizAux(int dim);
 int validarDim(int dimMundo);
 void perguntarDim();
 void perguntarCoordenadas();
@@ -30,3 +33,5 @@ int mensagemCoordenada(int status);
 void perguntarQtdGeracao();
 void perguntarVelocidade();
 void confirmacao();
+void mostrarVizinhosMortos();
+void mostrarVivos();

@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
-29/10/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
+05/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -9,10 +9,9 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-	A etapa 3 consiste de criar uma simulacao da evolucao das celulas ao longo de varias geracoes
-	Esta simulacao sera realizada com o auxilio de uma matriz auxiliar
-	O usuario pod definir a quantidade de geracao a serem simuladas
-	tembem deve ser possivel ajustar a velocidade com que as geracoes seram exibidas
+	A etapa 4 consiste de substituir a matriz auxiliar utilizada previamente 
+	por uma lista ligada, uma vez que a lista ligada faz um uso mais eficiente da memoria.	
+
 */
 
 #include "JVida_BGLL_Projeto_View.h"
@@ -21,7 +20,6 @@ void mostrarMatriz(int dim){
 	limparTela();
 	printf("\n============================= JOGO DA VIDA =============================\n\n");
 	printf("  '.' - celula morta/vazia | 'O' - celula viva | '+' - vizinha-morta\n\n");
-	
 	printf("\t");
     for (int j = 0; j < dim; j++)
       printf("%02d ", j);
@@ -40,20 +38,6 @@ void mostrarMatriz(int dim){
 	}
 }
 
-void mostrarMatrizAux(int dim){
-
-	printf("\t");
-    for (int j = 0; j < dim; j++)
-      printf("%02d ", j);
-    printf("\n\n");
-	
-	for (int i = 0; i < dim; i++){
-		printf("%02d\t", i);
-      	for (int j = 0; j < dim; j++)
-        	printf("%c  ", jdvAux[i][j].situacao);
-        printf("\n");
-	} 
-}
 
 // -----------FUNCOES DE VALIDACOES-----------
 int validarDim(int dimMundo){
@@ -96,9 +80,6 @@ int retirarCel(int linhas, int colunas, int dim) {
     return 0; 
 }
 
-void mostrarSitGeracao(int qtdCelViva,int geracaoAtual){
-	printf("Geracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva );
-}
 //-----------INTERACOES COM JOGADOR-----------
 
 void perguntarDim(){
@@ -178,4 +159,49 @@ void limparBuffer(){
 }
 void limparTela(){
 	system("cls||clear");
+}
+
+//----------------FUNCOES DE MENSAGEM-------------------
+void mostrarVivos(){
+	TipoCel *aux;
+	aux = pvivo;
+	if(totvivo > 0){
+		int k = 0;
+		printf("Celulas Vivas: \n");
+		while (aux->prox != NULL)
+		{
+			if(k%10 == 0){
+				printf("\n");
+			}
+			printf("(%d,%d) | ", aux->lin, aux->col);
+			aux = aux->prox;
+			k++;
+		}
+		printf("(%d,%d) ", aux->lin, aux->col);
+	}
+	printf("\n");
+}
+
+void mostrarVizinhosMortos(){
+	TipoCel *aux;
+	aux = pmorto;
+	if(totmorto > 0){
+		int k = 0;
+		printf("\n\nCelulas Vizinhas Mortas: \n");
+		while (aux->prox != NULL)
+		{
+			if(k%10 == 0){
+				printf("\n");
+			}
+			printf("(%d,%d) | ", aux->lin, aux->col);
+			aux = aux->prox;
+			k++;
+		}
+		printf("(%d,%d) ", aux->lin, aux->col);
+	}
+	printf("\n");
+}
+
+void mostrarSitGeracao(int qtdCelViva,int geracaoAtual){
+	printf("\n\nGeracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva );
 }

@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
-29/10/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
+05/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -9,10 +9,9 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-	A etapa 3 consiste de criar uma simulacao da evolucao das celulas ao longo de varias geracoes
-	Esta simulacao sera realizada com o auxilio de uma matriz auxiliar
-	O usuario pod definir a quantidade de geracao a serem simuladas
-	tembem deve ser possivel ajustar a velocidade com que as geracoes seram exibidas.
+	A etapa 4 consiste de substituir a matriz auxiliar utilizada previamente 
+	por uma lista ligada, uma vez que a lista ligada faz um uso mais eficiente da memoria.	
+
 	
 */
 
@@ -94,11 +93,4 @@ void inicializarMatriz60x60(int dim){
         }
     }
     
-}
-
-
-void inicializarMatrizAux(){
-	for (int i = 0; i < 60; i++)
-      for (int j = 0; j < 60; j++) 
-        jdvAux[i][j].situacao = '.'; // Define todos as celulas como vazias inicialmente
 }
