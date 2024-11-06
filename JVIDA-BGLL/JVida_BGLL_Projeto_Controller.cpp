@@ -484,6 +484,40 @@ int carrega1Morto(int i, int j){
 	return 0;
 }
 
+void gravaCelulas(){
+	int k,i,ni;
+	k = qtdConf;
+	if(totvivo == 0)
+		return;
+	TipoCel *aux;
+	aux = pvivo;
+	ni = 0;
+	do{
+		Lvivo.L[ni].lin = aux->lin;
+		Lvivo.L[ni].col = aux->col;
+		ni++;
+		aux = aux->prox;
+	}while(aux != NULL)
+	Lvivo.cont = totvivo;
+	LConfig[k].TL = Lvivo;
+
+	FILE *fp;
+	if((fp = fopen("CONFIG_INIC", "w")) == NULL){
+		printf("ERRO: o arquivo CONFIG_INIC nao pode ser aberto para gravacao\n");
+		return;
+	}
+	for(i = 0; i <= qtconf;i++){
+		if(fwrite(&LConfig[i], sizeof(TipoLista), 1, fp) != 1){
+			printf("Erro na gravacao do arquivo CONFIG_INIC\n");
+			fclose(fp);
+			return;
+		}
+	}
+	fclose(fp);
+	qtconf++;
+	printf("Configuracao Gravada\n");
+}
+
 //---------FUNCIONALIDADES DO MENU---------
 void jogarMenu(){
 
