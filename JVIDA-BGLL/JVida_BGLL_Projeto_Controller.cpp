@@ -35,6 +35,19 @@ void limparMapa(int dim) {
     }
 }
 
+void limparGeracao(){
+	if(qtconf > 0){
+		if(rconfirma("Confirma exclusao  das configuracoes iniciais? s, <n>: ") == 0)
+		    return;
+	}
+	qtconf = 0;  ///nenhuma configuracao gravada
+	ultimarecup = -1;
+	deletaConf();
+	printf("O dispositivo de geracoes iniciais esta vazio");
+	
+}
+
+	
 //verifica as possibilidades de acao para a coordenada informada, de forma que,
 //se a coordenada estiver vazia, ela e' ocupada e se estiver ocupada, pode ser esvaziada
 int inserirOuRetirarCel(int linhas, int colunas, int dim) {
@@ -368,6 +381,125 @@ void excluiVivo(int i, int j){
 			free(aux);
 		}
 		totvivo--;
+	}
+}
+
+//funcao para limpar a lista de cel morta
+void excluiMortos() {
+	
+    TipoCel *aux = pmorto;
+
+    while (aux != NULL) {
+        TipoCel *aux2 = aux->prox;
+        free(aux);
+        aux = aux2;
+    }
+
+    pmorto = NULL;
+    totmorto = 0;//reseta a qtd de cel morta
+}
+
+void carregaMorto(int i, int j){
+	if((i < 0) || (j < 0))
+		return;
+	if((i >= dim) || (j >= dim))
+		return;
+	if(jdvMatriz[i][j].situacao == VIVO)
+		return;
+	if(verificaMorto(i,j) == 1)
+		return;
+	
+	TipoCel *aux = (TipoCel*)malloc(sizeof(TipoCel));
+	if(aux == NULL){
+		return;
+	}
+	aux->lin = i;
+	aux->col = j;
+
+	if(totmorto == 0){
+		pmorto = aux;
+		pmorto->prox = NULL;
+	}
+	else{
+		aux->prox = pmorto;
+		pmorto = aux;
+	}
+	totmorto++;
+}
+
+int carrega1Morto(int i, int j){
+	
+	if(jdvMatriz[i][j].situacao == 'O')
+		return 1;//celula viva
+	
+	if(verificaMorto(i,j) == 1)
+		return 2;//celula morta
+		
+	carregaMorto(i,j);
+	
+	return 0;
+}
+
+//-----------------------------FUNCIONALIDADES PARA SALVAR E RECUPERAR----------------
+
+void gravaCelulas(){
+	int k,i,ni;
+	k = qtconf;
+	if(totvivo == 0)
+		return;
+	TipoCel *aux;
+	aux = pvivo;
+	ni = 0;
+	do{
+		Lvivo.l[ni].lin = aux->lin;
+		Lvivo.l[ni].col = aux->col;
+		ni++;
+		aux = aux->prox;
+	}while(aux != NULL);
+	Lvivo.tamanhoList = totvivo;
+	lConfig[k].TL = Lvivo;
+	FILE *fp;
+	if((fp = fopen("CONFIG_INIC", "w")) == NULL){
+		printf("ERRO: o arquivo CONFIG_INIC nao pode ser aberto para gravacao\n");
+		return;
+	}
+	for(i = 0; i <= qtconf;i++){
+		if(fwrite(&lConfig[i], sizeof(TipoLista), 1, fp) != 1){
+			printf("Erro na gravacao do arquivo CONFIG_INIC\n");
+			fclose(fp);
+			return;
+		}
+	}
+	fclose(fp);
+	qtconf++;
+	printf("Configuracao Gravada\n");
+}
+
+void deletaConf(){
+	if(remove("CONFIG_INIC")!= 0){
+		printf("ERRO: O arquivo CONF_INIC nao pode ser removido");
+		    return;
+	}
+	qtconf = 0;
+	printf("O arquivo CONF_INIC foi removido");
+}
+
+void recuperarCels(){
+	int i, j, k, ni;
+	
+	if(qtconf == 0){
+		
+		printf("Nao existe configuracao a recuperar");
+		     return;	
+	}
+	k = ultimarecup + 1;
+	if(k > qtconf){
+		k = 0;
+		Lvivo = lConfig[k].TL;
+		ultimarecup = k;
+    }
+    for(ni = 0; ni < Lvivo.tamanhoList; ni++){
+		carregaVivo(Lvivo.l[ni].lin, Lvivo.l[ni].col);
 	}
 }
 
