@@ -80,6 +80,22 @@ int retirarCel(int linhas, int colunas, int dim) {
     return 0; 
 }
 
+void apresentarMensamDeSucesso(int status){
+	
+	switch(status){
+		case 1:
+			printf("Configuracao Gravada\n");
+			break;
+		case 2:
+			printf("O arquivo CONF_INIC foi removido com sucesso.");
+			break;
+		case 3:
+			printf("O arquivo CONFIG_INIC foi removido com sucesso.");
+			break;
+		default:
+			printf("Mudança feita com sucesso");
+	}
+}
 void apresentaMensagemDeErro(int status){
 	
 	switch(status){
@@ -96,10 +112,16 @@ void apresentaMensagemDeErro(int status){
 	    	printf("O deposito de geracoes iniciais esta vazio");
 	    	break;
 	    case 4:
-	    	printf("ERRO: O arquivo CONFIG_INIC nao pode serremovido");
+	    	printf("ERRO: O arquivo CONFIG_INIC nao pode ser removido");
 	    	break;
 	    case 5:
 	    	printf("O arquivo CONFIG_INIC foi removido OK");
+	    	break;
+	    case 6:
+	    	printf("ERRO: o arquivo CONFIG_INIC nao pode ser aberto para gravacao\n");
+	    	break;
+	    case 7:
+	    	printf("Erro na gravacao do arquivo CONFIG_INIC\n");
 	    	break;
 		default:
 			printf("Erro desconhecido");

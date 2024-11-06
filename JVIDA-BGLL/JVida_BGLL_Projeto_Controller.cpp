@@ -517,19 +517,19 @@ void gravaCelulas(){
 	LConfig[k].TL = Lvivo;
 	FILE *fp;
 	if((fp = fopen("CONFIG_INIC", "w")) == NULL){
-		printf("ERRO: o arquivo CONFIG_INIC nao pode ser aberto para gravacao\n");
+		apresentaMensagemDeErro(6);
 		return;
 	}
 	for(i = 0; i <= qtdConf;i++){
 		if(fwrite(&LConfig[i], sizeof(TipoLista), 1, fp) != 1){
-			printf("Erro na gravacao do arquivo CONFIG_INIC\n");
+			apresentaMensagemDeErro(7);
 			fclose(fp);
 			return;
 		}
 	}
 	fclose(fp);
 	qtdConf++;
-	printf("Configuracao Gravada\n");
+	apresentarMensamDeSucesso(1);
 }
 
 void carregaConfig(){
@@ -557,11 +557,11 @@ FILE *fp;
 
 void deletaConf(){
 	if(remove("CONFIG_INIC")!= 0){
-		apresentaMensagem("ERRO: O arquivo CONF_INIC nao pode ser removido");
+		apresentaMensagemDeErro(0);
 		    return;
 	}
 	qtdConf = 0;
-	apresentaMensagem("O arquivo CONF_INIC foi removido");
+	apresentarMensamDeSucesso(2);
 }
 
 void recuperarCels(){
@@ -569,7 +569,7 @@ void recuperarCels(){
 	
 	if(qtdConf == 0){
 		
-		apresentaMensagem("Nao existe configuracao a recuperar");
+		apresentaMensagemDeErro(2);
 		     return;	
 	}
 	k = ultimarecup + 1;
@@ -593,16 +593,16 @@ void limpaGer(){
  	qtdConf = 0; //nenhuma configuracao gravada
  	ultimarecup = -1; //ultimo índice recuperado
  		deletaConf();
- 	apresentaMensagem("O deposito de geracoes iniciais esta vazio");
+ 	apresentaMensagemDeErro(3);
 }
 //remove o arquivo de configurações iniciais
 void deletaConfig(){
 	 if(remove("CONFIG_INIC") != 0){
- 			apresentaMensagem("ERRO: O arquivo CONFIG_INIC nao pode serremovido");
+ 			apresentaMensagemDeErro(4);
  			return;
      	}
  	qtdConf = 0;
- 	apresentaMensagem("O arquivo CONFIG_INIC foi removido OK");
+ 	apresentarMensamDeSucesso(3);
 }
 //---------FUNCIONALIDADES DO MENU---------
 void jogarMenu(){
