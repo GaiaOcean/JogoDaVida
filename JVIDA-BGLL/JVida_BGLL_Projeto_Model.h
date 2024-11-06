@@ -52,7 +52,7 @@ int totvivo, totmorto, totvivoprox;
 
 typdef struct c{
 	int lin, col;
-}CelViva;
+}Cel;
 
 typedef struct list{
 	int tamanhoList;//pode ser ate 400 cel vivas
@@ -68,6 +68,7 @@ int ultrecup = -1;//indice da ultima configuracao recuperada (de 0 a 49)
 typedef struct arquivo{
 	TipoLista TL; //1 lista total
 }LConfig[50];
+
 
 
 int linhas;
