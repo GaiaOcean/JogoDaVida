@@ -575,11 +575,11 @@ void recuperarCels(){
 	k = ultimarecup + 1;
 	if(k > qtdConf){
 		k = 0;
-		Lvivo = LConf[k].TL;
+		Lvivo = LConfig[k].TL;
 		ultimarecup = k;
     }
-    for(ni = 0; ni < Lvivo.cont; ni++){
-		carregaVivo(Lvivo.L[ni].lin, Lvivo.l[ni].col);
+    for(ni = 0; ni < Lvivo.tamanhoList; ni++){
+		carregaVivo(Lvivo.L[ni].lin, Lvivo.L[ni].col);
 	}
 }
 
@@ -591,8 +591,8 @@ void limpaGer(){
  		 return;
  	}
  	qtdConf = 0; //nenhuma configuracao gravada
- 	ultrecup = -1; //ultimo índice recuperado
- 		deletaConfig();
+ 	ultimarecup = -1; //ultimo índice recuperado
+ 		deletaConf();
  	apresentaMensagem("O deposito de geracoes iniciais esta vazio");
 }
 //remove o arquivo de configurações iniciais
@@ -667,7 +667,7 @@ void jogarMenu(){
 			case 7:
 				carregaConfig();
 				recuperarCels();
-				mostraMatriz(dim);
+				mostrarMatriz(dim);
 				break;
             case 0:
                 interacoesMenu(opcao);

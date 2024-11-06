@@ -80,6 +80,32 @@ int retirarCel(int linhas, int colunas, int dim) {
     return 0; 
 }
 
+void apresentaMensagemDeErro(int status){
+	
+	switch(status){
+		case 0:
+			printf("ERRO: O arquivo CONF_INIC nao pode ser removido");
+			break;
+	    case 1:
+	    	printf("O arquivo CONF_INIC foi removido");
+	    	break;
+	    case 2:
+	    	printf("Nao existe configuracao a recuperar");
+	    	break;
+	    case 3:
+	    	printf("O deposito de geracoes iniciais esta vazio");
+	    	break;
+	    case 4:
+	    	printf("ERRO: O arquivo CONFIG_INIC nao pode serremovido");
+	    	break;
+	    case 5:
+	    	printf("O arquivo CONFIG_INIC foi removido OK");
+	    	break;
+		default:
+			printf("Erro desconhecido");
+	}
+}
+
 //-----------INTERACOES COM JOGADOR-----------
 
 void perguntarDim(){
@@ -139,6 +165,8 @@ int rconfirma(){
 	else
 		return 1;	
 }
+
+
 //--------------FUNCIONALIDADES DO MENU------------
 
 int menu(){
