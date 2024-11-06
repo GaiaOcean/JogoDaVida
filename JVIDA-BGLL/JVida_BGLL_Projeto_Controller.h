@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 3
-28/10/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
+05/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -9,7 +9,8 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-O Controller.h contem os prototipos das funcoes presentes no Controller.cpp
+	A etapa 4 consiste de substituir a matriz auxiliar utilizada previamente 
+	por uma lista ligada, uma vez que a lista ligada faz um uso mais eficiente da memoria.	
 
 */
 
@@ -23,26 +24,36 @@ O Controller.h contem os prototipos das funcoes presentes no Controller.cpp
 void gerarSeres(int linhas, int colunas,int dim);
 void limparMapa(int dim);
 void tornarVazio(int l, int c);
-void tornarVizinho(int l, int c);
+void tornarVizinhoVivoOuMorto(int l, int c);
 int inserirOuRetirarCel(int linhas, int colunas, int dim);
-int verificarOcupacao(int l, int c);
-void guardarInfoVizinhos(int l, int c, int nC, int nL, int qtdVizinhos);
-void infoVizinhos(int l, int c);
+int verificarSeCelulaVizinhaViva(int l, int c);
+void definirSituacaoVizinhos(int l, int c);
 void alterarViz();
-void gerarSeresAux(int linhas, int colunas);
-void guardarInfoVizinhosAux(int l, int c, int nC, int nL, int qtdVizinhos);
-void infoVizinhosAux(int l, int c);
-int inserirCelAux(int linhas, int colunas);
+void gerarSeresLista(int linhas, int colunas);
+void guardarInfoVizinhosLista(int l, int c, int nC, int nL, int qtdVizinhos);
+void definirEArmazenarVizinhosLista(int l, int c);
+int inserirCelLista(int linhas, int colunas);
 int qtdVizinhosVivos(int l, int c);
 int reproducao(int l, int c);
 int sobrevivencia(int l, int c);
 int morteFaltaComida(int l,int c);
 int morteSolidao(int l, int c);
-void copiarMatrizAux(int dim);
-void limparMatrizAux(int dim);
 void gerarAtraso();
 int contarVivas(int dim);
 int definirSituacaoCelula(int l, int c);
 void proximaGeracao(int dim,int qtdGeracao);
 int validarCoordenadas();
 void jogarMenu();
+void carregaMorto(int i, int j);
+void mostrarVivos();
+void liberaLista(TipoCel *aux, int tot);
+void carregaVivo(int i, int j);
+void alterarSituacaoVizinhoMorto();
+void iniciarListas();
+void armazenarInfoVizinhos();
+int carrega1Morto(int i, int j);
+void recuperarCels();
+void deletaConf();
+void limparGeracao();
+void gravaCelulas();
+void carregaConfig();
