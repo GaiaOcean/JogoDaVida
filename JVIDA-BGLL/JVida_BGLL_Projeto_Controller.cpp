@@ -34,6 +34,19 @@ void limparMapa(int dim) {
     }
 }
 
+void limparGeracao(){
+	if(qtconf > 0){
+		if(rconfirma("Confirma exclusao  das configuracoes iniciais? s, <n>: ") == 0)
+		    return;
+	}
+	qtconf = 0;  ///nenhuma configuracao gravada
+	ultimarecup = -1;
+	deletaConf();
+	apresentaMensagem("O dispositivo de geracoes iniciais esta vazio");
+	
+}
+
+	
 //verifica as possibilidades de acao para a coordenada informada, de forma que,
 //se a coordenada estiver vazia, ela e' ocupada e se estiver ocupada, pode ser esvaziada
 int inserirOuRetirarCel(int linhas, int colunas, int dim) {
@@ -484,6 +497,8 @@ int carrega1Morto(int i, int j){
 	return 0;
 }
 
+//-----------------------------FUNCIONALIDADES PARA SALVAR E RECUPERAR----------------
+
 void gravaCelulas(){
 	int k,i,ni;
 	k = qtdConf;
@@ -500,7 +515,6 @@ void gravaCelulas(){
 	}while(aux != NULL)
 	Lvivo.cont = totvivo;
 	LConfig[k].TL = Lvivo;
-
 	FILE *fp;
 	if((fp = fopen("CONFIG_INIC", "w")) == NULL){
 		printf("ERRO: o arquivo CONFIG_INIC nao pode ser aberto para gravacao\n");
@@ -516,6 +530,34 @@ void gravaCelulas(){
 	fclose(fp);
 	qtconf++;
 	printf("Configuracao Gravada\n");
+}
+
+void deletaConf(){
+	if(remove("CONFIG_INIC")!= 0){
+		apresentaMensagem("ERRO: O arquivo CONF_INIC nao pode ser removido");
+		    return;
+	}
+	qtconf = 0;
+	apresentaMensagem("O arquivo CONF_INIC foi removido");
+}
+
+void recuperarCels(){
+	int i, j, k, ni;
+	
+	if(atconf == 0){
+		
+		apresentaMensagem("Nao existe configuracao a recuperar");
+		     return;	
+	}
+	k = ultimarecup + 1;
+	if(k > qtconf){
+		k = 0;
+		Lvivo = LConf[k].TL;
+		ultimarecup = k;
+    }
+    for(ni = 0; ni < Lvivo.cont; ni++){
+		carregaVivo(Lvivo.L[ni].lin, Lvivo.l[ni].col);
+	}
 }
 
 //---------FUNCIONALIDADES DO MENU---------

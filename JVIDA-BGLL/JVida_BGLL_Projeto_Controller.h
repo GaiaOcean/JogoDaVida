@@ -52,3 +52,7 @@ void alterarSituacaoVizinhoMorto();
 void iniciarListas();
 void armazenarInfoVizinhos();
 int carrega1Morto(int i, int j);
+void recuperarCels();
+void deletaConf();
+void limparGeracao();
+void gravaCelulas();
