@@ -518,6 +518,29 @@ void gravaCelulas(){
 	printf("Configuracao Gravada\n");
 }
 
+void carregaConfig(){
+ 
+int k;
+FILE *fp;
+
+ 	if((fp = fopen("CONFIG_INIC", "r")) != NULL){
+ 		//pesquisa a quantidade de configurações cadastradas
+ 		qtconf = 0;
+ 		k = 0;
+	 	while(!feof(fp)){ //enquanto não for fim de arquivo
+	 		if (fread(&LConfig[k], sizeof(TipoLista), 1, fp) != 1){
+		 		fclose(fp);
+		 		return;
+	 		}
+	 		
+			qtconf++;
+			k++;
+		}
+	 
+ 		fclose(fp);
+ 	}
+}
+
 //---------FUNCIONALIDADES DO MENU---------
 void jogarMenu(){
 
