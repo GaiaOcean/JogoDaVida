@@ -520,7 +520,7 @@ void gravaCelulas(){
 		printf("ERRO: o arquivo CONFIG_INIC nao pode ser aberto para gravacao\n");
 		return;
 	}
-	for(i = 0; i <= qtconf;i++){
+	for(i = 0; i <= qtdConf;i++){
 		if(fwrite(&LConfig[i], sizeof(TipoLista), 1, fp) != 1){
 			printf("Erro na gravacao do arquivo CONFIG_INIC\n");
 			fclose(fp);
@@ -528,7 +528,7 @@ void gravaCelulas(){
 		}
 	}
 	fclose(fp);
-	qtconf++;
+	qtdConf++;
 	printf("Configuracao Gravada\n");
 }
 
@@ -539,7 +539,7 @@ FILE *fp;
 
  	if((fp = fopen("CONFIG_INIC", "r")) != NULL){
  		//pesquisa a quantidade de configurações cadastradas
- 		qtconf = 0;
+ 		qtdConf = 0;
  		k = 0;
 	 	while(!feof(fp)){ //enquanto não for fim de arquivo
 	 		if (fread(&LConfig[k], sizeof(TipoLista), 1, fp) != 1){
@@ -547,7 +547,7 @@ FILE *fp;
 		 		return;
 	 		}
 	 		
-			qtconf++;
+			qtdConf++;
 			k++;
 		}
 	 
@@ -560,20 +560,20 @@ void deletaConf(){
 		apresentaMensagem("ERRO: O arquivo CONF_INIC nao pode ser removido");
 		    return;
 	}
-	qtconf = 0;
+	qtdConf = 0;
 	apresentaMensagem("O arquivo CONF_INIC foi removido");
 }
 
 void recuperarCels(){
 	int i, j, k, ni;
 	
-	if(qtconf == 0){
+	if(qtdConf == 0){
 		
 		apresentaMensagem("Nao existe configuracao a recuperar");
 		     return;	
 	}
 	k = ultimarecup + 1;
-	if(k > qtconf){
+	if(k > qtdConf){
 		k = 0;
 		Lvivo = LConf[k].TL;
 		ultimarecup = k;
@@ -586,11 +586,11 @@ void recuperarCels(){
 //Limpa o deposito de gerações iniciais
 //(gera o arquivo se o deposito ainda não existe
 void limpaGer(){
-	if(qtconf > 0){
+	if(qtdConf > 0){
     	 if (rconfirma() == 0)
  		 return;
  	}
- 	qtconf = 0; //nenhuma configuracao gravada
+ 	qtdConf = 0; //nenhuma configuracao gravada
  	ultrecup = -1; //ultimo índice recuperado
  		deletaConfig();
  	apresentaMensagem("O deposito de geracoes iniciais esta vazio");
@@ -601,7 +601,7 @@ void deletaConfig(){
  			apresentaMensagem("ERRO: O arquivo CONFIG_INIC nao pode serremovido");
  			return;
      	}
- 	qtconf = 0;
+ 	qtdConf = 0;
  	apresentaMensagem("O arquivo CONFIG_INIC foi removido OK");
 }
 //---------FUNCIONALIDADES DO MENU---------

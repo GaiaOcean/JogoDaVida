@@ -61,7 +61,7 @@ TipoLista Lvivo; //struct sem ponteiros
 int qtdConf;//quantidade de configuracoes iniciais
 int ultimarecup = -1;//indice da ultima configuracao recuperada (de 0 a 49)
 
-typedef struct arquivo{
+struct arquivo{
 	TipoLista TL; //1 lista total
 }LConfig[50];
 
