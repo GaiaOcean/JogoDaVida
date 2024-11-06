@@ -35,11 +35,11 @@ void limparMapa(int dim) {
 }
 
 void limparGeracao(){
-	if(qtconf > 0){
-		if(rconfirma("Confirma exclusao  das configuracoes iniciais? s, <n>: ") == 0)
+	if(qtdConf > 0){
+		if(rconfirma() == 0)
 		    return;
 	}
-	qtconf = 0;  ///nenhuma configuracao gravada
+	qtdConf = 0;  ///nenhuma configuracao gravada
 	ultimarecup = -1;
 	deletaConf();
 	printf("O dispositivo de geracoes iniciais esta vazio");
@@ -511,8 +511,9 @@ void gravaCelulas(){
 		Lvivo.L[ni].col = aux->col;
 		ni++;
 		aux = aux->prox;
-	}while(aux != NULL)
-	Lvivo.cont = totvivo;
+	}while(aux != NULL);
+	
+	Lvivo.tamanhoList = totvivo;
 	LConfig[k].TL = Lvivo;
 	FILE *fp;
 	if((fp = fopen("CONFIG_INIC", "w")) == NULL){
@@ -582,6 +583,27 @@ void recuperarCels(){
 	}
 }
 
+//Limpa o deposito de gerações iniciais
+//(gera o arquivo se o deposito ainda não existe
+void limpaGer(){
+	if(qtconf > 0){
+    	 if (rconfirma() == 0)
+ 		 return;
+ 	}
+ 	qtconf = 0; //nenhuma configuracao gravada
+ 	ultrecup = -1; //ultimo índice recuperado
+ 		deletaConfig();
+ 	apresentaMensagem("O deposito de geracoes iniciais esta vazio");
+}
+//remove o arquivo de configurações iniciais
+void deletaConfig(){
+	 if(remove("CONFIG_INIC") != 0){
+ 			apresentaMensagem("ERRO: O arquivo CONFIG_INIC nao pode serremovido");
+ 			return;
+     	}
+ 	qtconf = 0;
+ 	apresentaMensagem("O arquivo CONFIG_INIC foi removido OK");
+}
 //---------FUNCIONALIDADES DO MENU---------
 void jogarMenu(){
 
@@ -638,6 +660,14 @@ void jogarMenu(){
 					qtdGeracao = qtdGeracao - 1;
 				}while(qtdGeracao > 0 && conf != 'N');
 				mostrarMatriz(dim);
+				break;
+			case 6:
+				gravaCelulas();
+				break;
+			case 7:
+				carregaConfig();
+				recuperarCels();
+				mostraMatriz(dim);
 				break;
             case 0:
                 interacoesMenu(opcao);

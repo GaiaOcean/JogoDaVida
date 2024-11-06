@@ -125,6 +125,20 @@ void confirmacao(){
 	limparBuffer();
 	
 }
+
+int rconfirma(){
+	
+	char opcaoUsuario;
+	
+	toupper(opcaoUsuario);
+	printf("Confirma exclusao das configuracoes iniciais?(s ou n):");
+	scanf("%c", &opcaoUsuario);
+	
+	if(opcaoUsuario == 'S')
+		return 0;
+	else
+		return 1;	
+}
 //--------------FUNCIONALIDADES DO MENU------------
 
 int menu(){
@@ -136,6 +150,8 @@ int menu(){
     printf("3 - Incluir celula / excluir celulas\n");
     printf("4 - Mostrar/Esconder vizinhas-mortas\n");
     printf("5 - Mostrar Proximas Geracoes\n");
+    printf("6 - Salvar Geracoes\n");
+    printf("7 - Carregar Geracoes Salvas\n");
     printf("0 - Sair\n");  
     printf("=============================\n");
     printf("Escolha uma opcao: ");
