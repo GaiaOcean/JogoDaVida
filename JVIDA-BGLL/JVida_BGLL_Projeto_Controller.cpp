@@ -577,6 +577,8 @@ void recuperarCels(){
 		apresentaMensagemDeErro(2);
 		     return;	
 	}
+
+	iniciarListas();
 	k = ultimarecup + 1;
 	if(k > qtdConf){
 		k = 0;
