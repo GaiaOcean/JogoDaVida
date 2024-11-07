@@ -19,7 +19,8 @@ Nome dos integrantes:
 #include <stdlib.h>
 
 void gerarSeres(int linhas, int colunas,int dim){       
-    jdvMatriz[linhas][colunas].situacao = 'O';
+    carregaVivo(linhas,colunas);
+    alterarSituacaoVivo();
 }
 
 //Funcao responsavel por limpar o mapa
@@ -52,10 +53,12 @@ int inserirOuRetirarCel(int linhas, int colunas, int dim) {
     if (jdvMatriz[linhas][colunas].situacao == '.' || jdvMatriz[linhas][colunas].situacao == '+') {
         gerarSeres(linhas, colunas, dim);
         definirSituacaoVizinhos(linhas,colunas);
+        qtdCelViva++;  
         return 1;  // celula inserida
     }
     else if (jdvMatriz[linhas][colunas].situacao == 'O') {
     	 if(retirarCel(linhas, colunas, dim) == 1){
+    	 	excluiVivo(linhas, colunas);
     	 	tornarVizinhoVivoOuMorto(linhas, colunas);
 			tornarVazio(linhas, colunas);
         	return 2;  // celula removida
@@ -77,7 +80,7 @@ void tornarVizinhoVivoOuMorto(int l, int c){
 
 void definirEArmazenarVizinhosLista(int l, int c){
 	int quantidadeDeVizinhos = jdvMatriz[l][c].qtdVizinhos;
-	printf("%d", jdvMatriz[l][c].qtdVizinhos);
+
 	for(int i = 0; i < jdvMatriz[l][c].qtdVizinhos; i++){
 		int linhaVizinho = jdvMatriz[l][c].infoVizinhos[i].linha;
 		int colunaVizinho = jdvMatriz[l][c].infoVizinhos[i].coluna;
@@ -286,6 +289,8 @@ void alterarSituacaoVizinhoMorto(){
 
 //Funcao responsavel por criar a proxima geracao de celulas
 void proximaGeracao(int dim,int qtdGeracao) {
+	iniciarListas();
+	
     	for (int i = 0; i < dim; i++) {
 	    	for (int j = 0; j < dim; j++) {
 	    		definirSituacaoCelula(i,j);
@@ -299,10 +304,9 @@ void proximaGeracao(int dim,int qtdGeracao) {
         mostrarMatriz(dim);
         mostrarVivos();
         mostrarVizinhosMortos();
-        iniciarListas();
         geracaoAtual++;
-		int qtdCelViva = contarVivas(dim);  
-   		 mostrarSitGeracao(qtdCelViva, geracaoAtual);
+		qtdCelViva = contarVivas(dim);  
+   		mostrarSitGeracao(qtdCelViva, geracaoAtual);
 		if(velocidade == 0){
 			confirmacao();
 		}
@@ -499,28 +503,29 @@ int carrega1Morto(int i, int j){
 //-----------------------------FUNCIONALIDADES PARA SALVAR E RECUPERAR----------------
 
 void gravaCelulas(){
-	int k,i,ni;
-	k = qtdConf;
-	if(totvivo == 0)
+	int cursorMaxLista,cursorCelulasVivas;
+	cursorMaxLista = qtdConf;
+	if(totvivo == 0){
 		return;
+	}
 	TipoCel *aux;
 	aux = pvivo;
-	ni = 0;
+	cursorCelulasVivas = 0;
 	do{
-		Lvivo.L[ni].lin = aux->lin;
-		Lvivo.L[ni].col = aux->col;
-		ni++;
+		Lvivo.L[cursorCelulasVivas].lin = aux->lin;
+		Lvivo.L[cursorCelulasVivas].col = aux->col;
+		cursorCelulasVivas++;
 		aux = aux->prox;
 	}while(aux != NULL);
 	
 	Lvivo.tamanhoList = totvivo;
-	LConfig[k].TL = Lvivo;
+	LConfig[cursorMaxLista].TL = Lvivo;
 	FILE *fp;
-	if((fp = fopen("CONFIG_INIC", "w")) == NULL){
+	if((fp = fopen("CONFIG_INIC", "wb")) == NULL){
 		apresentaMensagemDeErro(6);
 		return;
 	}
-	for(i = 0; i <= qtdConf;i++){
+	for(int i = 0; i <= qtdConf;i++){
 		if(fwrite(&LConfig[i], sizeof(TipoLista), 1, fp) != 1){
 			apresentaMensagemDeErro(7);
 			fclose(fp);

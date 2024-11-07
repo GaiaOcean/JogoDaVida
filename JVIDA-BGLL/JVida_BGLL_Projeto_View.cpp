@@ -193,8 +193,7 @@ int rconfirma(){
 
 int menu(){
 	int opcao;
-
-	printf("\n======= JOGO DA VIDA =======\n");
+	printf("%d\n", totvivo);
     printf("1 - Apresentar Mapa\n");
     printf("2 - Limpar Mapa\n");
     printf("3 - Incluir celula / excluir celulas\n");

@@ -57,3 +57,5 @@ void deletaConf();
 void limparGeracao();
 void gravaCelulas();
 void carregaConfig();
+void alterarSituacaoVivo();
+void excluiVivo(int i, int j);

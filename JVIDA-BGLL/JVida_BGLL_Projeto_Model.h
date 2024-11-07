@@ -78,6 +78,7 @@ int qtdGeracao;
 int geracaoAtual = 0; 
 char conf;
 int qtdVivas = 0;
+int qtdCelViva = 0;
 
 
 Mundo jdvMatriz[VALORMAX][VALORMAX];
