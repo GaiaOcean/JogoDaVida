@@ -59,3 +59,4 @@ void gravaCelulas();
 void carregaConfig();
 void alterarSituacaoVivo();
 void excluiVivo(int i, int j);
+void atualizarCarregarConfig(TipoCel* pvivo);

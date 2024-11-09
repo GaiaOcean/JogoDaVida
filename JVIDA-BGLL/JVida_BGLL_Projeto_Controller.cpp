@@ -33,6 +33,7 @@ void limparMapa(int dim) {
             
         }
     }
+	
 }
 
 void limparGeracao(){
@@ -405,7 +406,9 @@ int verificaMorto(int i, int j){
 }
 
 void carregaVivo(int i, int j){
+
 	TipoCel *aux = (TipoCel *)malloc(sizeof(TipoCel));
+
 	if(aux == NULL){
 		return;
 	}
@@ -500,6 +503,8 @@ int carrega1Morto(int i, int j){
 	return 0;
 }
 
+
+
 //-----------------------------FUNCIONALIDADES PARA SALVAR E RECUPERAR----------------
 
 void gravaCelulas(){
@@ -521,7 +526,7 @@ void gravaCelulas(){
 	Lvivo.tamanhoList = totvivo;
 	LConfig[cursorMaxLista].TL = Lvivo;
 	FILE *fp;
-	if((fp = fopen("CONFIG_INIC", "wb")) == NULL){
+	if((fp = fopen("CONFIG_INIC", "ab")) == NULL){
 		apresentaMensagemDeErro(6);
 		return;
 	}
@@ -539,25 +544,22 @@ void gravaCelulas(){
 
 void carregaConfig(){
  
-int k;
-FILE *fp;
+	int k = 0;
+	FILE *fp;
 
- 	if((fp = fopen("CONFIG_INIC", "r")) != NULL){
- 		//pesquisa a quantidade de configurações cadastradas
- 		qtdConf = 0;
- 		k = 0;
-	 	while(!feof(fp)){ //enquanto não for fim de arquivo
-	 		if (fread(&LConfig[k], sizeof(TipoLista), 1, fp) != 1){
-		 		fclose(fp);
-		 		return;
-	 		}
-	 		
-			qtdConf++;
-			k++;
-		}
+
+	if((fp = fopen("CONFIG_INIC","rb")) == NULL){
+		printf("Erro ao abrir o arquivo de configuracoes\n");
+		fclose(fp);
+		return;
+	}
+		
+	while(fread(&LConfig[k], sizeof(TipoLista), 1, fp) == 1){ //enquanto não for fim de arquivo
+		qtdConf++;
+		k++;
+	}
 	 
- 		fclose(fp);
- 	}
+ 	fclose(fp);
 }
 
 void deletaConf(){
@@ -573,20 +575,37 @@ void recuperarCels(){
 	int i, j, k, ni;
 	
 	if(qtdConf == 0){
-		
 		apresentaMensagemDeErro(2);
 		     return;	
 	}
 
 	iniciarListas();
 	k = ultimarecup + 1;
-	if(k > qtdConf){
+	if(k >= qtdConf){
 		k = 0;
 		Lvivo = LConfig[k].TL;
 		ultimarecup = k;
     }
     for(ni = 0; ni < Lvivo.tamanhoList; ni++){
 		carregaVivo(Lvivo.L[ni].lin, Lvivo.L[ni].col);
+	}
+	
+}
+
+void atualizarMapaRecuperado(TipoCel* pvivo){
+
+	limparMapa(dim); // garente que nao vai ter nada na matriz
+
+	TipoCel* aux = pvivo;
+	while(aux != NULL){
+		int linha = aux->lin;
+		int coluna = aux->col;
+
+		if(linha >= 0 && linha < VALORMAX && coluna >= 0 && coluna < VALORMAX){
+			gerarSeres(linha, coluna, dim);
+		}
+
+		aux = aux->prox;
 	}
 }
 
@@ -633,6 +652,7 @@ void jogarMenu(){
                 break;
             case 2:
                 limparMapa(dim);
+				iniciarListas();
                 mostrarMatriz(dim);
                 break;
             case 3:
@@ -673,7 +693,13 @@ void jogarMenu(){
 				break;
 			case 7:
 				carregaConfig();
-				recuperarCels();
+				if(qtdConf > 0)
+					recuperarCels();
+				else{
+					printf("Nenhuma configuracao carregada");
+					break;
+				}
+				atualizarCarregarConfig(pvivo);
 				mostrarMatriz(dim);
 				break;
             case 0:

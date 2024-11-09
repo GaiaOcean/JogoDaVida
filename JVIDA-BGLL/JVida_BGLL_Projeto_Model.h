@@ -40,9 +40,9 @@ typedef struct{
   	Vizinhos infoVizinhos[8];
 }Mundo;
 
-typedef struct cel{
+typedef struct Tipocel{
 	int lin, col;
-	struct cel *prox;
+	struct Tipocel* prox;
 }TipoCel;
 
 //----------------------Gravacao/Recuperacao de cels vivas-------------------------------
