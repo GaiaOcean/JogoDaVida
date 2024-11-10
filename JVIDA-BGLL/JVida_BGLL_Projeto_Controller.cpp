@@ -592,6 +592,8 @@ void recuperarCels(){
 		Lvivo = LConfig[k].TL;
 		ultimarecup = k;
     }
+    qtdCelViva = Lvivo.tamanhoList;
+    
     for(ni = 0; ni < Lvivo.tamanhoList; ni++){
 		carregaVivo(Lvivo.L[ni].lin, Lvivo.L[ni].col);
 	}
