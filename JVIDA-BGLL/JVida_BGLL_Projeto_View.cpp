@@ -123,6 +123,12 @@ void apresentaMensagemDeErro(int status){
 	    case 7:
 	    	printf("Erro na gravacao do arquivo CONFIG_INIC\n");
 	    	break;
+	    case 8:
+	    	printf("Erro ao abrir o arquivo de configuracoes\n");
+	    	break;
+	    case 9:
+	    	printf("Nenhuma geraçao salva");
+	    	break;
 		default:
 			printf("Erro desconhecido");
 	}
@@ -173,7 +179,17 @@ void confirmacao(){
 	limparBuffer();
 	
 }
-
+void continuarMostrandoGeracoes(){
+	
+	int op;
+	printf("Aperte 1 para mostrar proxima geracao salva(0 para sair): ");
+	scanf("%d", &op);
+	
+	if(op == 0){
+		return;
+	}
+	
+}
 int rconfirma(){
 	
 	char opcaoUsuario;
