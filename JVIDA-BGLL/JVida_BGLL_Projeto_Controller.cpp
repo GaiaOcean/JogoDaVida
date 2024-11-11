@@ -33,7 +33,6 @@ void limparMapa(int dim) {
             
         }
     }
-	
 }
 
 void limparGeracao(){
@@ -406,9 +405,7 @@ int verificaMorto(int i, int j){
 }
 
 void carregaVivo(int i, int j){
-
 	TipoCel *aux = (TipoCel *)malloc(sizeof(TipoCel));
-
 	if(aux == NULL){
 		return;
 	}
@@ -503,71 +500,72 @@ int carrega1Morto(int i, int j){
 	return 0;
 }
 
-
-
 //-----------------------------FUNCIONALIDADES PARA SALVAR E RECUPERAR----------------
 
 void gravaCelulas(){
-	int cursorMaxLista,cursorCelulasVivas;
-	cursorMaxLista = qtdConf;
-	if(totvivo == 0){
-		return;
-	}
-	TipoCel *aux;
-	aux = pvivo;
-	cursorCelulasVivas = 0;
-	do{
-		Lvivo.L[cursorCelulasVivas].lin = aux->lin;
-		Lvivo.L[cursorCelulasVivas].col = aux->col;
-		cursorCelulasVivas++;
-		aux = aux->prox;
-	}while(aux != NULL);
-	
-	Lvivo.tamanhoList = totvivo;
-	LConfig[cursorMaxLista].TL = Lvivo;
-	FILE *fp;
-	if((fp = fopen("CONFIG_INIC", "ab")) == NULL){
-		apresentaMensagemDeErro(6);
-		return;
-	}
-	for(int i = 0; i <= qtdConf;i++){
-		if(fwrite(&LConfig[i], sizeof(TipoLista), 1, fp) != 1){
-			apresentaMensagemDeErro(7);
-			fclose(fp);
-			return;
-		}
-	}
-	if(fwrite(&geracaoAtual, sizeof(int), 1, fp) != 1){
-		apresentaMensagemDeErro(7);
-		return;
-	}
-	fclose(fp);
-	qtdConf++;
-	apresentarMensamDeSucesso(1);
+    int cursorMaxLista, cursorCelulasVivas;
+    cursorMaxLista = qtdConf;  
+
+    if (totvivo == 0) {
+        return;  
+    }
+
+    TipoCel *aux = pvivo;
+    cursorCelulasVivas = 0;
+    
+    // preenche a lista Lvivo com as cel vivas
+    do {
+        Lvivo.L[cursorCelulasVivas].lin = aux->lin;
+        Lvivo.L[cursorCelulasVivas].col = aux->col;
+        cursorCelulasVivas++;
+        aux = aux->prox;
+    } while (aux != NULL);
+
+    Lvivo.tamanhoList = totvivo;  
+    LConfig[cursorMaxLista].TL = Lvivo;  
+
+    
+    FILE *fp = fopen("CONFIG_INIC", "ab");
+    if (fp == NULL) {
+        apresentaMensagemDeErro(6);
+        return;
+    }
+
+    // salva a config no arquivo
+    if (fwrite(&LConfig[cursorMaxLista], sizeof(TipoLista), 1, fp) != 1) {
+        apresentaMensagemDeErro(7);
+        fclose(fp);
+        return;
+    }
+
+    fclose(fp);
+    qtdConf++;  
+    apresentarMensamDeSucesso(1);
 }
 
-void carregaConfig(){
- 
-	int k = 0;
-	FILE *fp;
 
+void carregaConfig() {
+	
+    FILE *fp = fopen("CONFIG_INIC", "rb");
+    if (fp == NULL) {
+        apresentaMensagemDeErro(8);
+        return;
+    }
 
-	if((fp = fopen("CONFIG_INIC","rb")) == NULL){
-		printf("Erro ao abrir o arquivo de configuracoes\n");
-		fclose(fp);
-		return;
-	}
-		
-	while(fread(&LConfig[k], sizeof(TipoLista), 1, fp) == 1){ //enquanto não for fim de arquivo
-		qtdConf++;
-		k++;
-	}
+    int k = 0;
+    qtdConf = 0;  // reinicia a  qtdConf 
 
-	if(fread(&geracaoAtual, sizeof(int), 1, fp) != 1){
-		apresentaMensagemDeErro(7);
-		return;
-	}
- 	fclose(fp);
+   
+    while (fread(&LConfig[k], sizeof(TipoLista), 1, fp) == 1) { // Ler as config salvas
+        qtdConf++;  // incrementa a qtd de config carregadas
+        k++;
+        if (k >= 50) {  
+            break;
+        }
+        
+    }
+	
+    fclose(fp);
 }
 
 void deletaConf(){
@@ -600,25 +598,23 @@ void recuperarCels(){
 		carregaVivo(Lvivo.L[ni].lin, Lvivo.L[ni].col);
 	}
 	
-	//geracaoAtual = 0;
-
 }
 
-void atualizarMapaRecuperado(TipoCel* pvivo){
-
+void atualizarMapaRecuperado(){
+	
     limparMapa(dim); 
 
     TipoCel *aux = pvivo;
-	while(aux != NULL){
-		int linha = aux->lin;
-		int coluna = aux->col;
+    while(aux != NULL){
+        int linha = aux->lin;
+        int coluna = aux->col;
 
-		if(linha >= 0 && linha < VALORMAX && coluna >= 0 && coluna < VALORMAX){
-			gerarSeres(linha, coluna, dim);
-		}
+        if(linha >= 0 && linha < VALORMAX && coluna >= 0 && coluna < VALORMAX){
+            gerarSeres(linha, coluna, dim);
+        }
 
-		aux = aux->prox;
-	}
+        aux = aux->prox;
+    }
 }
 
 
@@ -654,7 +650,7 @@ void jdvMatrizesSalvas() {
     do{
         Lvivo = LConfig[geracaoMostrada].TL;
         recuperarCels();
-        atualizarMapaRecuperado(pvivo);
+        atualizarMapaRecuperado();
         mostrarMatriz(dim); 
         mostrarVivos();
         mostrarVizinhosMortos();
@@ -690,7 +686,7 @@ void jogarMenu(){
                 break;
             case 2:
                 limparMapa(dim);
-				iniciarListas();
+                iniciarListas();
                 mostrarMatriz(dim);
                 break;
             case 3:
@@ -730,20 +726,16 @@ void jogarMenu(){
 				gravaCelulas();
 				break;
 			case 7:
-				carregaConfig();
-				if(qtdConf > 0)
-					recuperarCels();
-				else{
-					printf("Nenhuma configuracao carregada");
-					break;
-				}
-				atualizarMapaRecuperado(pvivo);
-				armazenarInfoVizinhos();
-	    		alterarSituacaoVizinhoMorto();
-				mostrarMatriz(dim);
+				 jdvMatrizesSalvas();
+//				 carregaConfig();
+//				 recuperarCels();
+//				 atualizarMapaRecuperado();
+//				 mostrarMatriz(dim);
 				break;
             case 0:
                 interacoesMenu(opcao);
+                limpaGer();
+                deletaConfig();
 				exit(0);
             default:
                 interacoesMenu(opcao);
