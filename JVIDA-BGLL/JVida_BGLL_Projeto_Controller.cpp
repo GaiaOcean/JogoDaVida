@@ -673,6 +673,8 @@ void jogarMenu(){
 	inicializarMatriz60x60(dim);
     limparTela();
  	mostrarMatriz(dim);
+ 	
+ 	carregaConfig(); 
 	viz = false;
 
  	do{
@@ -734,8 +736,6 @@ void jogarMenu(){
 				break;
             case 0:
                 interacoesMenu(opcao);
-                limpaGer();
-                deletaConfig();
 				exit(0);
             default:
                 interacoesMenu(opcao);
