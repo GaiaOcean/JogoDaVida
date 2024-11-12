@@ -323,7 +323,7 @@ void gerarAtraso(){
     lt1 = time(NULL);
     lt2 = lt1;
     
-    // enquanto a diferença entre o lt2 e o lt1 for menor que o atraso, continua no loop
+    // enquanto a diferenca entre o lt2 e o lt1 for menor que o atraso, continua no loop
     while (difftime(lt2, lt1) < velocidade) {
         lt2 = time(NULL); // atualiza o lt2 com o tempo atual
     }
@@ -390,12 +390,12 @@ int validarCoordenadas(){
         
 }
 
-//percorre a lista verificando se as coordenadas já existem retornando verdadeiro ou falso
+//percorre a lista verificando se as coordenadas ja existem retornando verdadeiro ou falso
 int verificaMorto(int i, int j){
 	
 	TipoCel *aux = pmorto;
 	while(aux != NULL){
-		if(aux -> lin == i  && aux -> col == j ){ //verifica se a celula já existe
+		if(aux -> lin == i  && aux -> col == j ){ //verifica se a celula ja existe
 			return 1;
 		}
 		aux = aux -> prox;
@@ -620,11 +620,11 @@ void limpaGer(){
  		 return;
  	}
  	qtdConf = 0; //nenhuma configuracao gravada
- 	ultimarecup = -1; //ultimo índice recuperado
+ 	ultimarecup = -1; //ultimo indice recuperado
  		deletaConf();
  	apresentaMensagemDeErro(3);
 }
-//remove o arquivo de configurações iniciais
+//remove o arquivo de configuracões iniciais
 void deletaConfig(){
 	 if(remove("CONFIG_INIC") != 0){
  			apresentaMensagemDeErro(4);
@@ -744,7 +744,10 @@ void jogarMenu(){
 				mostrarMatriz(dim);
 				break;
 			case 6:
+				limparTela();
+				mostrarMatriz(dim);
 				gravaCelulas();
+				
 				break;
 			case 7:
 				carregaConfig(); 

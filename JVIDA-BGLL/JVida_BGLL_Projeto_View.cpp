@@ -84,7 +84,7 @@ void apresentarMensamDeSucesso(int status){
 	
 	switch(status){
 		case 1:
-			printf("Configuracao Gravada\n");
+			printf("Configuracao Gravada com sucesso\n");
 			break;
 		case 2:
 			printf("O arquivo CONF_INIC foi removido com sucesso.");
@@ -93,7 +93,7 @@ void apresentarMensamDeSucesso(int status){
 			printf("O arquivo CONFIG_INIC foi removido com sucesso.");
 			break;
 		default:
-			printf("Mudança feita com sucesso");
+			printf("Mudanca feita com sucesso");
 	}
 }
 void apresentaMensagemDeErro(int status){
@@ -127,7 +127,7 @@ void apresentaMensagemDeErro(int status){
 	    	printf("Erro ao abrir o arquivo de configuracoes\n");
 	    	break;
 	    case 9:
-	    	printf("Nenhuma geraçao salva");
+	    	printf("Nenhuma geracao salva");
 	    	break;
 		default:
 			printf("Erro desconhecido");
