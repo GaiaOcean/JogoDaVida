@@ -58,7 +58,6 @@ typedef struct list{
 
 TipoLista Lvivo; //struct sem ponteiros
 
-//lConfig[50];//grava ate 50 listas de cel vivas iniciais
 int qtdConf = 0;//quantidade de configuracoes iniciais
 int ultimarecup = -1;//indice da ultima configuracao recuperada (de 0 a 49)
 
@@ -67,7 +66,7 @@ struct arquivo{
 	int j; //colunas
 	TipoLista TL; //1 lista total
 	int geracao;
-}LConfig[50];
+}LConfig[50];//grava ate 50 listas de cel vivas iniciais
 
 TipoCel *pvivo, *pmorto, *pvivoprox;
 int totvivo, totmorto, totvivoprox;

@@ -12,7 +12,6 @@ Nome dos integrantes:
 	A etapa 5 consiste em salvar e recuperar geracoes salvas anteriormente pelo usuario a partir 
 	da utilizacao de listas ligadas.
 
-
 */
 
 #include "JVida_BGLL_Projeto_Controller.h"
@@ -537,7 +536,7 @@ void gravaCelulas(){
     LConfig[cursorMaxLista].TL = Lvivo;  
     LConfig[cursorMaxLista].i = linhas;
     LConfig[cursorMaxLista].j = colunas;
-    LConfig[cursorMaxLista].geracao = geracaoAtual;  
+    LConfig[cursorMaxLista].geracao = geracaoAtual; 
 
     
     FILE *fp = fopen("CONFIG_INIC", "ab");
@@ -594,14 +593,14 @@ void deletaConf(){
 }
 //recupera tds as celulas vivas de uma gravacao
 void recuperarCels(){
-	int i, j, k, ni;
+	int k, ni;
 	
 	if(qtdConf == 0){
 		apresentaMensagemDeErro(2);
 		     return;	
 	}
 	
-	if (LConfig[k].i != linhas || LConfig[k].j != colunas) {
+	if (LConfig[k].i != dim || LConfig[k].j != dim) {
         apresentaMensagemDeErro(11);
         return;
     }
@@ -618,7 +617,6 @@ void recuperarCels(){
     for(ni = 0; ni < Lvivo.tamanhoList; ni++){
 		gerarSeres(Lvivo.L[ni].lin, Lvivo.L[ni].col,dim);
 	}
-	
 }
 
 //mostra a geracao salva 

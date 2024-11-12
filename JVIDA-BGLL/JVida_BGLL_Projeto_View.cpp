@@ -130,7 +130,7 @@ void apresentaMensagemDeErro(int status){
 	    	printf("Nenhuma geracao salva");
 	    	break;
 	    case 10:
-	    	printf("Não existe celulas vivas para gravacao.\n");
+	    	printf("Nao existe celulas vivas para gravacao.\n");
 	    	break;
 	    case 11:
 	    	printf("Erro: A dimensao da matriz salva e diferente da dimensao atual.\n");
