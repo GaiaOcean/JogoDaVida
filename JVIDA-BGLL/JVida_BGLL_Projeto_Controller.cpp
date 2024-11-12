@@ -86,8 +86,8 @@ void definirEArmazenarVizinhosLista(int l, int c){
 		int colunaVizinho = jdvMatriz[l][c].infoVizinhos[i].coluna;
 		
 		if(jdvMatriz[linhaVizinho][colunaVizinho].situacao == '.'){
-			//printf("b");
 			carrega1Morto(linhaVizinho, colunaVizinho);
+			jdvMatriz[linhaVizinho][colunaVizinho].situacao = VIZINHO;
 		}
 			
 	}
@@ -509,7 +509,7 @@ void gravaCelulas(){
     if (totvivo == 0) {
         return;  
     }
-
+	
     TipoCel *aux = pvivo;
     cursorCelulasVivas = 0;
     
@@ -520,9 +520,11 @@ void gravaCelulas(){
         cursorCelulasVivas++;
         aux = aux->prox;
     } while (aux != NULL);
+    
 
     Lvivo.tamanhoList = totvivo;  
     LConfig[cursorMaxLista].TL = Lvivo;  
+    LConfig[cursorMaxLista].geracao = geracaoAtual;  
 
     
     FILE *fp = fopen("CONFIG_INIC", "ab");
@@ -595,26 +597,20 @@ void recuperarCels(){
     qtdCelViva = Lvivo.tamanhoList;
     
     for(ni = 0; ni < Lvivo.tamanhoList; ni++){
-		carregaVivo(Lvivo.L[ni].lin, Lvivo.L[ni].col);
+		gerarSeres(Lvivo.L[ni].lin, Lvivo.L[ni].col,dim);
 	}
 	
 }
 
-void atualizarMapaRecuperado(){
+void atualizarMapaRecuperado(int geracaoMostrada){ 
 	
-    limparMapa(dim); 
-
-    TipoCel *aux = pvivo;
-    while(aux != NULL){
-        int linha = aux->lin;
-        int coluna = aux->col;
-
-        if(linha >= 0 && linha < VALORMAX && coluna >= 0 && coluna < VALORMAX){
-            gerarSeres(linha, coluna, dim);
-        }
-
-        aux = aux->prox;
-    }
+	for(int i = 0; i < LConfig[geracaoMostrada].TL.tamanhoList; i++){
+		int linha = LConfig[geracaoMostrada].TL.L[i].lin;
+		int coluna = LConfig[geracaoMostrada].TL.L[i].col;
+		
+		jdvMatriz[linha][coluna].situacao = VIVO;
+	}
+    
 }
 
 
@@ -644,24 +640,47 @@ void jdvMatrizesSalvas() {
         apresentaMensagemDeErro(9);
         return;
     }
+    int opcao;
 
     int geracaoMostrada = 0;
+    int geracaoSalva;
 
     do{
         Lvivo = LConfig[geracaoMostrada].TL;
-        recuperarCels();
-        atualizarMapaRecuperado();
-        mostrarMatriz(dim); 
-        mostrarVivos();
-        mostrarVizinhosMortos();
-        mostrarSitGeracao(qtdCelViva,geracaoAtual);
+        atualizarMapaRecuperado(geracaoMostrada);
+        geracaoSalva = LConfig[geracaoMostrada].geracao;
+        mostrarMatriz(dim);
+        qtdCelViva = contarVivas(dim);
+        mostrarSitGeracao(qtdCelViva,geracaoSalva);
+        
 
-        continuarMostrandoGeracoes();
+        opcao = continuarMostrandoGeracoes();
+        limparMapa(dim);
         
-        geracaoMostrada++; // vai para a prox geracao
+        if(geracaoMostrada >= qtdConf)
+        	break;
         
-    }while (geracaoMostrada != qtdConf);
-   
+        if(opcao == 3){
+        	recuperarCels();
+        	armazenarInfoVizinhos();
+        	break;
+		}
+        
+        if(opcao == 0)
+        	break;
+        	
+        if(opcao == 1)
+        	geracaoMostrada++; // vai para a prox geracao
+        	
+        if(opcao == 2)
+        	geracaoMostrada--;
+        	
+        
+    }while (geracaoMostrada < qtdConf || opcao != 0);
+    
+    
+    
+    limparTela();
 }
 
 //---------FUNCIONALIDADES DO MENU---------
@@ -674,7 +693,7 @@ void jogarMenu(){
     limparTela();
  	mostrarMatriz(dim);
  	
- 	carregaConfig(); 
+ 	
 	viz = false;
 
  	do{
@@ -728,11 +747,9 @@ void jogarMenu(){
 				gravaCelulas();
 				break;
 			case 7:
-				 jdvMatrizesSalvas();
-//				 carregaConfig();
-//				 recuperarCels();
-//				 atualizarMapaRecuperado();
-//				 mostrarMatriz(dim);
+				carregaConfig(); 
+				jdvMatrizesSalvas();
+				mostrarMatriz(dim);
 				break;
             case 0:
                 interacoesMenu(opcao);

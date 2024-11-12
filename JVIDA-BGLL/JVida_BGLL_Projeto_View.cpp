@@ -179,15 +179,13 @@ void confirmacao(){
 	limparBuffer();
 	
 }
-void continuarMostrandoGeracoes(){
+int continuarMostrandoGeracoes(){
 	
 	int op;
-	printf("Aperte 1 para mostrar proxima geracao salva(0 para sair): ");
+	printf("\n\n1 - Proxima geracao salva\n2 - Voltar a geracao salva anterior\n3 - Carregar essa geracao\n0 - Sair sem carregar\n");
 	scanf("%d", &op);
 	
-	if(op == 0){
-		return;
-	}
+	return op;
 	
 }
 int rconfirma(){
@@ -209,8 +207,7 @@ int rconfirma(){
 
 int menu(){
 	int opcao;
-	printf("%d\n", totvivo);
-    printf("1 - Apresentar Mapa\n");
+    printf("\n1 - Apresentar Mapa\n");
     printf("2 - Limpar Mapa\n");
     printf("3 - Incluir celula / excluir celulas\n");
     printf("4 - Mostrar/Esconder vizinhas-mortas\n");
@@ -284,5 +281,5 @@ void mostrarVizinhosMortos(){
 }
 
 void mostrarSitGeracao(int qtdCelViva,int geracaoAtual){
-	printf("\n\nGeracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva );
+	printf("\n\nGeracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva);
 }

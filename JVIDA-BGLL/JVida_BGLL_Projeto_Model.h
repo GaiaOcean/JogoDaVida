@@ -63,6 +63,7 @@ int ultimarecup = -1;//indice da ultima configuracao recuperada (de 0 a 49)
 
 struct arquivo{
 	TipoLista TL; //1 lista total
+	int geracao;
 }LConfig[50];
 
 TipoCel *pvivo, *pmorto, *pvivoprox;
