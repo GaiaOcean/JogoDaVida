@@ -693,7 +693,7 @@ void jdvMatrizesSalvas() {
 		}
         	
         if(opcao == 2){
-        	if(geracaoMostrada < 0){
+        	if(geracaoMostrada > 0){
                 geracaoMostrada--;  // Volta para a geracao anterior
             }else{
                 apresentaMensagemDeErro(12);  // Nao ha geracao anterior
