@@ -536,6 +536,7 @@ void gravaCelulas(){
     LConfig[cursorMaxLista].TL = Lvivo;  
     LConfig[cursorMaxLista].i = linhas;
     LConfig[cursorMaxLista].j = colunas;
+    
     LConfig[cursorMaxLista].geracao = geracaoAtual; 
 
     
@@ -598,12 +599,7 @@ void recuperarCels(){
 	if(qtdConf == 0){
 		apresentaMensagemDeErro(2);
 		     return;	
-	}
-	
-	if (LConfig[k].i != dim || LConfig[k].j != dim) {
-        apresentaMensagemDeErro(11);
-        return;
-    }
+	} 
 
 	iniciarListas();
 	k = ultimarecup + 1;
@@ -706,7 +702,7 @@ void jdvMatrizesSalvas() {
 void jogarMenu(){
 
 	int opcao;
- 	
+ 	int dimAux = LConfig[0].i * LConfig[0].j;
  	perguntarDim();
 	inicializarMatriz60x60(dim);
     limparTela();
@@ -766,9 +762,12 @@ void jogarMenu(){
 				limparTela();
 				mostrarMatriz(dim);
 				gravaCelulas();
-				
 				break;
 			case 7:
+		    	if (dimAux != dim){
+     			   apresentaMensagemDeErro(11);
+     			   break;
+ 				}
 				carregaConfig(); 
 				jdvMatrizesSalvas();
 				mostrarMatriz(dim);
