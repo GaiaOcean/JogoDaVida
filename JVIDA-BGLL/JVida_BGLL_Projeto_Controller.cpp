@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
-05/11/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 5
+12/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -9,8 +9,9 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-	A etapa 4 consiste de substituir a matriz auxiliar utilizada previamente 
-	por uma lista ligada, uma vez que a lista ligada faz um uso mais eficiente da memoria.
+	A etapa 5 consiste em salvar e recuperar geracoes salvas anteriormente pelo usuario a partir 
+	da utilizacao de listas ligadas.
+
 
 */
 
@@ -288,6 +289,8 @@ void alterarSituacaoVizinhoMorto(){
 
 
 //Funcao responsavel por criar a proxima geracao de celulas
+
+
 void proximaGeracao(int dim,int qtdGeracao) {
 	iniciarListas();
 	
@@ -502,13 +505,21 @@ int carrega1Morto(int i, int j){
 
 //-----------------------------FUNCIONALIDADES PARA SALVAR E RECUPERAR----------------
 
+void validarGravacao(){
+	
+	if (totvivo == 0) {
+		apresentaMensagemDeErro(10);
+        return;  
+    }
+    
+	
+}
+//funcao utilizada para gravar as celulas da geracao salva
 void gravaCelulas(){
     int cursorMaxLista, cursorCelulasVivas;
     cursorMaxLista = qtdConf;  
 
-    if (totvivo == 0) {
-        return;  
-    }
+    validarGravacao();
 	
     TipoCel *aux = pvivo;
     cursorCelulasVivas = 0;
@@ -545,7 +556,7 @@ void gravaCelulas(){
     apresentarMensamDeSucesso(1);
 }
 
-
+//recupera as informacoes salvas no gravarCelulas
 void carregaConfig() {
 	
     FILE *fp = fopen("CONFIG_INIC", "rb");
@@ -570,6 +581,7 @@ void carregaConfig() {
     fclose(fp);
 }
 
+//apaga todas as informacoes salvas
 void deletaConf(){
 	if(remove("CONFIG_INIC")!= 0){
 		apresentaMensagemDeErro(0);
@@ -578,7 +590,7 @@ void deletaConf(){
 	qtdConf = 0;
 	apresentarMensamDeSucesso(2);
 }
-
+//recupera tds as celulas vivas de uma gravacao
 void recuperarCels(){
 	int i, j, k, ni;
 	
@@ -602,6 +614,7 @@ void recuperarCels(){
 	
 }
 
+//mostra a geracao salva 
 void atualizarMapaRecuperado(int geracaoMostrada){ 
 	
 	for(int i = 0; i < LConfig[geracaoMostrada].TL.tamanhoList; i++){
@@ -634,6 +647,7 @@ void deletaConfig(){
  	apresentarMensamDeSucesso(3);
 }
 
+//mostra tds as geracoes salvas sucessivamente
 void jdvMatrizesSalvas() {
 	
     if (qtdConf == 0) {
