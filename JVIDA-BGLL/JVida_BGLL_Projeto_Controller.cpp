@@ -684,11 +684,21 @@ void jdvMatrizesSalvas() {
         if(opcao == 0)
         	break;
         	
-        if(opcao == 1)
-        	geracaoMostrada++; // vai para a prox geracao
+        if(opcao == 1){
+        	if (geracaoMostrada < qtdConf - 1){
+                geracaoMostrada++; // vai para a prox geracao
+            } else {
+                apresentaMensagemDeErro(13);  // Nao ha prox geracao
+            }
+		}
         	
-        if(opcao == 2)
-        	geracaoMostrada--;
+        if(opcao == 2){
+        	if(geracaoMostrada < 0){
+                geracaoMostrada--;  // Volta para a geracao anterior
+            }else{
+                apresentaMensagemDeErro(12);  // Nao ha geracao anterior
+            }
+		}    
         	
         
     }while (geracaoMostrada < qtdConf || opcao != 0);
@@ -772,6 +782,10 @@ void jogarMenu(){
 				jdvMatrizesSalvas();
 				mostrarMatriz(dim);
 				break;
+			case 8:
+				limpaGer();
+				deletaConf();
+				break; 
             case 0:
                 interacoesMenu(opcao);
 				exit(0);

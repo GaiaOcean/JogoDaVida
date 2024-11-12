@@ -135,6 +135,12 @@ void apresentaMensagemDeErro(int status){
 	    case 11:
 	    	printf("Erro: A dimensao da matriz salva e diferente da dimensao atual.\n");
 	    	break;
+	    case 12:
+	    	printf("Nao ha geracoes anteriores.\n");
+	    	break;
+	    case 13:
+	    	printf("Nao ha proximas geracoes.\n");
+	    	break;
 		default:
 			printf("Erro desconhecido");
 	}
@@ -220,6 +226,7 @@ int menu(){
     printf("5 - Mostrar Proximas Geracoes\n");
     printf("6 - Salvar Geracoes\n");
     printf("7 - Carregar Geracoes Salvas\n");
+    printf("8 - Deletar Geracoes salvas\n");
     printf("0 - Sair\n");  
     printf("=============================\n");
     printf("Escolha uma opcao: ");
