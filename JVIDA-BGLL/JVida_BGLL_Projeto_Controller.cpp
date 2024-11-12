@@ -514,7 +514,7 @@ void validarGravacao(){
 	
 }
 //funcao utilizada para gravar as celulas da geracao salva
-void gravaCelulas(){
+void gravaCelulas(){ 
     int cursorMaxLista, cursorCelulasVivas;
     cursorMaxLista = qtdConf;  
 
@@ -540,7 +540,7 @@ void gravaCelulas(){
     LConfig[cursorMaxLista].geracao = geracaoAtual; 
 
     
-    FILE *fp = fopen("CONFIG_INIC", "ab");
+    FILE *fp = fopen("CONFIG_INIC", "ab"); //"ab" impede subescricao dos arquivos salvos
     if (fp == NULL) {
         apresentaMensagemDeErro(6);
         return;
@@ -572,7 +572,7 @@ void carregaConfig() {
 
    
     while (fread(&LConfig[k], sizeof(TipoLista), 1, fp) == 1) { // Ler as config salvas
-        qtdConf++;  // incrementa a qtd de config carregadas
+		qtdConf++;  // incrementa a qtd de config carregadas
         k++;
         if (k >= 50) {  
             break;
@@ -675,11 +675,12 @@ void jdvMatrizesSalvas() {
         if(geracaoMostrada >= qtdConf)
         	break;
         
-        if(opcao == 3){
-        	recuperarCels();
-        	armazenarInfoVizinhos();
-        	break;
-		}
+        if (opcao == 3) {            // Configura o jogo para continuar a partir da geracao selecionada
+            ultimarecup = geracaoMostrada;  
+            recuperarCels();                
+            armazenarInfoVizinhos();        
+            return;                         
+        }
         
         if(opcao == 0)
         	break;
@@ -774,17 +775,22 @@ void jogarMenu(){
 				gravaCelulas();
 				break;
 			case 7:
-		    	if (dimAux != dim){
-     			   apresentaMensagemDeErro(11);
-     			   break;
- 				}
-				carregaConfig(); 
+		        carregaConfig(); 
+				dimAux = LConfig[0].i * LConfig[0].j;
+				
+//				if (dimAux != dim){
+//     			   apresentaMensagemDeErro(11);
+//    			   break;
+// 				}
+// 				
 				jdvMatrizesSalvas();
 				mostrarMatriz(dim);
 				break;
 			case 8:
 				limpaGer();
 				deletaConf();
+				limparTela();
+				mostrarMatriz(dim);
 				break; 
             case 0:
                 interacoesMenu(opcao);
