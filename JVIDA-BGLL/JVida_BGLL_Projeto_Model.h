@@ -63,6 +63,8 @@ int qtdConf = 0;//quantidade de configuracoes iniciais
 int ultimarecup = -1;//indice da ultima configuracao recuperada (de 0 a 49)
 
 struct arquivo{
+	int i; //linhas
+	int j; //colunas
 	TipoLista TL; //1 lista total
 	int geracao;
 }LConfig[50];

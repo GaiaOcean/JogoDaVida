@@ -535,6 +535,8 @@ void gravaCelulas(){
 
     Lvivo.tamanhoList = totvivo;  
     LConfig[cursorMaxLista].TL = Lvivo;  
+    LConfig[cursorMaxLista].i = linhas;
+    LConfig[cursorMaxLista].j = colunas;
     LConfig[cursorMaxLista].geracao = geracaoAtual;  
 
     
@@ -598,6 +600,11 @@ void recuperarCels(){
 		apresentaMensagemDeErro(2);
 		     return;	
 	}
+	
+	if (LConfig[k].i != linhas || LConfig[k].j != colunas) {
+        apresentaMensagemDeErro(11);
+        return;
+    }
 
 	iniciarListas();
 	k = ultimarecup + 1;
