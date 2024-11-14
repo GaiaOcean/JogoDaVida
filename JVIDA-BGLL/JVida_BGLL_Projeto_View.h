@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
-05/11/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 5
+12/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -9,8 +9,9 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-	A etapa 4 consiste de substituir a matriz auxiliar utilizada previamente 
-	por uma lista ligada, uma vez que a lista ligada faz um uso mais eficiente da memoria.	
+	A etapa 5 consiste em salvar e recuperar geracoes salvas anteriormente pelo usuario a partir 
+	da utilizacao de listas ligadas.
+
 
 */
 
@@ -35,3 +36,4 @@ void perguntarVelocidade();
 void confirmacao();
 void mostrarVizinhosMortos();
 void mostrarVivos();
+void mostrarObservacao();

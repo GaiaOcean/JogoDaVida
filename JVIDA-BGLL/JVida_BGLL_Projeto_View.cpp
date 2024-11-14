@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
-05/11/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 5
+12/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -9,18 +9,22 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-	A etapa 4 consiste de substituir a matriz auxiliar utilizada previamente 
-	por uma lista ligada, uma vez que a lista ligada faz um uso mais eficiente da memoria.	
+	A etapa 5 consiste em salvar e recuperar geracoes salvas anteriormente pelo usuario a partir 
+	da utilizacao de listas ligadas.
+
 
 */
-
 #include "JVida_BGLL_Projeto_View.h"
 
 void mostrarMatriz(int dim){
 	limparTela();
-	printf("\n============================= JOGO DA VIDA =============================\n\n");
-	printf("  '.' - celula morta/vazia | 'O' - celula viva | '+' - vizinha-morta\n\n");
-	printf("\t");
+	if(opcaoCarregarMenu != 7){
+		printf("\n============================= JOGO DA VIDA =============================\n\n");
+		printf("  '.' - celula morta/vazia | 'O' - celula viva | '+' - vizinha-morta\n\n");
+	} else {
+		mostrarObservacao();
+	}
+	printf("\n\t");
     for (int j = 0; j < dim; j++)
       printf("%02d ", j);
     printf("\n\n");
@@ -36,6 +40,11 @@ void mostrarMatriz(int dim){
         	
         printf("\n");
 	}
+	if(opcaoCarregarMenu != 7){
+		mostrarVivos();
+	    mostrarVizinhosMortos();
+	}
+	
 }
 
 
@@ -78,6 +87,72 @@ int retirarCel(int linhas, int colunas, int dim) {
         } 
     }
     return 0; 
+}
+
+void apresentarMensamDeSucesso(int status){
+	
+	switch(status){
+		case 1:
+			printf("Configuracao Gravada com sucesso\n");
+			break;
+		case 2:
+			printf("O arquivo CONF_INIC foi removido com sucesso.");
+			break;
+		case 3:
+			printf("O arquivo CONFIG_INIC foi removido com sucesso.");
+			break;
+		default:
+			printf("Mudanca feita com sucesso");
+	}
+}
+void apresentaMensagemDeErro(int status){
+	
+	switch(status){
+		case 0:
+			printf("ERRO: O arquivo CONF_INIC nao pode ser removido");
+			break;
+	    case 1:
+	    	printf("O arquivo CONF_INIC foi removido");
+	    	break;
+	    case 2:
+	    	printf("Nao existe configuracao a recuperar");
+	    	break;
+	    case 3:
+	    	printf("Nao e possivel deletar: O deposito de geracoes iniciais esta vazio\n");
+	    	break;
+	    case 4:
+	    	printf("ERRO: O arquivo CONFIG_INIC nao pode ser removido");
+	    	break;
+	    case 5:
+	    	printf("O arquivo CONFIG_INIC foi removido OK");
+	    	break;
+	    case 6:
+	    	printf("Nao ha geracoes salvas\n");
+	    	break;
+	    case 7:
+	    	printf("Erro na gravacao do arquivo CONFIG_INIC\n");
+	    	break;
+	    case 8:
+	    	printf("Erro ao abrir o arquivo de configuracoes\n");
+	    	break;
+	    case 9:
+	    	printf("Nao foi possivel carregar: Nenhuma geracao salva\n");
+	    	break;
+	    case 10:
+	    	printf("Nao existe celulas vivas para gravacao.\n");
+	    	break;
+	    case 11:
+	    	printf("Erro: A dimensao da matriz salva e diferente da dimensao atual.\n");
+	    	break;
+	    case 12:
+	    	printf("Nao ha geracoes anteriores.\n");
+	    	break;
+	    case 13:
+	    	printf("Nao ha proximas geracoes.\n");
+	    	break;
+		default:
+			printf("Erro desconhecido");
+	}
 }
 
 //-----------INTERACOES COM JOGADOR-----------
@@ -125,17 +200,42 @@ void confirmacao(){
 	limparBuffer();
 	
 }
+int continuarMostrandoGeracoes(){
+	
+	int op;
+	printf("\n\n1 - Ver proxima geracao salva\n2 - Ver a geracao salva anterior\n3 - Carregar essa geracao para o jogo atual\n0 - Sair sem alterar o jogo atual\n");
+	scanf("%d", &op);
+	
+	return op;
+	
+}
+int rconfirma(){
+	
+	char opcaoUsuario;
+	
+	toupper(opcaoUsuario);
+	printf("Confirma exclusao das configuracoes iniciais?(s ou n):");
+	scanf("%c", &opcaoUsuario);
+	
+	if(opcaoUsuario == 'S')
+		return 0;
+	else
+		return 1;	
+}
+
+
 //--------------FUNCIONALIDADES DO MENU------------
 
 int menu(){
 	int opcao;
-
-	printf("\n======= JOGO DA VIDA =======\n");
-    printf("1 - Apresentar Mapa\n");
+    printf("\n1 - Apresentar Mapa\n");
     printf("2 - Limpar Mapa\n");
     printf("3 - Incluir celula / excluir celulas\n");
     printf("4 - Mostrar/Esconder vizinhas-mortas\n");
     printf("5 - Mostrar Proximas Geracoes\n");
+    printf("6 - Salvar Geracoes\n");
+    printf("7 - Carregar Geracoes Salvas\n");
+    printf("8 - Deletar Geracoes salvas\n");
     printf("0 - Sair\n");  
     printf("=============================\n");
     printf("Escolha uma opcao: ");
@@ -167,7 +267,7 @@ void mostrarVivos(){
 	aux = pvivo;
 	if(totvivo > 0){
 		int k = 0;
-		printf("Celulas Vivas: \n");
+		printf("\nCelulas Vivas: \n");
 		while (aux->prox != NULL)
 		{
 			if(k%10 == 0){
@@ -187,7 +287,7 @@ void mostrarVizinhosMortos(){
 	aux = pmorto;
 	if(totmorto > 0){
 		int k = 0;
-		printf("\n\nCelulas Vizinhas Mortas: \n");
+		printf("\nCelulas Vizinhas Mortas: \n");
 		while (aux->prox != NULL)
 		{
 			if(k%10 == 0){
@@ -203,5 +303,15 @@ void mostrarVizinhosMortos(){
 }
 
 void mostrarSitGeracao(int qtdCelViva,int geracaoAtual){
-	printf("\n\nGeracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva );
+	printf("\n\nGeracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva);
+}
+
+void mostrarInformacoesSave(int indiceSave, int qtdVivas){
+	printf("\n\nSave %d - Celulas vivas: %d\n",indiceSave+1,qtdVivas);
+}
+
+void mostrarObservacao(){
+	printf("\n------------------------------------------------------------------------------------------------------------");
+	printf("\n| OBSERVACAO:\n| Se a dimensao da matriz salva for maior que a da atual, pode ser que algumas celulas\n| nao aparecam caso estejam em coordenadas nao existentes na matriz atual.\n| A matriz que aparece abaixo mostra exatamente a forma que esse save ira se comportar no jogo atual\n");
+	printf("------------------------------------------------------------------------------------------------------------\n");
 }

@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 4
-05/11/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 5
+12/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -9,8 +9,9 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-	A etapa 4 consiste de substituir a matriz auxiliar utilizada previamente 
-	por uma lista ligada, uma vez que a lista ligada faz um uso mais eficiente da memoria.	
+	A etapa 5 consiste em salvar e recuperar geracoes salvas anteriormente pelo usuario a partir 
+	da utilizacao de listas ligadas.
+
 
 */
 
@@ -45,31 +46,31 @@ typedef struct cel{
 	struct cel *prox;
 }TipoCel;
 
-TipoCel *pvivo, *pmorto, *pvivoprox;
-int totvivo, totmorto, totvivoprox;
-
-//Gravação/Recuperacao de cels vivas
-
-typdef struct c{
+//----------------------Gravacao/Recuperacao de cels vivas-------------------------------
+typedef struct c{
 	int lin, col;
 }Cel;
 
 typedef struct list{
 	int tamanhoList;//pode ser ate 400 cel vivas
-	Cel l[400];
+	Cel L[400];
+	int dim;
 }TipoLista;
 
 TipoLista Lvivo; //struct sem ponteiros
 
-lConfig[50];//grava ate 50 listas de cel vivas iniciais
-int qtconf;//quantidade de configurações iniciais
-int ultrecup = -1;//indice da ultima configuracao recuperada (de 0 a 49)
+int qtdConf = 0;//quantidade de configuracoes iniciais
+int ultimarecup = -1;//indice da ultima configuracao recuperada (de 0 a 49)
 
-typedef struct arquivo{
+struct arquivo{
+	int i; //linhas
+	int j; //colunas
 	TipoLista TL; //1 lista total
-}LConfig[50];
+	int geracao;
+}LConfig[50];//grava ate 50 listas de cel vivas iniciais
 
-
+TipoCel *pvivo, *pmorto, *pvivoprox;
+int totvivo, totmorto, totvivoprox;
 
 int linhas;
 int colunas;
@@ -81,6 +82,8 @@ int qtdGeracao;
 int geracaoAtual = 0; 
 char conf;
 int qtdVivas = 0;
+int qtdCelViva = 0;
+int opcaoCarregarMenu = 0;
 
 
 Mundo jdvMatriz[VALORMAX][VALORMAX];
