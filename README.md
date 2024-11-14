@@ -20,6 +20,7 @@ máximo de 8 células vizinhas (que podem ser representadas pelo caracter “+�
 
 - Aprender a trabalhar com ponteiros, listas ligadas, funções de memory menagement(i.e Malloc), entre outros.
 - Desenvolver habilidades de trabalho em equipe.
+- Desenvolver documentação de projetos e apresentá-los.
 
 ## REQUISITOS FUNCIONAIS
 
