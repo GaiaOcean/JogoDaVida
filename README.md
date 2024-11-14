@@ -9,7 +9,7 @@ O jogo da vida foi criado pelo cientista John Conway e objetiva simular o proces
 [@luanagbrm](https://github.com/luanagbrm) [@GaiaOcean](https://github.com/GaiaOcean) [@bialim](https://github.com/bialim) [@Ferri-js](https://github.com/Ferri-js) 
 
 ## OBJETIVOS
-- Criar um p
+- Desenvolver o jogo da vida em linguagem C a partir dos requisitos 
 - O jogo poderá ser jogado entre dois oponentes reais (pessoas) ou entre um jogador real e o computador (vamos simular um comportamento inteligente do computador por meio de regras implementadas em código).
 - O programa deverá implementar as funções e estruturas de dados para a execução do jogo com as regras simples e com a interface com o usuário necessária para a interação dos jogadores. Vamos usar um padrão de projeto de sistemas interativos para construir o programa (arquitetura MVC).
 
