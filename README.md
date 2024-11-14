@@ -1,5 +1,4 @@
 # PROJETO JOGO DA VIDA
-
 O jogo da vida foi criado pelo cientista John Conway e objetiva simular o processo de evolução celular, de modo a reproduzir, através de regras simples, as alterações e mudanças em grupos de seres vivos.
 
 ### Linguagens utilizadas:
@@ -8,7 +7,7 @@ O jogo da vida foi criado pelo cientista John Conway e objetiva simular o proces
 ### Desenvolvido por:
 [@luanagbrm](https://github.com/luanagbrm) [@GaiaOcean](https://github.com/GaiaOcean) [@bialim](https://github.com/bialim) [@Ferri-js](https://github.com/Ferri-js) 
 
-## OBJETIVOS
+## OBJETIVOS FUNCIONAIS
 
 - Objetiva-se criar um programa em C para simular o jogo da vida em 6 etapas pré-estabelecidas e 12 requisitos funcionais.
 - Dividir as funcionalidas do programa no método MCV(Model-View-Controller).
@@ -16,6 +15,11 @@ O jogo da vida foi criado pelo cientista John Conway e objetiva simular o proces
 - Cada posição da matriz é uma célula que pode ter um “O” (para representar um ser vivo) ou um ponto “.” para indicar “vazio” ou “morto”. Cada célula tem um
 máximo de 8 células vizinhas (que podem ser representadas pelo caracter “+”).
 - Gerar a geração seguinte a partir das regras do jogo de reprodução, sobrevivência e morte.
+
+## OBJETIVOS ACADÊMICOS
+
+- Aprender a trabalhar com ponteiros, listas ligadas, funções de memory menagement(i.e Malloc), entre outros.
+- Desenvolver habilidades de trabalho em equipe.
 
 ## REQUISITOS FUNCIONAIS
 
@@ -45,7 +49,7 @@ gerações. No caso de velocidade zero, então a simulação deverá ser passo-a
 <b>REQ12</b>: O sistema deverá permitir ao usuário carregar cada geração previamente
 armazenada no arquivo de forma sucessiva conforme seu comando. 
 
-##
+
 
 
 
