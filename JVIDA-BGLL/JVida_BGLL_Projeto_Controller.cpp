@@ -788,11 +788,13 @@ void jogarMenu(){
 				break;	
 			case 7:
 				opcaoCarregarMenu = 7;
-				limparMapa(dim);
-		        mensagemDeErro = carregaConfig(); 			
-				jdvMatrizesSalvas();
+		        mensagemDeErro = carregaConfig(); 	
+				if(mensagemDeErro != 6){
+					limparMapa(dim);
+					jdvMatrizesSalvas();
+				}
 				opcaoCarregarMenu = 0;
-				mostrarMatriz(dim);
+				mostrarMatriz(dim);		
 				break;
 			case 8:
 				mensagemDeErro = limpaGer();
