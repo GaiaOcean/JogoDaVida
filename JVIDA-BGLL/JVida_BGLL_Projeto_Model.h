@@ -54,6 +54,7 @@ typedef struct c{
 typedef struct list{
 	int tamanhoList;//pode ser ate 400 cel vivas
 	Cel L[400];
+	int dim;
 }TipoLista;
 
 TipoLista Lvivo; //struct sem ponteiros
@@ -82,6 +83,7 @@ int geracaoAtual = 0;
 char conf;
 int qtdVivas = 0;
 int qtdCelViva = 0;
+int opcaoCarregarMenu = 0;
 
 
 Mundo jdvMatriz[VALORMAX][VALORMAX];

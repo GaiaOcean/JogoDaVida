@@ -18,9 +18,13 @@ Nome dos integrantes:
 
 void mostrarMatriz(int dim){
 	limparTela();
-	printf("\n============================= JOGO DA VIDA =============================\n\n");
-	printf("  '.' - celula morta/vazia | 'O' - celula viva | '+' - vizinha-morta\n\n");
-	printf("\t");
+	if(opcaoCarregarMenu != 7){
+		printf("\n============================= JOGO DA VIDA =============================\n\n");
+		printf("  '.' - celula morta/vazia | 'O' - celula viva | '+' - vizinha-morta\n\n");
+	} else {
+		mostrarObservacao();
+	}
+	printf("\n\t");
     for (int j = 0; j < dim; j++)
       printf("%02d ", j);
     printf("\n\n");
@@ -36,6 +40,11 @@ void mostrarMatriz(int dim){
         	
         printf("\n");
 	}
+	if(opcaoCarregarMenu != 7){
+		mostrarVivos();
+	    mostrarVizinhosMortos();
+	}
+	
 }
 
 
@@ -109,7 +118,7 @@ void apresentaMensagemDeErro(int status){
 	    	printf("Nao existe configuracao a recuperar");
 	    	break;
 	    case 3:
-	    	printf("O deposito de geracoes iniciais esta vazio");
+	    	printf("Nao e possivel deletar: O deposito de geracoes iniciais esta vazio\n");
 	    	break;
 	    case 4:
 	    	printf("ERRO: O arquivo CONFIG_INIC nao pode ser removido");
@@ -118,7 +127,7 @@ void apresentaMensagemDeErro(int status){
 	    	printf("O arquivo CONFIG_INIC foi removido OK");
 	    	break;
 	    case 6:
-	    	printf("ERRO: o arquivo CONFIG_INIC nao pode ser aberto para gravacao\n");
+	    	printf("Nao ha geracoes salvas\n");
 	    	break;
 	    case 7:
 	    	printf("Erro na gravacao do arquivo CONFIG_INIC\n");
@@ -127,7 +136,7 @@ void apresentaMensagemDeErro(int status){
 	    	printf("Erro ao abrir o arquivo de configuracoes\n");
 	    	break;
 	    case 9:
-	    	printf("Nenhuma geracao salva");
+	    	printf("Nao foi possivel carregar: Nenhuma geracao salva\n");
 	    	break;
 	    case 10:
 	    	printf("Nao existe celulas vivas para gravacao.\n");
@@ -194,7 +203,7 @@ void confirmacao(){
 int continuarMostrandoGeracoes(){
 	
 	int op;
-	printf("\n\n1 - Proxima geracao salva\n2 - Voltar a geracao salva anterior\n3 - Carregar essa geracao\n0 - Sair sem carregar\n");
+	printf("\n\n1 - Ver proxima geracao salva\n2 - Ver a geracao salva anterior\n3 - Carregar essa geracao para o jogo atual\n0 - Sair sem alterar o jogo atual\n");
 	scanf("%d", &op);
 	
 	return op;
@@ -258,7 +267,7 @@ void mostrarVivos(){
 	aux = pvivo;
 	if(totvivo > 0){
 		int k = 0;
-		printf("Celulas Vivas: \n");
+		printf("\nCelulas Vivas: \n");
 		while (aux->prox != NULL)
 		{
 			if(k%10 == 0){
@@ -278,7 +287,7 @@ void mostrarVizinhosMortos(){
 	aux = pmorto;
 	if(totmorto > 0){
 		int k = 0;
-		printf("\n\nCelulas Vizinhas Mortas: \n");
+		printf("\nCelulas Vizinhas Mortas: \n");
 		while (aux->prox != NULL)
 		{
 			if(k%10 == 0){
@@ -295,4 +304,14 @@ void mostrarVizinhosMortos(){
 
 void mostrarSitGeracao(int qtdCelViva,int geracaoAtual){
 	printf("\n\nGeracao %d: %d celulas vivas\n",geracaoAtual,qtdCelViva);
+}
+
+void mostrarInformacoesSave(int indiceSave, int qtdVivas){
+	printf("\n\nSave %d - Celulas vivas: %d\n",indiceSave+1,qtdVivas);
+}
+
+void mostrarObservacao(){
+	printf("\n------------------------------------------------------------------------------------------------------------");
+	printf("\n| OBSERVACAO:\n| Se a dimensao da matriz salva for maior que a da atual, pode ser que algumas celulas\n| nao aparecam caso estejam em coordenadas nao existentes na matriz atual.\n| A matriz que aparece abaixo mostra exatamente a forma que esse save ira se comportar no jogo atual\n");
+	printf("------------------------------------------------------------------------------------------------------------\n");
 }

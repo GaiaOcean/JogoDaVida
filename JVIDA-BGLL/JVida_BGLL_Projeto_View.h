@@ -36,3 +36,4 @@ void perguntarVelocidade();
 void confirmacao();
 void mostrarVizinhosMortos();
 void mostrarVivos();
+void mostrarObservacao();

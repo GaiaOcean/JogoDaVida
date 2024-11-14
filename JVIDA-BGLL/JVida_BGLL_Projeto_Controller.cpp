@@ -52,7 +52,7 @@ void limparGeracao(){
 int inserirOuRetirarCel(int linhas, int colunas, int dim) {
     if (jdvMatriz[linhas][colunas].situacao == '.' || jdvMatriz[linhas][colunas].situacao == '+') {
         gerarSeres(linhas, colunas, dim);
-        definirSituacaoVizinhos(linhas,colunas);
+        armazenarInfoVizinhos();
         qtdCelViva++;  
         return 1;  // celula inserida
     }
@@ -79,13 +79,14 @@ void tornarVizinhoVivoOuMorto(int l, int c){
 }
 
 void definirEArmazenarVizinhosLista(int l, int c){
+	
 	int quantidadeDeVizinhos = jdvMatriz[l][c].qtdVizinhos;
 
 	for(int i = 0; i < jdvMatriz[l][c].qtdVizinhos; i++){
 		int linhaVizinho = jdvMatriz[l][c].infoVizinhos[i].linha;
 		int colunaVizinho = jdvMatriz[l][c].infoVizinhos[i].coluna;
 		
-		if(jdvMatriz[linhaVizinho][colunaVizinho].situacao == '.'){
+		if(jdvMatriz[linhaVizinho][colunaVizinho].situacao != 'O'){
 			carrega1Morto(linhaVizinho, colunaVizinho);
 			jdvMatriz[linhaVizinho][colunaVizinho].situacao = VIZINHO;
 		}
@@ -261,6 +262,10 @@ void alterarSituacaoVivo(){
 }
 
 void armazenarInfoVizinhos(){
+	liberaLista(pmorto, totmorto);
+	pmorto = NULL;
+	totmorto = 0;
+	
 	TipoCel *aux;
 	aux = pvivo;
 	if(totvivo > 0){
@@ -304,8 +309,6 @@ void proximaGeracao(int dim,int qtdGeracao) {
 	    armazenarInfoVizinhos();
 	    alterarSituacaoVizinhoMorto();
         mostrarMatriz(dim);
-        mostrarVivos();
-        mostrarVizinhosMortos();
         geracaoAtual++;
 		qtdCelViva = contarVivas(dim);  
    		mostrarSitGeracao(qtdCelViva, geracaoAtual);
@@ -532,7 +535,8 @@ void gravaCelulas(){
     } while (aux != NULL);
     
 
-    Lvivo.tamanhoList = totvivo;  
+    Lvivo.tamanhoList = totvivo;
+    Lvivo.dim = dim;
     LConfig[cursorMaxLista].TL = Lvivo;  
     LConfig[cursorMaxLista].i = linhas;
     LConfig[cursorMaxLista].j = colunas;
@@ -559,12 +563,11 @@ void gravaCelulas(){
 }
 
 //recupera as informacoes salvas no gravarCelulas
-void carregaConfig() {
+int carregaConfig() {
 	
     FILE *fp = fopen("CONFIG_INIC", "rb");
     if (fp == NULL) {
-        apresentaMensagemDeErro(8);
-        return;
+        return 6;
     }
 
     int k = 0;
@@ -581,6 +584,7 @@ void carregaConfig() {
     }
 	
     fclose(fp);
+    return -1;
 }
 
 //apaga todas as informacoes salvas
@@ -603,6 +607,7 @@ void recuperarCels(){
 
 	iniciarListas();
 	k = ultimarecup + 1;
+	
 	if(k >= qtdConf){
 		k = 0;
 		Lvivo = LConfig[k].TL;
@@ -628,15 +633,15 @@ void atualizarMapaRecuperado(int geracaoMostrada){
 }
 
 
-void limpaGer(){
+int limpaGer(){
 	if(qtdConf > 0){
     	 if (rconfirma() == 0)
- 		 return;
+ 		 return -1;
  	}
  	qtdConf = 0; //nenhuma configuracao gravada
  	ultimarecup = -1; //ultimo indice recuperado
- 		deletaConf();
- 	apresentaMensagemDeErro(3);
+ 	deletaConf();
+ 	return 3;
 }
 //remove o arquivo de configuracões iniciais
 void deletaConfig(){
@@ -645,7 +650,6 @@ void deletaConfig(){
  			return;
      	}
  	qtdConf = 0;
- 	apresentarMensamDeSucesso(3);
 }
 
 //mostra tds as geracoes salvas sucessivamente
@@ -658,38 +662,40 @@ void jdvMatrizesSalvas() {
     int opcao;
 
     int geracaoMostrada = 0;
-    int geracaoSalva;
+    int mensagemDeErro = -1;
 
     do{
+    	limparMapa(dim);
         Lvivo = LConfig[geracaoMostrada].TL;
         atualizarMapaRecuperado(geracaoMostrada);
-        geracaoSalva = LConfig[geracaoMostrada].geracao;
         mostrarMatriz(dim);
         qtdCelViva = contarVivas(dim);
-        mostrarSitGeracao(qtdCelViva,geracaoSalva);
+        mostrarInformacoesSave(geracaoMostrada,qtdCelViva);
         
-
+        if(mensagemDeErro != -1){
+        	apresentaMensagemDeErro(mensagemDeErro);
+		}
+		
+		mensagemDeErro =-1;
         opcao = continuarMostrandoGeracoes();
-        limparMapa(dim);
-        
-        if(geracaoMostrada >= qtdConf)
-        	break;
         
         if (opcao == 3) {            // Configura o jogo para continuar a partir da geracao selecionada
-            ultimarecup = geracaoMostrada;  
             recuperarCels();                
             armazenarInfoVizinhos();        
-            return;                         
+            break;                         
         }
         
-        if(opcao == 0)
+        if(opcao == 0){
+        	alterarSituacaoVivo();
+    		//alterarSituacaoVizinhoMorto();
         	break;
+		}
         	
         if(opcao == 1){
         	if (geracaoMostrada < qtdConf - 1){
                 geracaoMostrada++; // vai para a prox geracao
             } else {
-                apresentaMensagemDeErro(13);  // Nao ha prox geracao
+                mensagemDeErro = 13;  // Nao ha prox geracao
             }
 		}
         	
@@ -697,33 +703,35 @@ void jdvMatrizesSalvas() {
         	if(geracaoMostrada > 0){
                 geracaoMostrada--;  // Volta para a geracao anterior
             }else{
-                apresentaMensagemDeErro(12);  // Nao ha geracao anterior
+                mensagemDeErro = 12;  // Nao ha geracao anterior
             }
 		}    
-        	
-        
+        	 
     }while (geracaoMostrada < qtdConf || opcao != 0);
     
-    
-    
     limparTela();
+    limparMapa(dim);
+    alterarSituacaoVivo();
+    alterarSituacaoVizinhoMorto();
 }
 
 //---------FUNCIONALIDADES DO MENU---------
 void jogarMenu(){
 
 	int opcao;
- 	int dimAux = LConfig[0].i * LConfig[0].j;
  	perguntarDim();
 	inicializarMatriz60x60(dim);
     limparTela();
  	mostrarMatriz(dim);
  	
- 	
+ 	int mensagemDeErro = -1;
 	viz = false;
 
  	do{
- 		
+ 		if(mensagemDeErro != -1){
+ 			apresentaMensagemDeErro(mensagemDeErro);	
+		}
+		mensagemDeErro = -1;
  		opcao = menu();
  		
         switch(opcao){
@@ -775,19 +783,15 @@ void jogarMenu(){
 				gravaCelulas();
 				break;
 			case 7:
-		        carregaConfig(); 
-				dimAux = LConfig[0].i * LConfig[0].j;
-				
-//				if (dimAux != dim){
-//     			   apresentaMensagemDeErro(11);
-//    			   break;
-// 				}
-// 				
+				opcaoCarregarMenu = 7;
+				limparMapa(dim);
+		        mensagemDeErro = carregaConfig(); 			
 				jdvMatrizesSalvas();
+				opcaoCarregarMenu = 0;
 				mostrarMatriz(dim);
 				break;
 			case 8:
-				limpaGer();
+				mensagemDeErro = limpaGer();
 				deletaConf();
 				limparTela();
 				mostrarMatriz(dim);
