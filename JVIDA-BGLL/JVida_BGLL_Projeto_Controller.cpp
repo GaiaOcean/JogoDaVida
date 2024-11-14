@@ -61,6 +61,7 @@ int inserirOuRetirarCel(int linhas, int colunas, int dim) {
     	 	excluiVivo(linhas, colunas);
     	 	tornarVizinhoVivoOuMorto(linhas, colunas);
 			tornarVazio(linhas, colunas);
+			armazenarInfoVizinhos();
         	return 2;  // celula removida
         }
     }
@@ -507,21 +508,19 @@ int carrega1Morto(int i, int j){
 
 //-----------------------------FUNCIONALIDADES PARA SALVAR E RECUPERAR----------------
 
-void validarGravacao(){
+int validarGravacao(){
 	
 	if (totvivo == 0) {
 		apresentaMensagemDeErro(10);
-        return;  
+        return 10;  
     }
     
-	
+    return -1;
 }
 //funcao utilizada para gravar as celulas da geracao salva
 void gravaCelulas(){ 
     int cursorMaxLista, cursorCelulasVivas;
     cursorMaxLista = qtdConf;  
-
-    validarGravacao();
 	
     TipoCel *aux = pvivo;
     cursorCelulasVivas = 0;
@@ -778,10 +777,15 @@ void jogarMenu(){
 				mostrarMatriz(dim);
 				break;
 			case 6:
+				if(validarGravacao() == 10){
+					mensagemDeErro = 10;
+					mostrarMatriz(dim);
+					break;
+				}
 				limparTela();
 				mostrarMatriz(dim);
 				gravaCelulas();
-				break;
+				break;	
 			case 7:
 				opcaoCarregarMenu = 7;
 				limparMapa(dim);
