@@ -10,7 +10,7 @@ O jogo da vida foi criado pelo cientista John Conway e objetiva simular o proces
 ## OBJETIVOS FUNCIONAIS
 
 - Objetiva-se criar um programa em C para simular o jogo da vida em 6 etapas pré-estabelecidas e 12 requisitos funcionais.
-- Dividir as funcionalidas do programa no método MCV(Model-View-Controller).
+- Dividir as funcionalidas do programa no método MVC(Model-View-Controller).
 - Apresentar os seres em uma matriz com a dimensão definida pelo usuário.
 - Cada posição da matriz é uma célula que pode ter um “O” (para representar um ser vivo) ou um ponto “.” para indicar “vazio” ou “morto”. Cada célula tem um
 máximo de 8 células vizinhas (que podem ser representadas pelo caracter “+”).
