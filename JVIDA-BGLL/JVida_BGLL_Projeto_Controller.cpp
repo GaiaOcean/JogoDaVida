@@ -1,6 +1,6 @@
 /*
-JVIDA-BGLL - Projeto Jogo da Vida - Etapa 5
-12/11/2024 - Grupo:BGLL
+JVIDA-BGLL - Projeto Jogo da Vida - Etapa 6
+19/11/2024 - Grupo:BGLL
 
 Nome dos integrantes:
 
@@ -9,8 +9,9 @@ Nome dos integrantes:
 - Luana Gabrielle Rodrigues Macedo
 - Lucas Ferri dos Santos
 
-	A etapa 5 consiste em salvar e recuperar geracoes salvas anteriormente pelo usuario a partir 
-	da utilizacao de listas ligadas.
+    A etapa 6 e' a entrega do projeto final, ela abilita a jogada completa do Jogo Da Vida,
+	permitindo gerar, salvar, recuperar e excluir geracoes de celulas utilizando listas ligadas.
+
 
 */
 
