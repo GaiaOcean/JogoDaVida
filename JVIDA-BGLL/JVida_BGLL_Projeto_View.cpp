@@ -312,6 +312,6 @@ void mostrarInformacoesSave(int indiceSave, int qtdVivas){
 
 void mostrarObservacao(){
 	printf("\n------------------------------------------------------------------------------------------------------------");
-	printf("\n| OBSERVACAO:\n| Se a dimensao da matriz salva for maior que a da atual, pode ser que algumas celulas\n| nao aparecam caso estejam em coordenadas nao existentes na matriz atual.\n| A matriz que aparece abaixo mostra exatamente a forma que esse save ira se comportar no jogo atual\n");
+	printf("\n OBSERVACAO:\n - Se a dimensao da matriz salva for maior que a da atual, pode ser que algumas celulas\n   nao aparecam caso estejam em coordenadas nao existentes na matriz atual.\n - A matriz que aparece abaixo mostra exatamente a forma que esse save ira se comportar no jogo atual\n");
 	printf("------------------------------------------------------------------------------------------------------------\n");
 }
