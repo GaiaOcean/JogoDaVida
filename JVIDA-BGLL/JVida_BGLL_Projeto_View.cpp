@@ -51,6 +51,7 @@ void mostrarMatriz(int dim){
 // -----------FUNCOES DE VALIDACOES-----------
 int validarDim(int dimMundo){
 	if(dimMundo < 10 || dimMundo > 60){
+	    limparTela();
 		printf("Dimensao invalida.\n"); 
 		return -1;
 	}
@@ -159,7 +160,7 @@ void apresentaMensagemDeErro(int status){
 
 void perguntarDim(){
 	int dimMundo;
-	do{
+	do{ 
 		printf("\n============================= JOGO DA VIDA =============================\n\n");
 		printf("Digite a dimensao do mundo(de 10 a 60) [0 para sair do jogo]: " );
 		scanf("%d", &dimMundo);
@@ -312,6 +313,6 @@ void mostrarInformacoesSave(int indiceSave, int qtdVivas){
 
 void mostrarObservacao(){
 	printf("\n------------------------------------------------------------------------------------------------------------");
-	printf("\n| OBSERVACAO:\n| Se a dimensao da matriz salva for maior que a da atual, pode ser que algumas celulas\n| nao aparecam caso estejam em coordenadas nao existentes na matriz atual.\n| A matriz que aparece abaixo mostra exatamente a forma que esse save ira se comportar no jogo atual\n");
+	printf("\n OBSERVACAO:\n -Se a dimensao da matriz salva for maior que a da atual, pode ser que algumas celulas\n  nao aparecam caso estejam em coordenadas nao existentes na matriz atual.\n -A matriz que aparece abaixo mostra exatamente a forma que esse save ira se comportar no jogo atual\n");
 	printf("------------------------------------------------------------------------------------------------------------\n");
 }
