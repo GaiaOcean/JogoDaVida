@@ -44,7 +44,6 @@ void limparGeracao(){
 	qtdConf = 0;  ///nenhuma configuracao gravada
 	ultimarecup = -1;
 	deletaConf();
-	printf("O dispositivo de geracoes iniciais esta vazio");
 	
 }
 	
