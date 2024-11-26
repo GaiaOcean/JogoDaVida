@@ -595,6 +595,16 @@ void deletaConf(){
 	qtdConf = 0;
 	apresentarMensamDeSucesso(2);
 }
+int deleteConf(){
+	if(remove("CONFIG_INIC")!= 0){
+		apresentaMensagemDeErro(0);
+		return 0;
+	}
+	qtdConf = 0;
+	apresentarMensamDeSucesso(2);
+	return 2;
+}
+
 //recupera tds as celulas vivas de uma gravacao
 void recuperarCels(){
 	int k, ni;
@@ -647,10 +657,19 @@ void deletaConfig(){
 	 if(remove("CONFIG_INIC") != 0){
  			apresentaMensagemDeErro(4);
  			return;
-     	}
+     	}else{
+     		apresentaMensagemDeErro(5);
+		 }
+
  	qtdConf = 0;
 }
-
+int deleteConfig(){
+	 if(remove("CONFIG_INIC") != 0){
+ 			return 0;
+     	}
+ 	qtdConf = 0;
+ 	return 5;
+}
 //mostra tds as geracoes salvas sucessivamente
 void jdvMatrizesSalvas() {
 	
@@ -797,11 +816,15 @@ void jogarMenu(){
 				mostrarMatriz(dim);		
 				break;
 			case 8:
-				mensagemDeErro = limpaGer();
-				deletaConf();
-				limparTela();
-				mostrarMatriz(dim);
-				break; 
+			    mensagemDeErro = deleteConfig();
+			    if(mensagemDeErro != 0){
+			    	limparGeracao();
+				    deletaConf();
+					limparTela();
+					mostrarMatriz(dim);
+				}
+				opcaoCarregarMenu = 0;
+				break;
             case 0:
                 interacoesMenu(opcao);
 				exit(0);
