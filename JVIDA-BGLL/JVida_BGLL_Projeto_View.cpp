@@ -125,7 +125,7 @@ void apresentaMensagemDeErro(int status){
 	    	printf("ERRO: O arquivo CONFIG_INIC nao pode ser removido");
 	    	break;
 	    case 5:
-	    	printf("O arquivo CONFIG_INIC foi removido OK");
+	    	printf("O arquivo CONFIG_INIC foi removido com sucesso");
 	    	break;
 	    case 6:
 	    	printf("Nao ha geracoes salvas\n");
