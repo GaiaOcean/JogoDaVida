@@ -100,7 +100,7 @@ void apresentarMensamDeSucesso(int status){
 			printf("O arquivo CONF_INIC foi removido com sucesso.");
 			break;
 		case 3:
-			printf("O arquivo CONFIG_INIC foi removido com sucesso.");
+			printf("O arquivo CONFIG_INIC foi removido.\n");
 			break;
 		default:
 			printf("Mudanca feita com sucesso");
@@ -110,7 +110,7 @@ void apresentaMensagemDeErro(int status){
 	
 	switch(status){
 		case 0:
-			printf("ERRO: O arquivo CONF_INIC nao pode ser removido");
+			printf("ERRO: O arquivo CONF_INIC nao pode ser removido\n");
 			break;
 	    case 1:
 	    	printf("O arquivo CONF_INIC foi removido");
@@ -125,7 +125,7 @@ void apresentaMensagemDeErro(int status){
 	    	printf("ERRO: O arquivo CONFIG_INIC nao pode ser removido");
 	    	break;
 	    case 5:
-	    	printf("O arquivo CONFIG_INIC foi removido com sucesso");
+	    	printf("\nO arquivo CONFIG_INIC foi removido com sucesso\n");
 	    	break;
 	    case 6:
 	    	printf("Nao ha geracoes salvas\n");

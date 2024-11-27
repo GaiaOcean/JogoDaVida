@@ -589,20 +589,10 @@ int carregaConfig() {
 //apaga todas as informacoes salvas
 void deletaConf(){
 	if(remove("CONFIG_INIC")!= 0){
-		apresentaMensagemDeErro(0);
-		    return;
+		return;
 	}
 	qtdConf = 0;
-	apresentarMensamDeSucesso(2);
-}
-int deleteConf(){
-	if(remove("CONFIG_INIC")!= 0){
-		apresentaMensagemDeErro(0);
-		return 0;
-	}
-	qtdConf = 0;
-	apresentarMensamDeSucesso(2);
-	return 2;
+
 }
 
 //recupera tds as celulas vivas de uma gravacao
@@ -639,18 +629,6 @@ void atualizarMapaRecuperado(int geracaoMostrada){
 		jdvMatriz[linha][coluna].situacao = VIVO;
 	}
     
-}
-
-
-int limpaGer(){
-	if(qtdConf > 0){
-    	 if (rconfirma() == 0)
- 		 return -1;
- 	}
- 	qtdConf = 0; //nenhuma configuracao gravada
- 	ultimarecup = -1; //ultimo indice recuperado
- 	deletaConf();
- 	return 3;
 }
 //remove o arquivo de configuracões iniciais
 void deletaConfig(){
